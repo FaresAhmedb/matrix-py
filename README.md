@@ -13,7 +13,7 @@ and many other things will come on 1.0 (if the project is still live)
 As far as I'm concerned it should work on any python3 version but it's always good to have the latest version since it will be the one I am sure it works on
 
 The module is currently not on PyPi so you will have to install it manually right now \
-NOTE: this assumes you have pip installed on your PC :warning:
+NOTE: this assumes you have pip installed on your PC  :warning:
 ```
 git clone https://github.com/FaresAhmedb/matrixmanp.git
 cd matrixmanp/dist
@@ -42,8 +42,10 @@ optional arguments:
   -i , --int         Integer (.. -i 69)
 
 Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb "[[7, 8, 9], [10, 11, 12]]"
-
 ```
+
+# Usage
+## CLI
 
 ## Alpha Noitce
 The Module is right now in Alpha so there's a big chance there's
