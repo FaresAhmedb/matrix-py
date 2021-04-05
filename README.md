@@ -14,7 +14,7 @@ As far as I'm concerned it should work on any python3 version but it's always go
 
 The module is currently not on PyPi so you will have to install it manually right now \
 NOTE: this assumes you have pip installed on your PC  :warning:
-```g
+```
 git clone https://github.com/FaresAhmedb/matrixmanp.git
 cd matrixmanp/dist
 pip install ./matrixmanp-0.1.tar.gz
