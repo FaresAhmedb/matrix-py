@@ -26,7 +26,7 @@ import json
 
 
 name = 'matrixmanp'
-__version__ = '0.1 Alpha'
+__version__ = '0.1'
 __all__     = ['Matrix']
 
 
