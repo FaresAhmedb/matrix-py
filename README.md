@@ -120,8 +120,6 @@ some bugs so please consider reporting them.
 All Contributions are welcome so consider looking at the source
 code on src/matrixmanp
 
----
-
 ## License &copy;
 Matrix Manipulation module to add, substract, multiply matrices.
 Copyright (C) 2021 Fares Ahmed
