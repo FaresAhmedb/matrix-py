@@ -14,7 +14,7 @@ As far as I'm concerned it should work on any python3 version but it's always go
 
 The module is currently not on PyPi so you will have to install it manually right now \
 NOTE: this assumes you have pip installed on your PC  :warning:
-```
+```g
 git clone https://github.com/FaresAhmedb/matrixmanp.git
 cd matrixmanp/dist
 pip install ./matrixmanp-0.1.tar.gz
@@ -117,8 +117,10 @@ and for a list of the all avillable options
 The Module is right now in Alpha so there's a big chance there's
 some bugs so please consider reporting them.
 
-All Contributions are welcomed so consider looking at the source
+All Contributions are welcome so consider looking at the source
 code on src/matrixmanp
+
+---
 
 ## License &copy;
 Matrix Manipulation module to add, substract, multiply matrices.
