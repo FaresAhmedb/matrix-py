@@ -50,7 +50,7 @@ The Module is right now in Alpha so there's a big chance there's
 some bugs so please consider reporting them.
 
 All Contributions are welcome so consider looking at the source
-code on src/matrixmanpulation
+code on src/matrixmanp
 
 ## License &copy;
 Matrix Manipulation module to add, substract, multiply matrices.
