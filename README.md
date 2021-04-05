@@ -13,9 +13,10 @@ and many other things will come on 1.0 (if the project is still live)
 As far as I'm concerned it should work on any python3 version but it's always good to have the latest version since it will be the one I am sure it works on
 
 The module is currently not on PyPi so you will have to install it manually right now
+NOTE: this assumes you have pip installed on your pc :warning:
 ```
 git clone https://github.com/FaresAhmedb/matrixmanp.git
-cd MatrexMinuplation/dist
+cd matrixmanp/dist
 pip install ./matrixmanp-0.1.tar.gz
 ```
 
