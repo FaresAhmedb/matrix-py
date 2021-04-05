@@ -90,7 +90,9 @@ The CLI is limited at the moment by one  operation at a time (You can't add 3 ma
 To get the size of a matrix
 ```bash
 python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
-(3x2)
+1 2 3
+4 5 6
+(2x3)
 ```
 
 To get the transpose of a matrix
