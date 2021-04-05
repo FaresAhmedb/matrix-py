@@ -85,7 +85,7 @@ print(type(C))
 
 
 ## - The Command Line Interface (CLI)
-The CLI is limited at the moment by one  operation at a time (You can't add 3 matrices) duo to the limitations of argparse 
+The CLI is limited at the moment by one  operation at a time (eg. You can't add +2 matrices) duo to the limitations of argparse 
 
 To get the size of a matrix
 ```bash
