@@ -44,16 +44,12 @@ Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb "[[7, 8, 9], [10, 11, 12]]"
 
 ```
 
----
-
 ## Alpha Noitce
 The Module is right now in Alpha so there's a big chance there's
 some bugs so please consider reporting them.
 
 All Contributions are welcome so consider looking at the source
 code on src/matrixmanpulation
-
----
 
 ## License &copy;
 Matrix Manipulation module to add, substract, multiply matrices.
