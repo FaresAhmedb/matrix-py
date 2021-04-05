@@ -63,13 +63,18 @@ print(A * B)
 # Print the addition of the negative Matrix A + Matrix B transposed
 print(-A + B.transpose()) 
 # Ouput:
-# 2 4 6
-# 8 10 12
+# 0 0 0
+# 0 0 0
 # (2x3)
 
 # 0.1% solved this
 C = (+A.transpose() - -B) - (B * 3) + (A.transpose() * 5)
 print(C)
+# Output:
+# 4 16
+# 8 20
+# 12 24
+# (3x2)
 
 # Convert the Matrix to a list if you want to manipulate the matrices yourself
 C = C.to_list()
