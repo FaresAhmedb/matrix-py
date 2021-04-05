@@ -87,6 +87,12 @@ print(type(C))
 ## - The Command Line Interface (CLI)
 The CLI is limited at the moment by one  operation at a time (You can't add 3 matrices) duo to the limitations of argparse 
 
+To get the size of a matrix
+```bash
+python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
+(3x2)
+```
+
 To get the transpose of a matrix
 ```bash
 python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
@@ -119,8 +125,6 @@ some bugs so please consider reporting them.
 
 All Contributions are welcome so consider looking at the source
 code on src/matrixmanp
-
----
 
 ## License &copy;
 Matrix Manipulation module to add, substract, multiply matrices.
