@@ -139,8 +139,7 @@ class Matrix:
         """ Matrix Multiplication: A * B or A * INT. """
         if isinstance(other, Matrix):
             # A * B
-            if (len(self.matrix)    != len(other.matrix[0]) or
-                len(self.matrix[0]) != len(other.matrix)):
+            if len(self.matrix[0]) != len(other.matrix):
                 raise MatrixError('The number of rows in matrix A must be'
                 ' equal to the number of columns in B matrix')
 
@@ -226,10 +225,10 @@ def main():
     if args.size:
         print(Matrix(args.size))
 
-    if args.transpose:
+    elif args.transpose:
         print(Matrix(args.transpose).transpose())
 
-    if args.matrixa:
+    elif args.matrixa:
         if args.operator == '+':
             print(Matrix(args.matrixa) + Matrix(args.matrixb)) \
             if args.matrixb else \
@@ -244,6 +243,8 @@ def main():
             print(Matrix(args.matrixa) * args.int)
         else:
             raise SyntaxError('The avillable operations are +, -, *')
+    else:
+        print(parser.print_help())
 
 
 if __name__ == '__main__':
