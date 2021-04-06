@@ -53,14 +53,12 @@ Sample code:
 
 # Print the multiply of Matrix A * Matrix B
 >>> print(A * B)
-# Ouput:
 # 14 32
 # 32 77
 # (2x2)
 
 # Print the addition of the negative Matrix A + Matrix B transposed
 >>> print(-A + B.transpose()) 
-# Ouput:
 # 0 0 0
 # 0 0 0
 # (2x3)
@@ -68,7 +66,6 @@ Sample code:
 # 0.1% solved this
 >>> C = (+A.transpose() - -B) - (B * 3) + (A.transpose() * 5)
 >>> print(C)
-# Output:
 # 4 16
 # 8 20
 # 12 24
@@ -77,7 +74,6 @@ Sample code:
 # Convert the Matrix to a list if you want to manipulate the matrices yourself
 >>> C = C.to_list()
 >>> print(type(C))
-# Output:
 # <class 'list'>
 ```
 
