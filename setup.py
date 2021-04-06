@@ -32,5 +32,6 @@ setuptools.setup(
     author_email                  = 'faresahmed@zohomail.com',
     license                       = 'GPLv2',
     packages                      = ['matrixmanp'],
+    package_dir                   = {"": "src"},
     python_requires               = ">=3.6",
     )
