@@ -16,8 +16,7 @@ The module is currently not on PyPi so you will have to install it manually righ
 NOTE: this assumes you have pip installed on your PC  :warning:
 ```
 git clone https://github.com/FaresAhmedb/matrixmanp.git
-cd matrixmanp/dist
-pip install ./matrixmanp-0.1.tar.gz
+cd matrixmanp && sudo python setup.py install
 ```
 
 Now Try it! 
