@@ -12,8 +12,7 @@ and many other things will come on 1.0 (if the project is still live)
 # Installation
 As far as I'm concerned it should work on any python3 version but it's always good to have the latest version since it will be the one I am sure it works on
 
-The module is currently not on PyPi so you will have to install it manually using the CLI \
-NOTE: this assumes you have pip installed on your PC  :warning:
+The module is currently not on PyPi so you will have to install it manually using the CLI
 ```
 git clone https://github.com/FaresAhmedb/matrixmanp.git
 cd matrixmanp && sudo python setup.py install
