@@ -115,7 +115,9 @@ $ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
 ```
 to substract or multiply matrices just change the '+' to '-' or '*' \
 and for a list of the all avillable options
-
+```
+$ python -m matrixmanp --help
+```
 ---
 
 ## Alpha Noitce
