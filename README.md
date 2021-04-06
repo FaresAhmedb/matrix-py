@@ -126,6 +126,15 @@ some bugs so please consider reporting them.
 All Contributions are welcomed so consider looking at the source
 code on src/matrixmanp
 
+## Why, Why publishing this simple module?
+Yes I know it's a simple module that doesn't do everything it's excpected to do \
+and to be honest I didn't really want to put it on my github as my "FIRST EVER" project \ 
+nope it is not I code most of the time without remote repositories for fun and personal need (this one was) \
+that I want and don't think anyone would be intersted in (eg. I created CLH-Bash the game in python
+for the sake of hating JavaScript) but this project is different I have learnt a LOT of things while \
+creating this module from knowing classes better to how to package a module and even some algorithms \
+that I used and was very inspiring to me so I wanted to share my little creation with the world!
+
 ## License &copy;
 Matrix Manipulation module to add, substract, multiply matrices.
 Copyright (C) 2021 Fares Ahmed
