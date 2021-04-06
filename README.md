@@ -87,7 +87,7 @@ The CLI is limited at the moment by one  operation at a time (eg. You can't add 
 
 To get the size of a matrix
 ```bash
-python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
+python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 1 2 3
 4 5 6
 (2x3)
