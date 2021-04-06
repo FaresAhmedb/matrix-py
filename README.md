@@ -47,31 +47,31 @@ Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb "[[7, 8, 9], [10, 11, 12]]"
 Sample code:
 ```python
 >>> from matrixmanp.matrix import Matrix
-
+>>>
 >>> A = Matrix([ [1, 2, 3], [4, 5, 6] ])   # List -> Matrix Object
 >>> B = Matrix([ [1, 4], [2, 5], [3, 6] ]) # List -> Matrix Object
-
-# Print the multiply of Matrix A * Matrix B
+>>>
+>>> # Print the multiply of Matrix A * Matrix B
 >>> print(A * B)
 # 14 32
 # 32 77
 # (2x2)
-
-# Print the addition of the negative Matrix A + Matrix B transposed
+>>>
+>>> # Print the addition of the negative Matrix A + Matrix B transposed
 >>> print(-A + B.transpose()) 
 # 0 0 0
 # 0 0 0
 # (2x3)
-
-# 0.1% solved this
+>>>
+>>> # 0.1% solved this
 >>> C = (+A.transpose() - -B) - (B * 3) + (A.transpose() * 5)
 >>> print(C)
 # 4 16
 # 8 20
 # 12 24
 # (3x2)
-
-# Convert the Matrix to a list if you want to manipulate the matrices yourself
+>>>
+>>> # Convert the Matrix to a list if you want to manipulate the matrices yourself
 >>> C = C.to_list()
 >>> print(type(C))
 # <class 'list'>
