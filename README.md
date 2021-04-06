@@ -87,7 +87,7 @@ The CLI is limited at the moment by one  operation at a time (eg. You can't add 
 
 To get the size of a matrix
 ```bash
-python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
+$ python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 1 2 3
 4 5 6
 (2x3)
@@ -95,7 +95,7 @@ python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 
 To get the transpose of a matrix
 ```bash
-python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
+$ python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
 1 4
 2 5
 3 6
@@ -104,12 +104,12 @@ python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
 Your matrix is [[1, 2, 3], [4, 5, 6]] \
 To add 2 matrices to each other or add a matrix to an integer:
 ```bash
-python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
+$ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
 2 4 6
 8 10 12
 (2x3)
 
-python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
+$ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
 3 4 5
 6 7 8
 (2x3)
