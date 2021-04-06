@@ -92,7 +92,7 @@ $ python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 4 5 6
 (2x3)
 ```
-
+Your matrix is [[1, 2, 3], [4, 5, 6]] \
 To get the transpose of a matrix
 ```bash
 $ python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
@@ -101,7 +101,6 @@ $ python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
 3 6
 (3x2)
 ```
-Your matrix is [[1, 2, 3], [4, 5, 6]] \
 To add 2 matrices to each other or add a matrix to an integer:
 ```bash
 $ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
