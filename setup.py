@@ -33,5 +33,7 @@ setuptools.setup(
     license                       = 'GPLv2',
     packages                      = ['matrixmanp'],
     package_dir                   = {"": "src"},
+    install_requires              = ["setuptools"],
+    url                           = "https://github.com/FaresAhmedb/matrixmanp",
     python_requires               = ">=3.6",
     )
