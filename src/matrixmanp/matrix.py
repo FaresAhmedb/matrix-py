@@ -1,4 +1,4 @@
-#!/usr/bin/python3.9
+#!/usr/bin/python3
 
 """
 Matrix Manipulation module to add, substract, multiply matrices.
@@ -131,7 +131,8 @@ class Matrix:
             for m in range(len(self.matrix)):
                 result.append([])
                 for i in range(len(self.matrix[0])):
-                    result[m].append(self.matrix[m][i] - other)
+                    result[m]
+                    .append(self.matrix[m][i] - other)
 
         return Matrix(result)
 
@@ -160,7 +161,7 @@ class Matrix:
         return Matrix(result)
     # Object Math opertaions: END
 
-
+    # Object Manpulation: START
     def transpose(self: list):
         """ Return a new matrix transposed """
         result = [list(i) for i in zip(*self.matrix)]
@@ -170,6 +171,7 @@ class Matrix:
     def to_list(self):
         """ Convert Matrix object to a list """
         return self.matrix
+    # Object Manpulation: END
 
 def main():
     """ The CLI for the module """
