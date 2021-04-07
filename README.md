@@ -6,18 +6,13 @@
 # Matrix Manpulation
 MatrixManp. Module is a python module to:
 
+  - Add Matrices :heavy_check_mark:
 
-- Add Matrices :heavy_check_mark:
+  - Substract Matrices :heavy_check_mark:
 
+  - Multiply Matrices :heavy_check_mark:
 
-- Substract Matrices :heavy_check_mark:
-
-
-- Multiply Matrices :heavy_check_mark:
-
-
-- Transpose Matrices :heavy_check_mark:
-
+  - Transpose Matrices :heavy_check_mark:
 
 and many other things will come on 1.0 (if the project is still live)
 
@@ -33,7 +28,7 @@ cd matrixmanp && sudo python setup.py install
 ```
 
 Now Try it! 
-```
+```bash
 $ matrixmanp -h
 ```
 
