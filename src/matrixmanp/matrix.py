@@ -233,16 +233,19 @@ def main():
 
     elif args.matrixa:
         if args.operator == '+':
-            return Matrix(args.matrixa) + Matrix(args.matrixb) \
-            if args.matrixb else \
+            if args.matrixb:
+                return Matrix(args.matrixa) + Matrix(args.matrixb)
+            # If args.init
             return Matrix(args.matrixa) + args.int
         elif args.operator == '-':
-            return Matrix(args.matrixa) - Matrix(args.matrixb) \
-            if args.matrixb else \
+            if args.matrixb:
+                return Matrix(args.matrixa) - Matrix(args.matrixb) \
+            # If args.int
             return Matrix(args.matrixa) - args.int
         elif args.operator == '*':
-            return Matrix(args.matrixa) * Matrix(args.matrixb) \
-            if args.matrixb else \
+            if args.matrixb:
+                return Matrix(args.matrixa) * Matrix(args.matrixb) \
+            # If args.int
             return Matrix(args.matrixa) * args.int
         else:
             raise SyntaxError('The avillable operations are +, -, *')
