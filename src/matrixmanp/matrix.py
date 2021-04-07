@@ -131,8 +131,7 @@ class Matrix:
             for m in range(len(self.matrix)):
                 result.append([])
                 for i in range(len(self.matrix[0])):
-                    result[m]
-                    .append(self.matrix[m][i] - other)
+                    result[m].append(self.matrix[m][i] - other)
 
         return Matrix(result)
 
