@@ -225,10 +225,10 @@ def main():
     args = parser.parse_args()
 
     if args.size:
-        return Matrix(args.size)
+        print(Matrix(args.size))
 
     elif args.transpose:
-        return Matrix(args.transpose).transpose()
+        print(Matrix(args.transpose).transpose())
 
     elif args.matrixa:
         if args.operator == '+':
