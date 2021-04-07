@@ -31,9 +31,10 @@ setuptools.setup(
     author                        = 'Fares Ahmed',
     author_email                  = 'faresahmed@zohomail.com',
     license                       = 'GPLv2',
+    scripts                       = ['bin/matrixmanp'],
     packages                      = ['matrixmanp'],
     package_dir                   = {"": "src"},
     install_requires              = ["setuptools"],
     url                           = "https://github.com/FaresAhmedb/matrixmanp",
-    python_requires               = ">=3.6",
+    python_requires               = ">=3.1",
     )
