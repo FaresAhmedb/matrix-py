@@ -1,6 +1,6 @@
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![GPLv2 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+[![GPLv2 license](https://img.shields.io/badge/License-GPLv2-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 [![Updated Badge](https://badges.pufler.dev/updated/FaresAhmedb/matrixmanp)](https://badges.pufler.dev)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/462eb1a0e9c84557ae182addab62eefd)](https://app.codacy.com/gh/FaresAhmedb/matrixmanp?utm_source=github.com&utm_medium=referral&utm_content=FaresAhmedb/matrixmanp&utm_campaign=Badge_Grade_Settings)
