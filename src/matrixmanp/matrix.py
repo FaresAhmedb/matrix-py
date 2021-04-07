@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-"""
-Matrix Manipulation module to add, substract, multiply matrices.
+"""Matrix Manipulation module to add, substract, multiply matrices.
+
 Copyright (C) 2021 Fares Ahmed
 
 This program is free software; you can redistribute it and/or
@@ -31,19 +31,21 @@ __all__     = ['Matrix']
 
 
 class MatrixError(Exception):
-    """ Error for the Matrix Object invalid operations """
+
+    """Error for the Matrix Object invalid operations"""
 
 
 class Matrix:
-    """ Matrix Object: add, sub, mul, and a lot more """
+
+    """Matrix Object: add, sub, mul, and a lot more"""
 
     # Object Creation: START
     def __init__(self, matrix) -> None:
-        """ Initialize matrix object. """
+        """Initialize matrix object."""
         self.matrix = matrix
 
     def __str__(self, dims=True):
-        """ Return the Matrix, the size of it (Activated when using print) """
+        """Return the Matrix, the size of it (Activated when using print)"""
         for row in self.matrix:
             print(' '.join(map(str,row)))
 
@@ -53,13 +55,13 @@ class Matrix:
         return ''
 
     def __repr__(self):
-        """ Return the matrix size (string representation of the object) """
+        """Return the matrix size (string representation of the object)"""
         return '({}x{})'.format(len(self.matrix), len(self.matrix[0]))
     # Object Creation: END
 
     # Object Expressions: START
     def __pos__(self):
-        """ Positive operator: +A | Return the matrix * 1 (copy) """
+        """Positive operator: +A | Return the matrix * 1 (copy)"""
         result = list()
 
         for i in range(len(self.matrix)):
@@ -70,7 +72,7 @@ class Matrix:
         return Matrix(result)
 
     def __neg__(self):
-        """ Negative operator: -A. | Returns the matrix * -1 """
+        """Negative operator: -A. | Returns the matrix * -1"""
         result = list()
 
         for i in range(len(self.matrix)):
@@ -83,7 +85,7 @@ class Matrix:
 
     # Object Math operations: START
     def __add__(self, other):
-        """ Matrix Addition: A + B or A + INT. """
+        """Matrix Addition: A + B or A + INT."""
         if isinstance(other, Matrix):
             # A + B
             result = list()
@@ -110,7 +112,7 @@ class Matrix:
         return Matrix(result)
 
     def __sub__(self, other):
-        """ Matrix Subtraction: A - B or A - INT. """
+        """Matrix Subtraction: A - B or A - INT."""
         if isinstance(other, Matrix):
             # A + B
             result = list()
@@ -136,7 +138,7 @@ class Matrix:
         return Matrix(result)
 
     def __mul__(self, other):
-        """ Matrix Multiplication: A * B or A * INT. """
+        """Matrix Multiplication: A * B or A * INT."""
         if isinstance(other, Matrix):
             # A * B
             if len(self.matrix[0]) != len(other.matrix):
@@ -162,18 +164,18 @@ class Matrix:
 
     # Object Manpulation: START
     def transpose(self: list):
-        """ Return a new matrix transposed """
+        """Return a new matrix transposed"""
         result = [list(i) for i in zip(*self.matrix)]
         return Matrix(result)
 
 
     def to_list(self):
-        """ Convert Matrix object to a list """
+        """Convert Matrix object to a list"""
         return self.matrix
     # Object Manpulation: END
 
 def main():
-    """ The CLI for the module """
+    """The CLI for the module"""
     parser=argparse.ArgumentParser(
         description = 'Matrix Minuplation module to add, substract, multiply'
         'matrices.',
@@ -224,28 +226,28 @@ def main():
     args = parser.parse_args()
 
     if args.size:
-        print(Matrix(args.size))
+        return Matrix(args.size)
 
     elif args.transpose:
-        print(Matrix(args.transpose).transpose())
+        return Matrix(args.transpose).transpose()
 
     elif args.matrixa:
         if args.operator == '+':
-            print(Matrix(args.matrixa) + Matrix(args.matrixb)) \
+            return Matrix(args.matrixa) + Matrix(args.matrixb) \
             if args.matrixb else \
-            print(Matrix(args.matrixa) + args.int)
+            return Matrix(args.matrixa) + args.int
         elif args.operator == '-':
-            print(Matrix(args.matrixa) - Matrix(args.matrixb)) \
+            return Matrix(args.matrixa) - Matrix(args.matrixb) \
             if args.matrixb else \
-            print(Matrix(args.matrixa) - args.int)
+            return Matrix(args.matrixa) - args.int
         elif args.operator == '*':
-            print(Matrix(args.matrixa) * Matrix(args.matrixb)) \
+            return Matrix(args.matrixa) * Matrix(args.matrixb) \
             if args.matrixb else \
-            print(Matrix(args.matrixa) * args.int)
+            return Matrix(args.matrixa) * args.int
         else:
             raise SyntaxError('The avillable operations are +, -, *')
     else:
-        print(parser.print_help())
+        return parser.print_help()
 
 
 if __name__ == '__main__':
