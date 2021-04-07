@@ -1,3 +1,8 @@
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![codebeat badge](https://codebeat.co/badges/b3f3c7fb-ff8a-48a6-9bce-76d7c70a3648)](https://codebeat.co/projects/github-com-faresahmedb-matrixmanp-main)
+[![GPLv2 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+[![Updated Badge](https://badges.pufler.dev/updated/puf17640/git-badges)](https://badges.pufler.dev)
+
 # Matrix Manpulation
 MatrixManp. Module is a python module to:
 - Add Matrices :heavy_check_mark:
@@ -20,7 +25,7 @@ cd matrixmanp && sudo python setup.py install
 
 Now Try it! 
 ```
-python -m  matrixmanp -h
+matrixmanp -h
 ```
 
 The ouput should be something like this:
@@ -89,7 +94,7 @@ The CLI is limited at the moment by one  operation at a time (eg. You can't add 
 
 To get the size of a matrix
 ```bash
-$ python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
+$ matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 1 2 3
 4 5 6
 (2x3)
@@ -97,7 +102,7 @@ $ python -m matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 Your matrix is [[1, 2, 3], [4, 5, 6]] \
 To get the transpose of a matrix
 ```bash
-$ python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
+$ matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
 1 4
 2 5
 3 6
@@ -105,12 +110,12 @@ $ python -m matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
 ```
 To add 2 matrices to each other or add a matrix to an integer:
 ```bash
-$ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
+$ matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
 2 4 6
 8 10 12
 (2x3)
 
-$ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
+$ matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
 3 4 5
 6 7 8
 (2x3)
@@ -118,7 +123,7 @@ $ python -m matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
 to substract or multiply matrices just change the '+' to '-' or '*' \
 and for a list of the all avillable options
 ```
-$ python -m matrixmanp --help
+$ matrixmanp --help
 ```
 ---
 
