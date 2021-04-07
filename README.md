@@ -25,7 +25,7 @@ cd matrixmanp && sudo python setup.py install
 
 Now Try it! 
 ```
-matrixmanp -h
+$ matrixmanp -h
 ```
 
 The ouput should be something like this:
