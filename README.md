@@ -34,6 +34,10 @@ Now Try it!
 ```bash
 $ matrixmanp -h
 ```
+On Windows
+```
+matrixmanp\> python -m matrixmanp -h
+```
 
 The ouput should be something like this:
 ```
@@ -96,6 +100,11 @@ print(type(C))
 ```
 
 ## - The Command Line Interface (CLI)
+NOTE :warning:: On Windows NT all the command  below are done like this:
+```
+python -m matrixmanp
+```
+
 The CLI is limited at the moment by one  operation at a time (eg. You can't add 3 matrices) duo to the limitations of argparse 
 
 To get the size of a matrix
