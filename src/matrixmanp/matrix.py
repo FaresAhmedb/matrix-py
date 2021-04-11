@@ -192,6 +192,17 @@ class Matrix:
     def zero(size: int):
         """Return a New Zero Matrix"""
         return [ [0] * size ] * size
+
+    
+    def diagonal(matrix: list):
+        """"Return a New diagonal Matrix"""
+        result = list()
+        
+        for i in range(len(matrix)):
+            result.append([0] * len(matrix))
+            result[i][i] = matrix[i]
+
+        return Matrix(result)
     # Pre Made Objects: END
 
 
@@ -238,16 +249,22 @@ def main():
         help='Matrix B (.. -mb "[[1, 2, 3], [4, 5, 6]]")'
     )
 
-    parser.add_argument('-id', '--identity',
+    parser.add_argument('-I', '--identity',
         type=int,
         metavar='',
-        help='Identity (.. -id 3)'
+        help='Identity (.. -I 3)'
     )
 
     parser.add_argument('-i', '--int',
         type=int,
         metavar='',
         help='Integer (.. -i 5)'
+    )
+
+    parser.add_argument('-diag', '--diagonal',
+        type=json.loads,
+        metavar='',
+        help='Diagonal (.. -diag [1, 2, 3, 4])'
     )
 
     args = parser.parse_args()
@@ -264,7 +281,9 @@ def main():
         elif args.int:
             b = args.int
         elif args.identity:
-            b = args.identity
+            b = Matrix.identity(args.identity)
+        elif args.diagonal:
+            b = Matrix.diagonal(args.diagonal)
 
         if args.operator == '+':
             print(Matrix(args.matrixa) + b)
