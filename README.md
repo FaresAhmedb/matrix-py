@@ -93,7 +93,7 @@ print(C)
 # (3x2)
 
 # Convert the Matrix to a list if you want to manipulate the matrices yourself
-C = C.to_list()
+C = C.tolist()
 print(type(C))
 # Output:
 # <class 'list'>
