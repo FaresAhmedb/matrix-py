@@ -168,6 +168,15 @@ class Matrix:
         return self.matrix
     # Object Manpulation: END
 
+    # Booleon Expressions: START
+    def issquare(self):
+        """Check if the matrix is square"""
+        if len(self.matrix) == len(self.matrix[0]):
+            return True
+        else:
+            return False
+    # Booleon Expressions: END
+
     # Pre Made Objects: START
     def identity(size: int):
         """Return a New Identity Matrix"""
