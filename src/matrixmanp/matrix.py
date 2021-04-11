@@ -178,6 +178,7 @@ class Matrix:
 
     
     def issymmetric(self):
+        """Check of the matrix is symmetric"""
         if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
         return False
