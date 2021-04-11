@@ -26,7 +26,7 @@ import json
 
 name = 'matrixmanp'
 __version__ = '0.1'
-__all__     = ['Matrix']
+__all__     = ['Matrix', 'identity']
 
 
 class MatrixError(Exception):
@@ -168,6 +168,19 @@ class Matrix:
         return self.matrix
     # Object Manpulation: END
 
+    # Pre Made Objects: START
+    def identity(size: int):
+        """Return a New Identity Matrix"""
+        result = list()
+
+        for i in range(size):
+            result.append([0] * size)
+            result[i][i] = 1
+
+        return Matrix(result)
+    # Pre Made Objects: END
+
+
 def main():
     """The CLI for the module"""
     parser=argparse.ArgumentParser(
@@ -211,10 +224,16 @@ def main():
         help='Matrix B (.. -mb "[[1, 2, 3], [4, 5, 6]]")'
     )
 
+    parser.add_argument('-id', '--identity',
+        type=int,
+        metavar='',
+        help='Identity (.. -id 3)'
+    )
+
     parser.add_argument('-i', '--int',
         type=int,
         metavar='',
-        help='Integer (.. -i 69)'
+        help='Integer (.. -i 5)'
     )
 
     args = parser.parse_args()
@@ -226,18 +245,19 @@ def main():
         print(Matrix(args.transpose).transpose())
 
     elif args.matrixa:
+        if args.matrixb:
+            b = Matrix(args.matrixb)
+        elif args.int:
+            b = args.int
+        elif args.identity:
+            b = args.identity
+
         if args.operator == '+':
-            print(Matrix(args.matrixa) + Matrix(args.matrixb)) \
-            if args.matrixb else \
-            print(Matrix(args.matrixa) + args.int)
+            print(Matrix(args.matrixa) + b)
         elif args.operator == '-':
-            print(Matrix(args.matrixa) - Matrix(args.matrixb)) \
-            if args.matrixb else \
-            print(Matrix(args.matrixa) - args.int)
+            print(Matrix(args.matrixa) - b) 
         elif args.operator == '*':
-            print(Matrix(args.matrixa) * Matrix(args.matrixb)) \
-            if args.matrixb else \
-            print(Matrix(args.matrixa) * args.int)
+            print(Matrix(args.matrixa) * b)
         else:
             raise SyntaxError('The avillable operations are +, -, *')
     else:
