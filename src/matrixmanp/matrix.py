@@ -72,12 +72,7 @@ class Matrix:
 
     def __neg__(self):
         """Negative operator: -A. | Returns the matrix * -1"""
-        result = list()
-
-        for i in range(len(self.matrix)):
-            result.append([])
-            for m in range(len(self.matrix[0])):
-                result[i].append(-self.matrix[i][m])
+        result = [[-x for x in y] for y in self.matrix]
 
         return Matrix(result)
     # Object Expressions: END
