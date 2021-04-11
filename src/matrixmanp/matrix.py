@@ -178,6 +178,11 @@ class Matrix:
             result[i][i] = 1
 
         return Matrix(result)
+
+
+    def zero(size: int):
+        """Return a New Zero Matrix"""
+        return [ [0] * size ] * size
     # Pre Made Objects: END
 
 
