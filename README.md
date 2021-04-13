@@ -160,7 +160,7 @@ knowing classes better to writing a more readable code to how to package a modul
 that I used and was very inspiring to me so I wanted to share my little creation with the world!
 
 ## License &copy;
-Matrix Manipulation module to add, substract, multiply matrices.
+matrix-py module to add, substract, multiply matrices.
 Copyright (C) 2021 Fares Ahmed
 
 This program is free software; you can redistribute it and/or
