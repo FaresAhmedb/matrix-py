@@ -27,7 +27,7 @@ As far as I'm concerned it should work on any python3 version but it's always go
 The module is currently not on PyPi so you will have to install it manually using the CLI
 ```bash
 git clone https://github.com/FaresAhmedb/matrix-py.git
-cd matrix-py && sudo python setup.py install
+cd matrix-py && python setup.py install --user
 ```
 
 Now Try it! 

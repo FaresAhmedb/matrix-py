@@ -25,9 +25,16 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+# Stolen from https://bitbucket.org/jeunice/stuf/src/master/setup.py :)
+def getversion(fname):
+    '''Get __version__ without importing.'''
+    for line in open(fname):
+        if line.startswith('__version__'):
+            return f'{eval(line[13:].rstrip())}'
+
 setuptools.setup(
     name                          = "matrixpy",
-    version                       = "0.2",
+    version                       =  getversion("src/matrixpy.py"),
     description                   = "matrix-py module to add, substract, multiply matrices.",
     long_description              = long_description,
     long_description_content_type = "text/markdown",
