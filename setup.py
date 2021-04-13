@@ -17,24 +17,27 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
 
+# Check this awesome GitHub repo
+# https://github.com/navdeep-G/setup.py
+
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name                          = 'matrixmanp',
-    version                       = '0.2',
-    description                   = 'Matrix Manipulation module to add, substract, multiply matrices.',
+    name                          = "matrixpy",
+    version                       = "0.2",
+    description                   = "matrix-py module to add, substract, multiply matrices.",
     long_description              = long_description,
-    long_description_content_type = 'text/markdown',
-    author                        = 'Fares Ahmed',
-    author_email                  = 'faresahmed@zohomail.com',
-    license                       = 'GPLv2',
-    scripts                       = ['bin/matrixmanp'],
-    packages                      = ['matrixmanp'],
+    long_description_content_type = "text/markdown",
+    author                        = "Fares Ahmed",
+    author_email                  = "faresahmed@zohomail.com",
+    license                       = "GPLv2",
+    scripts                       = ["bin/matrixpy"],
     package_dir                   = {"": "src"},
+    py_modules                    = ["matrixpy"],
     install_requires              = ["setuptools"],
-    url                           = "https://github.com/FaresAhmedb/matrixmanp",
+    url                           = "https://github.com/FaresAhmedb/matrixpy",
     python_requires               = ">=3.1",
     )

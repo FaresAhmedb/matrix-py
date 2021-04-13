@@ -1,5 +1,5 @@
-"""
-Matrix Manipulation module to add, substract, multiply matrices.
+"""matrix-py module to add, substract, multiply matrices.
+
 Copyright (C) 2021 Fares Ahmed
 
 This program is free software; you can redistribute it and/or
@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
 
-import matrixmanp.matrix
+import matrixpy
 
 if __name__ == '__main__':
-    matrixmanp.matrix.main()
+    matrixpy.main()

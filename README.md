@@ -6,8 +6,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/462eb1a0e9c84557ae182addab62eefd)](https://app.codacy.com/gh/FaresAhmedb/matrixmanp?utm_source=github.com&utm_medium=referral&utm_content=FaresAhmedb/matrixmanp&utm_campaign=Badge_Grade_Settings)
 [![codebeat badge](https://codebeat.co/badges/b3f3c7fb-ff8a-48a6-9bce-76d7c70a3648)](https://codebeat.co/projects/github-com-faresahmedb-matrixmanp-main)
 
-# Matrix Manpulation
-MatrixManp. Module is a python module to:
+# matrix-py
+matrix-py Module is a python module to:
 
   - Add Matrices :heavy_check_mark:
 
@@ -26,17 +26,17 @@ As far as I'm concerned it should work on any python3 version but it's always go
 
 The module is currently not on PyPi so you will have to install it manually using the CLI
 ```bash
-git clone https://github.com/FaresAhmedb/matrixmanp.git
-cd matrixmanp && sudo python setup.py install
+git clone https://github.com/FaresAhmedb/matrix-py.git
+cd matrix-py && sudo python setup.py install
 ```
 
 Now Try it! 
 ```bash
-$ matrixmanp -h
+$ matrixpy -h
 ```
 On Windows
 ```
-matrixmanp\> python -m matrixmanp -h
+> python -m matrixpy -h
 ```
 
 The ouput should be something like this:
@@ -64,7 +64,7 @@ Sample code:
 ```python
 
 
-from matrixmanp.matrix import Matrix
+from matrixpy import Matrix
 
 A = Matrix([ [1, 2, 3], [4, 5, 6] ])   # List -> Matrix Object
 B = Matrix([ [1, 4], [2, 5], [3, 6] ]) # List -> Matrix Object
@@ -102,14 +102,14 @@ print(type(C))
 ## - The Command Line Interface (CLI)
 NOTE :warning:: On Windows NT all the command  below are done like this:
 ```
-python -m matrixmanp
+python -m matrixpy
 ```
 
 The CLI is limited at the moment by one  operation at a time (eg. You can't add 3 matrices) duo to the limitations of argparse 
 
 To get the size of a matrix
 ```bash
-$ matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
+$ matrixpy -s '[[1, 2, 3], [4, 5, 6]]'
 1 2 3
 4 5 6
 (2x3)
@@ -117,7 +117,7 @@ $ matrixmanp -s '[[1, 2, 3], [4, 5, 6]]'
 Your matrix is [[1, 2, 3], [4, 5, 6]] \
 To get the transpose of a matrix
 ```bash
-$ matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
+$ matrixpy -t '[[1, 2, 3], [4, 5, 6]]'
 1 4
 2 5
 3 6
@@ -125,12 +125,12 @@ $ matrixmanp -t '[[1, 2, 3], [4, 5, 6]]'
 ```
 To add 2 matrices to each other or add a matrix to an integer:
 ```bash
-$ matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
+$ matrixpy -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
 2 4 6
 8 10 12
 (2x3)
 
-$ matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
+$ matrixpy -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
 3 4 5
 6 7 8
 (2x3)
@@ -138,7 +138,7 @@ $ matrixmanp -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -i 2
 to substract or multiply matrices just change the '+' to '-' or '*' \
 and for a list of the all avillable options
 ```
-$ matrixmanp --help
+$ matrixpy --help
 ```
 ---
 
@@ -147,7 +147,7 @@ The Module is right now in Alpha so there's a big chance there's
 some bugs so please consider reporting them.
 
 All Contributions are welcomed so consider looking at the source
-code on src/matrixmanp
+code on src/matrixpy
 
 ## Why, Why publishing this simple module?
 Yes I know it's a simple module that doesn't do everything it's excpected to do \
