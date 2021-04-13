@@ -59,6 +59,7 @@ Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb "[[7, 8, 9], [10, 11, 12]]"
 ```
 
 # Usage
+HEADS UP! :WARNING:: UPDATE 0.2 HAS OTHER STUFF SO USE help(Matrix) UNTIL I WRITE THE NEW STUFF
 ## - The Module
 Sample code:
 ```python
