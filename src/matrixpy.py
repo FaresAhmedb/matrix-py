@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Matrix Manipulation module to add, substract, multiply matrices.
+"""matrix-py module to add, substract, multiply matrices.
 
 Copyright (C) 2021 Fares Ahmed
 
@@ -24,9 +24,9 @@ import argparse
 import json
 
 
-name = 'matrixmanp'
-__version__ = '0.1'
-__all__     = ['Matrix', 'identity']
+name = 'matrixpy'
+__version__ = '0.2'
+__all__     = ['Matrix']
 
 
 class MatrixError(Exception):
