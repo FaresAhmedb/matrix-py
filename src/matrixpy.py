@@ -239,7 +239,7 @@ class Matrix:
 def main():
     """The CLI for the module"""
     parser=argparse.ArgumentParser(
-        description = 'Matrix Minuplation module to add, substract, multiply'
+        description = 'matrix-py module to add, substract, multiply'
         'matrices.',
         epilog = 'Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb'
         ' "[[7, 8, 9], [10, 11, 12]]"')
