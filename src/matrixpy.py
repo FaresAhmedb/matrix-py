@@ -157,6 +157,26 @@ class Matrix:
     # Object Math opertaions: END
 
     # Object Manpulation: START
+    def row(self, num: int):
+        if num <= 0: raise MatrixError('Matrices start from 1')
+        if num > 0: num -= 1
+
+        return Matrix([self.matrix[num]])
+
+
+    def col(self, num: int):
+        if num <= 0: raise MatrixError('Matrices start from 1')
+        if num > 0: num -= 1
+
+        result = list()
+
+        for i in range(len(self.matrix)):
+            result.append([])
+            result[i].append(self.matrix[i][num])
+
+        return Matrix(result)
+
+
     def transpose(self: list):
         """Return a new matrix transposed"""
         result = [list(i) for i in zip(*self.matrix)]
