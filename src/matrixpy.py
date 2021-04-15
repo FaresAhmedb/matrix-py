@@ -202,7 +202,7 @@ class Matrix:
 
     def is_symmetric(self):
         """Check of the matrix is symmetric"""
-        if self.matrix == (Matrix(self.matrix).transpose()).tolist():
+        if self.matrix == (Matrix(self.matrix).transpose()).to_list():
             return True
         return False
     # Booleon Expressions: END
@@ -221,7 +221,7 @@ class Matrix:
 
     def zero(size: int):
         """Return a New Zero Matrix"""
-        return [ [0] * size ] * size
+        return Matrix([[0] * size] * size)
 
 
     def diagonal(matrix: list):
