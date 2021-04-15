@@ -41,10 +41,10 @@ class Matrix:
     # Object Creation: START
     def __init__(self, matrix) -> None:
         """Initialize matrix object."""
-        self.matrix = matrix
+        self.matrix  = matrix
         
-        self.rowsnum   = len(self.matrix)
-        self.colsnum   = len(self.matrix[0])
+        self.rowsnum = len(self.matrix)
+        self.colsnum = len(self.matrix[0])
 
     def __str__(self, dims=True):
         """Return the Matrix, the size of it (Activated when using print)"""
@@ -87,8 +87,8 @@ class Matrix:
             # A + B
             result = list()
 
-            if (self.rowsnum  != other.rowsnum or
-                self.colsnum  != other.colsnum):
+            if (self.rowsnum != other.rowsnum or
+                self.colsnum != other.colsnum):
                 raise MatrixError('To add matrices, the matrices must have'
                 ' the same dimensions')
 
