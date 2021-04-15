@@ -42,6 +42,9 @@ class Matrix:
     def __init__(self, matrix) -> None:
         """Initialize matrix object."""
         self.matrix = matrix
+        
+        self.rowsnum   = len(self.matrix)
+        self.colsnum   = len(self.matrix[0])
 
     def __str__(self, dims=True):
         """Return the Matrix, the size of it (Activated when using print)"""
@@ -55,7 +58,7 @@ class Matrix:
 
     def __repr__(self):
         """Return the matrix size (string representation of the object)"""
-        return '({}x{})'.format(len(self.matrix), len(self.matrix[0]))
+        return '({}x{})'.format(self.rowsnum, self.colsnum)
     # Object Creation: END
 
     # Object Expressions: START
@@ -63,9 +66,9 @@ class Matrix:
         """Positive operator: +A | Return the matrix * 1 (copy)"""
         result = list()
 
-        for i in range(len(self.matrix)):
+        for i in range(self.rowsnum):
             result.append([])
-            for m in range(len(self.matrix[0])):
+            for m in range(self.colsnum):
                 result[i].append(+self.matrix[i][m])
 
         return Matrix(result)
@@ -84,23 +87,23 @@ class Matrix:
             # A + B
             result = list()
 
-            if (len(self.matrix)    != len(other.matrix) or
-                len(self.matrix[0]) != len(other.matrix[0])):
+            if (self.rowsnum  != other.rowsnum or
+                self.colsnum  != other.colsnum):
                 raise MatrixError('To add matrices, the matrices must have'
                 ' the same dimensions')
 
-            for m in range(len(self.matrix)):
+            for m in range(self.rowsnum):
                 result.append([])
-                for j in range(len(self.matrix[0])):
+                for j in range(self.colsnum):
                     result[m].append(self.matrix[m][j] + other.matrix[m][j])
 
         else:
             # A + INT
             result = list()
 
-            for m in range(len(self.matrix)):
+            for m in range(self.rowsnum):
                 result.append([])
-                for i in range(len(self.matrix[0])):
+                for i in range(self.colsnum):
                     result[m].append(self.matrix[m][i] + other)
 
         return Matrix(result)
@@ -111,22 +114,22 @@ class Matrix:
             # A + B
             result = list()
 
-            if (len(self.matrix)    != len(other.matrix) or
-                len(self.matrix[0]) != len(other.matrix[0])):
+            if (self.rowsnum != other.rowsnum or
+                self.colsnum != other.colsnum):
                 raise MatrixError('To sub matrices, the matrices must have'
                 ' the same dimensions')
 
-            for m in range(len(self.matrix)):
+            for m in range(self.rowsnum):
                 result.append([])
-                for j in range(len(self.matrix[0])):
+                for j in range(self.colsnum):
                     result[m].append(self.matrix[m][j] - other.matrix[m][j])
         else:
             # A + INT
             result = list()
 
-            for m in range(len(self.matrix)):
+            for m in range(self.rowsnum):
                 result.append([])
-                for i in range(len(self.matrix[0])):
+                for i in range(self.colsnum):
                     result[m].append(self.matrix[m][i] - other)
 
         return Matrix(result)
@@ -148,9 +151,9 @@ class Matrix:
             # A * INT
             result = list()
 
-            for m in range(len(self.matrix)):
+            for m in range(self.rowsnum):
                 result.append([])
-                for i in range(len(self.matrix[0])):
+                for i in range(self.colsnum):
                     result[m].append(self.matrix[m][i] * other)
 
         return Matrix(result)
@@ -170,7 +173,7 @@ class Matrix:
 
         result = list()
 
-        for i in range(len(self.matrix)):
+        for i in range(self.rowsnum):
             result.append([])
             result[i].append(self.matrix[i][num])
 
@@ -191,7 +194,7 @@ class Matrix:
     # Booleon Expressions: START
     def is_square(self):
         """Check if the matrix is square"""
-        if len(self.matrix) == len(self.matrix[0]):
+        if self.rowsnum == self.colsnum:
             return True
         else:
             return False
