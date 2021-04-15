@@ -163,13 +163,13 @@ class Matrix:
         return Matrix(result)
 
 
-    def toList(self):
+    def to_list(self):
         """Convert Matrix object to a list"""
         return self.matrix
     # Object Manpulation: END
 
     # Booleon Expressions: START
-    def isSquare(self):
+    def is_square(self):
         """Check if the matrix is square"""
         if len(self.matrix) == len(self.matrix[0]):
             return True
@@ -177,7 +177,7 @@ class Matrix:
             return False
 
 
-    def isSymmetric(self):
+    def is_symmetric(self):
         """Check of the matrix is symmetric"""
         if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
