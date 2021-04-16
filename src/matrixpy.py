@@ -60,7 +60,7 @@ class Matrix:
         if dims:
             return self.__repr__()
 
-        return ''
+        return str()
     # Object Creation: END
 
     # Object Expressions: START
