@@ -65,6 +65,10 @@ class Matrix:
 
         return str()
 
+    def __getitem__(self, rowcol: list):
+        """Return matrix item | a_matrix[1, 2] 1->row 2->col"""
+        return self.matrix[rowcol[0]][rowcol[1]]
+
     def __contains__(self, item):
         """Return True if item in Object else False"""
         for row in self.matrix:
