@@ -33,7 +33,7 @@ def getversion(fname):
             return f'{eval(line[13:].rstrip())}'
 
 setuptools.setup(
-    name                          = "matrixpy",
+    name                          = "matrix-py",
     version                       =  getversion("src/matrixpy.py"),
     description                   = "matrix-py module to add, substract, multiply matrices.",
     long_description              = long_description,
