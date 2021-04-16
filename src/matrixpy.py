@@ -185,9 +185,10 @@ class Matrix:
     # Object Math opertaions: END
 
     # Object Manpulation: START
-    def row(self, num: int):
-        if num <= 0: raise MatrixError('Matrices start from 1')
-        if num > 0: num -= 1
+    def row(self, num: int, start=0):
+        if num <= start-1: raise MatrixError('The matrix rows start from'
+        f' {start} row(num) to start from 0')
+        if num > start-1: num -= start
 
         try:
             return Matrix([self.matrix[num]])
@@ -195,9 +196,10 @@ class Matrix:
             raise MatrixError('Matrix Index out of range')
 
 
-    def col(self, num: int):
-        if num <= 0: raise MatrixError('Matrices start from 1')
-        if num > 0: num -= 1
+    def col(self, num: int, start=0):
+        if num <= start-1: raise MatrixError('The matrix cols start from'
+        f' {start} col(num) to start from 0')
+        if num > start-1: num -= start
 
         result = list()
 
