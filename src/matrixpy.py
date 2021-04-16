@@ -42,7 +42,10 @@ class Matrix:
     def __init__(self, matrix) -> None:
         """Initialize matrix object."""
         self.matrix  = matrix
-        
+
+        if isinstance(matrix, int):
+            self.matrix = Matrix.identity(matrix).to_list()
+
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
 
