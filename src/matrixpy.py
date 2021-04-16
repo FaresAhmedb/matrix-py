@@ -65,8 +65,17 @@ class Matrix:
 
         return str()
 
-    def __getitem__(self, rowcol: list):
+    def __getitem__(self, rowcol):
         """Return matrix item | a_matrix[1, 2] 1->row 2->col"""
+        # Return row if one argument (int) was given (M[1])
+        if isinstance(rowcol, int):
+            return Matrix(self.matrix).row(rowcol)
+
+        # Return col if slice was given (M[:1])
+        if isinstance(rowcol, slice):
+            return Matrix(self.matrix).col(rowcol.stop)
+
+        # Return Matrix item if 2 arguments (list) was given
         return self.matrix[rowcol[0]][rowcol[1]]
 
     def __contains__(self, item):
