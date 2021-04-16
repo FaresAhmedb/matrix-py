@@ -58,9 +58,16 @@ class Matrix:
             print(' '.join(map(str,row)))
 
         if dims:
-            return self.__repr__()
+            return "({}x{})".format(self.rowsnum, self.colsnum)
 
         return str()
+
+    def __contains__(self, item):
+        """Return True if item in Object else False"""
+        for row in self.matrix:
+            if item in row:
+                return True
+        return False
     # Object Creation: END
 
     # Object Expressions: START
