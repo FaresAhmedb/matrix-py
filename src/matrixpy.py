@@ -189,7 +189,10 @@ class Matrix:
         if num <= 0: raise MatrixError('Matrices start from 1')
         if num > 0: num -= 1
 
-        return Matrix([self.matrix[num]])
+        try:
+            return Matrix([self.matrix[num]])
+        except IndexError:
+            raise MatrixError('Matrix Index out of range')
 
 
     def col(self, num: int):
@@ -201,8 +204,11 @@ class Matrix:
         for i in range(self.rowsnum):
             result.append([])
             result[i].append(self.matrix[i][num])
-
-        return Matrix(result)
+        
+        try:
+            return Matrix(result)
+        except IndexError:
+            raise MatrixError('Matrix Index out of range')
 
 
     def transpose(self: list):
