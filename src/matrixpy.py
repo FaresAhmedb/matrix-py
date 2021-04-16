@@ -46,6 +46,12 @@ class Matrix:
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
 
+    def __repr__(self):
+        """Return the matrix size (string representation of the object)"""
+        return '<{} ({}x{}) 0x{}x>'.format(self.__class__.__name__,
+        self.rowsnum, self.colsnum,
+        id(self))
+
     def __str__(self, dims=True):
         """Return the Matrix, the size of it (Activated when using print)"""
         for row in self.matrix:
@@ -55,12 +61,6 @@ class Matrix:
             return self.__repr__()
 
         return ''
-
-    def __repr__(self):
-        """Return the matrix size (string representation of the object)"""
-        return '<{} ({}x{}) 0x{}x>'.format(self.__class__.__name__,
-        self.rowsnum, self.colsnum,
-        id(self))
     # Object Creation: END
 
     # Object Expressions: START
