@@ -233,13 +233,13 @@ class Matrix:
         return Matrix([[0] * size] * size)
 
 
-    def diagonal(matrix: list):
+    def diagonal(*numbers: int):
         """"Return a New diagonal Matrix"""
         result = list()
 
-        for i in range(len(matrix)):
-            result.append([0] * len(matrix))
-            result[i][i] = matrix[i]
+        for i in range(len(numbers)):
+            result.append([0] * len(numbers))
+            result[i][i] = numbers[i]
 
         return Matrix(result)
     # Pre Made Objects: END
