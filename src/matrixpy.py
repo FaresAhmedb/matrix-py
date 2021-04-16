@@ -58,7 +58,9 @@ class Matrix:
 
     def __repr__(self):
         """Return the matrix size (string representation of the object)"""
-        return '({}x{})'.format(self.rowsnum, self.colsnum)
+        return '<{} ({}x{}) 0x{}x>'.format(self.__class__.__name__,
+        self.rowsnum, self.colsnum,
+        id(self))
     # Object Creation: END
 
     # Object Expressions: START
