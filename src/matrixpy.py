@@ -25,7 +25,7 @@ import json
 
 
 name = 'matrixpy'
-__version__ = '0.3'
+__version__ = '0.3.1'
 __all__     = ['Matrix']
 
 
@@ -41,10 +41,23 @@ class Matrix:
     # Object Creation: START
     def __init__(self, matrix) -> None:
         """Initialize matrix object."""
-        self.matrix  = matrix
+        # Matrix([[1, 2, 3], [4, 5, 6]]) -> Row1 = (1 2 3), Row2 = (4 5 6)
+        self.matrix = matrix
 
+        # Matrix(3) -> (3x3) Zero Matrix
         if isinstance(matrix, int):
             self.matrix = Matrix.identity(matrix).to_list()
+
+        # Matrix("1 2 3; 4 5 6") -> Row1 = (1 2 3), Row2 = (4 5 6)
+        if isinstance(matrix, str):
+            # input: Matrix("1 2 3; 4 5 6") | output: Matrix([[1, 2, 3], [4, 5, 6]])
+            matrix = matrix.split(';')             # ["1 2 3", " 4 5 6"]
+            matrix = list(map(str.lstrip, matrix)) # ["1 2 3", "4 5 6"]
+            for i, nums in enumerate(matrix):      # [['1', '2', '3'], ['4', '5', '6']]
+                matrix[i] = nums.split(' ')
+            matrix = [list(map(int, matrix[i])) for i in range(len(matrix))]
+
+            self.matrix = matrix
 
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
