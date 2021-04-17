@@ -1,10 +1,10 @@
-[![PyPI version shields.io](https://img.shields.io/pypi/v/matrix.svg)](https://pypi.python.org/pypi/matrix-py/)
-[![PyPI download month](https://img.shields.io/pypi/dm/matrix.svg)](https://pypi.python.org/pypi/matrix-py/)
-[![PyPI license](https://img.shields.io/pypi/l/matrix.svg)](https://pypi.python.org/pypi/matrix-py/)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/matrix-py.svg)](https://pypi.python.org/pypi/matrix-py/)
+[![PyPI download month](https://img.shields.io/pypi/dm/matrix-py.svg)](https://pypi.python.org/pypi/matrix-py/)
+[![PyPI license](https://img.shields.io/pypi/l/matrix-py.svg)](https://pypi.python.org/pypi/matrix-py/)
 
 [![Updated Badge](https://badges.pufler.dev/updated/FaresAhmedb/matrix-py)](https://badges.pufler.dev)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/462eb1a0e9c84557ae182addab62eefd)](https://app.codacy.com/gh/FaresAhmedb/matrixmanp?utm_source=github.com&utm_medium=referral&utm_content=FaresAhmedb/matrixmanp&utm_campaign=Badge_Grade_Settings)
-[![codebeat badge](https://codebeat.co/badges/b3f3c7fb-ff8a-48a6-9bce-76d7c70a3648)](https://codebeat.co/projects/github-com-faresahmedb-matrixmanp-main)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/480bf6060f5a49938991f62a368f8859)](https://www.codacy.com/gh/FaresAhmedb/matrix-py/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=FaresAhmedb/matrix-py&amp;utm_campaign=Badge_Grade)
+[![codebeat badge](https://codebeat.co/badges/b51ca73f-6ba1-443f-ae4d-fd9f541176b2)](https://codebeat.co/projects/github-com-faresahmedb-matrix-py-main)
 
 # matrix-py
 matrix-py Module is a python module to:
