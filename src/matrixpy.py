@@ -206,7 +206,7 @@ class Matrix:
         for i in range(self.rowsnum):
             result.append([])
             result[i].append(self.matrix[i][num])
-        
+
         try:
             return Matrix(result)
         except IndexError:
