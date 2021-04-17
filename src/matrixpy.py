@@ -203,11 +203,10 @@ class Matrix:
 
         result = list()
 
-        for i in range(self.rowsnum):
-            result.append([])
-            result[i].append(self.matrix[i][num])
-
         try:
+            for i in range(self.rowsnum):
+                result.append([self.matrix[i][num]])
+
             return Matrix(result)
         except IndexError:
             raise MatrixError('Matrix Index out of range')
