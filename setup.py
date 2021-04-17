@@ -25,26 +25,40 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+
 # Stolen from https://bitbucket.org/jeunice/stuf/src/master/setup.py :)
 def getversion(fname):
-    '''Get __version__ without importing.'''
+    """Get __version__ without importing."""
     for line in open(fname):
         if line.startswith('__version__'):
             return f'{eval(line[13:].rstrip())}'
+
 
 setuptools.setup(
     name                          = "matrix-py",
     version                       =  getversion("src/matrixpy.py"),
     description                   = "matrix-py module to add, substract, multiply matrices.",
-    long_description              = long_description,
+    long_description              =  long_description,
     long_description_content_type = "text/markdown",
     author                        = "Fares Ahmed",
     author_email                  = "faresahmed@zohomail.com",
-    license                       = "GPLv2",
-    scripts                       = ["bin/matrixpy"],
+    python_requires               = ">=3.1",
+    url                           = "https://github.com/FaresAhmedb/matrix-py",
+    entry_points                  = {
+        "console_scripts": ["matrixpy=matrixpy:main"],
+    },
+    install_requires              = ["setuptools"],
+    include_package_data          =  True,
     package_dir                   = {"": "src"},
     py_modules                    = ["matrixpy"],
-    install_requires              = ["setuptools"],
-    url                           = "https://github.com/FaresAhmedb/matrixpy",
-    python_requires               = ">=3.1",
+    zip_safe                      =  True,
+    license                       = "GPLv2",
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
+        'Topic :: Scientific/Engineering :: Mathematics'
+    ],
     )
