@@ -201,13 +201,8 @@ class Matrix:
         f' {start} col(num) to start from 0')
         if num > start-1: num -= start
 
-        result = list()
-
         try:
-            for i in range(self.rowsnum):
-                result.append([self.matrix[i][num]])
-
-            return Matrix(result)
+            return Matrix([[row[num]] for row in self.matrix])
         except IndexError:
             raise MatrixError('Matrix Index out of range')
 
