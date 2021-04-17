@@ -235,6 +235,7 @@ class Matrix:
     # Booleon Expressions: END
 
     # Pre Made Objects: START
+    @staticmethod
     def identity(size: int):
         """Return a New Identity Matrix"""
         result = list()
@@ -246,18 +247,20 @@ class Matrix:
         return Matrix(result)
 
 
+    @staticmethod
     def zero(size: int):
         """Return a New Zero Matrix"""
         return Matrix([[0] * size] * size)
 
 
+    @staticmethod
     def diagonal(*numbers: int):
         """"Return a New diagonal Matrix"""
         result = list()
 
-        for i in range(len(numbers)):
+        for i, number in enumerate(numbers):
             result.append([0] * len(numbers))
-            result[i][i] = numbers[i]
+            result[i][i] = number
 
         return Matrix(result)
     # Pre Made Objects: END
@@ -345,7 +348,7 @@ def main():
         if args.operator == '+':
             print(Matrix(args.matrixa) + b)
         elif args.operator == '-':
-            print(Matrix(args.matrixa) - b) 
+            print(Matrix(args.matrixa) - b)
         elif args.operator == '*':
             print(Matrix(args.matrixa) * b)
         else:
