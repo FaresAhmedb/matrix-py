@@ -1,8 +1,8 @@
+[![PyPI version shields.io](https://img.shields.io/pypi/v/matrix.svg)](https://pypi.python.org/pypi/matrix-py/)
+[![PyPI download month](https://img.shields.io/pypi/dm/matrix.svg)](https://pypi.python.org/pypi/matrix-py/)
+[![PyPI license](https://img.shields.io/pypi/l/matrix.svg)](https://pypi.python.org/pypi/matrix-py/)
 
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![GPLv2 license](https://img.shields.io/badge/License-GPLv2-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 [![Updated Badge](https://badges.pufler.dev/updated/FaresAhmedb/matrix-py)](https://badges.pufler.dev)
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/462eb1a0e9c84557ae182addab62eefd)](https://app.codacy.com/gh/FaresAhmedb/matrixmanp?utm_source=github.com&utm_medium=referral&utm_content=FaresAhmedb/matrixmanp&utm_campaign=Badge_Grade_Settings)
 [![codebeat badge](https://codebeat.co/badges/b3f3c7fb-ff8a-48a6-9bce-76d7c70a3648)](https://codebeat.co/projects/github-com-faresahmedb-matrixmanp-main)
 
@@ -19,12 +19,19 @@ matrix-py Module is a python module to:
 
 and many other things will come on 1.0 (if the project is still live)
 
+Works with Python3+ 
+
 ---
 
 # Installation
 As far as I'm concerned it should work on any python3 version but it's always good to have the latest version since it will be the one I am sure it works on
 
-The module is currently not on PyPi so you will have to install it manually using the CLI
+## Using PyPI
+```bash
+pip install matrix-py
+```
+
+## Manule Installation
 ```bash
 git clone https://github.com/FaresAhmedb/matrix-py.git
 cd matrix-py && python setup.py install --user
@@ -35,7 +42,7 @@ Now Try it!
 $ matrixpy -h
 ```
 On Windows
-```
+```powershell
 > python -m matrixpy -h
 ```
 
@@ -59,7 +66,7 @@ Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb "[[7, 8, 9], [10, 11, 12]]"
 ```
 
 # Usage
-HEADS UP! :warning:: UPDATE 0.2 HAS OTHER STUFF SO USE help(Matrix) UNTIL I ADD THE NEW STUFF
+HEADS UP! :warning:: UPDATE 0.3 HAS OTHER STUFF SO USE help(Matrix) UNTIL I ADD THE NEW STUFF
 ## - The Module
 Sample code:
 ```python
