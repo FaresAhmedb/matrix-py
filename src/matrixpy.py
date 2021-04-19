@@ -57,7 +57,7 @@ class Matrix:
                 matrix[i] = nums.split(' ')
 
             # list From str -> int
-            self.matrix = [list(map(int, matrix[i])) 
+            self.matrix = [list(map(int, matrix[i]))
             for i in range(len(matrix))]
 
         self.rowsnum = len(self.matrix)
@@ -67,7 +67,7 @@ class Matrix:
         """Returnt the matrix in string formatted way"""
         result = list()
 
-        ma_str = [list(map(str, self.matrix[i])) 
+        ma_str = [list(map(str, self.matrix[i]))
         for i in range(self.rowsnum)]
 
         for i in ma_str:
@@ -260,7 +260,7 @@ class Matrix:
 
         return Matrix(result)
 
-    
+
     def rmcol(self, index):
         result = self.matrix
 
