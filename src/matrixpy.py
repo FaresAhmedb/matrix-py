@@ -206,9 +206,8 @@ class Matrix:
     # Object Manpulation: START
     def row(self, num: int, start=0):
         """Return the given row position"""
-        if num <= start-1: raise MatrixError('The matrix rows start from'
-        f' {start}. row(num) to start from 0') from None
-        if num > start-1: num -= start
+        if num > start-1:
+            num -= start
 
         try:
             return Matrix([self.matrix[num]])
@@ -217,10 +216,8 @@ class Matrix:
 
 
     def col(self, num: int, start=0):
-        """Return the given col position"""
-        if num <= start-1: raise MatrixError('The matrix cols start from'
-        f' {start}. col(num) to start from 0') from None
-        if num > start-1: num -= start
+        if num > start-1:
+            num -= start
 
         try:
             return Matrix([[row[num]] for row in self.matrix])
