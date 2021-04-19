@@ -216,6 +216,7 @@ class Matrix:
 
 
     def col(self, num: int, start=0):
+        """Return the given col position"""
         if num > start-1:
             num -= start
 

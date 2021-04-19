@@ -42,7 +42,7 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     author                        = "Fares Ahmed",
     author_email                  = "faresahmed@zohomail.com",
-    python_requires               = ">=3.1",
+    python_requires               = ">=3.6",
     url                           = "https://github.com/FaresAhmedb/matrix-py",
     entry_points                  = {
         "console_scripts": ["matrixpy=matrixpy:main"],
