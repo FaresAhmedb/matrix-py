@@ -226,6 +226,30 @@ class Matrix:
             raise MatrixError('Matrix Index out of range')
 
 
+    def addrow(self, row, index=-1):
+        result = self.matrix
+
+        if index == -1:
+            result.insert(len(result), (Matrix(row).to_list()[0]))
+        else:
+            result.insert(index, (Matrix(row).to_list()[0]))
+
+        return Matrix(result)
+
+
+    def addcol(self, col, index=-1):
+        result = self.matrix
+
+        if index == -1:
+            for i in range(self.rowsnum):
+                result[i].insert(len(result), Matrix(col)[0, i])
+        else:
+            for i in range(self.rowsnum):
+                result[i].insert(index, Matrix(col)[0, i])
+
+        return Matrix(result)
+
+
     def transpose(self: list):
         """Return a new matrix transposed"""
         result = [list(i) for i in zip(*self.matrix)]
