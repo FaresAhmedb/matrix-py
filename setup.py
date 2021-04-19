@@ -47,7 +47,6 @@ setuptools.setup(
     entry_points                  = {
         "console_scripts": ["matrixpy=matrixpy:main"],
     },
-    install_requires              = ["setuptools"],
     include_package_data          =  True,
     package_dir                   = {"": "src"},
     py_modules                    = ["matrixpy"],
