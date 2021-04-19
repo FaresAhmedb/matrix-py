@@ -134,7 +134,7 @@ class Matrix:
             if (self.rowsnum != other.rowsnum or
                 self.colsnum != other.colsnum):
                 raise MatrixError('To add matrices, the matrices must have'
-                ' the same dimensions')
+                ' the same dimensions') from None
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -161,7 +161,7 @@ class Matrix:
             if (self.rowsnum != other.rowsnum or
                 self.colsnum != other.colsnum):
                 raise MatrixError('To sub matrices, the matrices must have'
-                ' the same dimensions')
+                ' the same dimensions') from None
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -184,7 +184,7 @@ class Matrix:
             # A * B
             if self.colsnum != other.rowsnum:
                 raise MatrixError('The number of rows in matrix A must be'
-                ' equal to the number of columns in B matrix')
+                ' equal to the number of columns in B matrix') from None
 
             # References:
             # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
@@ -207,25 +207,25 @@ class Matrix:
     def row(self, num: int, start=0):
         """Return the given row position"""
         if num <= start-1: raise MatrixError('The matrix rows start from'
-        f' {start} row(num) to start from 0')
+        f' {start}. row(num) to start from 0') from None
         if num > start-1: num -= start
 
         try:
             return Matrix([self.matrix[num]])
         except IndexError:
-            raise MatrixError('Matrix Index out of range')
+            raise MatrixError('Matrix Index out of range') from None
 
 
     def col(self, num: int, start=0):
         """Return the given col position"""
         if num <= start-1: raise MatrixError('The matrix cols start from'
-        f' {start} col(num) to start from 0')
+        f' {start}. col(num) to start from 0') from None
         if num > start-1: num -= start
 
         try:
             return Matrix([[row[num]] for row in self.matrix])
         except IndexError:
-            raise MatrixError('Matrix Index out of range')
+            raise MatrixError('Matrix Index out of range') from None
 
 
     def addrow(self, row, index=-1):
@@ -261,7 +261,7 @@ class Matrix:
         try:
             result.pop(index)
         except IndexError:
-            raise MatrixError("Matrix index out of range")
+            raise MatrixError("Matrix index out of range") from None
 
         return Matrix(result)
 
@@ -274,7 +274,7 @@ class Matrix:
             for i in range(self.rowsnum):
                 result[i].pop(index)
         except IndexError:
-            raise MatrixError("Matrix index out of range")
+            raise MatrixError("Matrix index out of range") from None
 
         return Matrix(result)
 
