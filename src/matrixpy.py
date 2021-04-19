@@ -75,15 +75,14 @@ class Matrix:
 
         return "; ".join(result)
 
-    def __str__(self, dims=True):
+    def __str__(self):
         """Return the Matrix, the size of it (Activated when using print)"""
+        result = list()
+
         for row in self.matrix:
-            print(' '.join(map(str,row)))
+            result.append(" ".join(map(str, row)))
 
-        if dims:
-            return "({}x{})".format(self.rowsnum, self.colsnum)
-
-        return str()
+        return "\n".join(result) + f"\n({self.rowsnum}x{self.colsnum})"
 
     def __getitem__(self, rowcol):
         """Return matrix item | a_matrix[1, 2] 1->row 2->col"""
