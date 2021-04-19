@@ -242,7 +242,7 @@ class Matrix:
 
         if index == -1:
             for i in range(self.rowsnum):
-                result[i].insert(len(result), Matrix(col)[0, i])
+                result[i].insert(self.colsnum, Matrix(col)[0, i])
         else:
             for i in range(self.rowsnum):
                 result[i].insert(index, Matrix(col)[0, i])
