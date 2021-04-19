@@ -293,10 +293,7 @@ class Matrix:
     # Booleon Expressions: START
     def is_square(self):
         """Check if the matrix is square"""
-        if self.rowsnum == self.colsnum:
-            return True
-        else:
-            return False
+        return bool(self.rowsnum == self.colsnum)
 
 
     def is_symmetric(self):
