@@ -55,9 +55,10 @@ class Matrix:
             matrix = list(map(str.lstrip, matrix)) # ["1 2 3", "4 5 6"]
             for i, nums in enumerate(matrix):      # [['1', '2', '3'], ['4', '5', '6']]
                 matrix[i] = nums.split(' ')
-            matrix = [list(map(int, matrix[i])) for i in range(len(matrix))]
 
-            self.matrix = matrix
+            # list From str -> int
+            self.matrix = [list(map(int, matrix[i])) 
+            for i in range(len(matrix))]
 
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
@@ -182,7 +183,7 @@ class Matrix:
         """Matrix Multiplication: A * B or A * INT."""
         if isinstance(other, Matrix):
             # A * B
-            if len(self.matrix[0]) != len(other.matrix):
+            if self.colsnum != other.rowsnum:
                 raise MatrixError('The number of rows in matrix A must be'
                 ' equal to the number of columns in B matrix')
 
