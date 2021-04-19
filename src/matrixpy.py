@@ -230,7 +230,7 @@ class Matrix:
         result = self.matrix
 
         if index == -1:
-            result.insert(len(result), (Matrix(row).to_list()[0]))
+            result.insert(self.rowsnum, (Matrix(row).to_list()[0]))
         else:
             result.insert(index, (Matrix(row).to_list()[0]))
 
@@ -246,6 +246,29 @@ class Matrix:
         else:
             for i in range(self.rowsnum):
                 result[i].insert(index, Matrix(col)[0, i])
+
+        return Matrix(result)
+
+
+    def rmrow(self, index):
+        result = self.matrix
+
+        try:
+            result.pop(index)
+        except IndexError:
+            raise MatrixError("Matrix index out of range")
+
+        return Matrix(result)
+
+    
+    def rmcol(self, index):
+        result = self.matrix
+
+        try:
+            for i in range(self.rowsnum):
+                result[i].pop(index)
+        except IndexError:
+            raise MatrixError("Matrix index out of range")
 
         return Matrix(result)
 
