@@ -205,6 +205,7 @@ class Matrix:
 
     # Object Manpulation: START
     def row(self, num: int, start=0):
+        """Return the given row position"""
         if num <= start-1: raise MatrixError('The matrix rows start from'
         f' {start} row(num) to start from 0')
         if num > start-1: num -= start
@@ -216,6 +217,7 @@ class Matrix:
 
 
     def col(self, num: int, start=0):
+        """Return the given col position"""
         if num <= start-1: raise MatrixError('The matrix cols start from'
         f' {start} col(num) to start from 0')
         if num > start-1: num -= start
@@ -227,6 +229,7 @@ class Matrix:
 
 
     def addrow(self, row, index=-1):
+        """Add a row to an exisiting Matrix object"""
         result = self.matrix
 
         if index == -1:
@@ -238,6 +241,7 @@ class Matrix:
 
 
     def addcol(self, col, index=-1):
+        """Add a col to an exisiting Matrix object"""
         result = self.matrix
 
         if index == -1:
@@ -251,6 +255,7 @@ class Matrix:
 
 
     def rmrow(self, index):
+        """Remove a row from an exisiting Matrix object"""
         result = self.matrix
 
         try:
@@ -262,6 +267,7 @@ class Matrix:
 
 
     def rmcol(self, index):
+        """Remove a col from an exisiting Matrix object"""
         result = self.matrix
 
         try:
