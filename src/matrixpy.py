@@ -26,7 +26,7 @@ import json
 
 name = 'matrixpy'
 __version__ = '0.4'
-__all__     = ['Matrix']
+__all__     = ['Matrix', 'MatrixError']
 
 
 class MatrixError(Exception):
@@ -336,6 +336,7 @@ class Matrix:
 def main():
     """The CLI for the module"""
     parser=argparse.ArgumentParser(
+        prog="matrix-py",
         description = 'matrix-py module to add, substract, multiply'
         'matrices.',
         epilog = 'Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb'
