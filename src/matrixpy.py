@@ -277,11 +277,10 @@ class Matrix:
 
     def transpose(self: list):
         """Return a new matrix transposed"""
-        result = [list(i) for i in zip(*self.matrix)]
-        return Matrix(result)
+        return Matrix([list(i) for i in zip(*self.matrix)])
 
 
-    def to_list(self):
+    def tolist(self):
         """Convert Matrix object to a list"""
         return self.matrix
     # Object Manpulation: END
