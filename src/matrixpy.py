@@ -30,12 +30,10 @@ __all__     = ['Matrix', 'MatrixError']
 
 
 class MatrixError(Exception):
-
     """Error for the Matrix Object invalid operations"""
 
 
 class Matrix:
-
     """Matrix Object: add, sub, mul, and a lot more"""
 
     # Object Creation: START
