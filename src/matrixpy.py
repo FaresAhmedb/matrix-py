@@ -25,7 +25,7 @@ import json
 
 
 name = 'matrixpy'
-__version__ = '0.5'
+__version__ = '0.5.1'
 __all__     = ['Matrix', 'MatrixError']
 
 
@@ -44,7 +44,7 @@ class Matrix:
 
         # Matrix(3) -> (3x3) Zero Matrix
         if isinstance(matrix, int):
-            self.matrix = Matrix.identity(matrix).to_list()
+            self.matrix = Matrix.identity(matrix).tolist()
 
         # Matrix("1 2 3; 4 5 6") -> Row1 = (1 2 3), Row2 = (4 5 6)
         if isinstance(matrix, str):
@@ -229,9 +229,9 @@ class Matrix:
         result = self.matrix
 
         if index == -1:
-            result.insert(self.rowsnum, (Matrix(row).to_list()[0]))
+            result.insert(self.rowsnum, (Matrix(row).tolist()[0]))
         else:
-            result.insert(index, (Matrix(row).to_list()[0]))
+            result.insert(index, (Matrix(row).tolist()[0]))
 
         return Matrix(result)
 
@@ -293,7 +293,7 @@ class Matrix:
 
     def is_symmetric(self):
         """Check of the matrix is symmetric"""
-        if self.matrix == (Matrix(self.matrix).transpose()).to_list():
+        if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
         return False
     # Booleon Expressions: END
