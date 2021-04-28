@@ -37,7 +37,7 @@ class Matrix:
     """Matrix Object: add, sub, mul, and a lot more"""
 
     # Object Creation: START
-    def __init__(self, matrix) -> None:
+    def __init__(self, matrix):
         """Initialize matrix object."""
         # Matrix([[1, 2, 3], [4, 5, 6]]) -> Row1 = (1 2 3), Row2 = (4 5 6)
         self.matrix = matrix
