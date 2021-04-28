@@ -340,6 +340,10 @@ class Matrix:
         """"Return a New diagonal Matrix"""
         result = list()
 
+        if isinstance(numbers[0], Matrix):
+            result = numbers[0]
+            return Matrix([[result[i, i] for i in range(result.rowsnum)]])
+
         for i, number in enumerate(numbers):
             result.append([0] * len(numbers))
             result[i][i] = number
