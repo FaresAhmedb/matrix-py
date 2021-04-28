@@ -34,15 +34,21 @@ class MatrixError(Exception):
 
 
 class Matrix:
-    """Matrix Object: add, sub, mul, and a lot more"""
+    """Matrix Object that support Addition, Substraction, [...]
+    And Capable of manipulation, Hackable
+    """
 
     # Object Creation: START
     def __init__(self, matrix):
-        """Initialize matrix object."""
+        """Initialize Matrix Object | 3 Ways.
+        [Nested List]    Matrix([[1, 2, 3], [4, 5, 6]])
+        [One Number (I)] Matrix(3) -> (3x3) Identity Matrix
+        [String]         Matrix("1 2 3; 4 5 6")
+        """
         # Matrix([[1, 2, 3], [4, 5, 6]]) -> Row1 = (1 2 3), Row2 = (4 5 6)
         self.matrix = matrix
 
-        # Matrix(3) -> (3x3) Zero Matrix
+        # Matrix(3) -> (3x3) Identity Matrix
         if isinstance(matrix, int):
             self.matrix = Matrix.identity(matrix).tolist()
 
@@ -62,7 +68,10 @@ class Matrix:
         self.colsnum = len(self.matrix[0])
 
     def __repr__(self):
-        """Returnt the matrix in string formatted way"""
+        """Returnt a representation of the Matrix Object
+        Appears when using an interactive Python shell (eg. Python, Ipython)
+        >>> Matrix(3) | Output: '1 0 0; 0 1 0; 0 0 1'
+        """
         result = list()
 
         ma_str = [list(map(str, self.matrix[i]))
@@ -74,7 +83,14 @@ class Matrix:
         return "; ".join(result)
 
     def __str__(self):
-        """Return the Matrix, the size of it (Activated when using print)"""
+        """Return the matrix in `str` representation
+        Appears when using print(Matrix)
+        >>> print(Matrix.random((3,3), 1, 1000))
+        Output: 133 23  388
+                4   335 6
+                72  8   933
+                   (3x3)
+        """
         matrix_str = list()
         rows = str()
 
@@ -101,7 +117,16 @@ class Matrix:
         return rows + rwcl_spaces + f"({self.rowsnum}x{self.colsnum})"
 
     def __getitem__(self, rowcol):
-        """Return matrix item | a_matrix[1, 2] 1->row 2->col"""
+        """Return row or col or item of Matrix
+        MatrixObject = Matrix("1 2 3; 4 5 6")
+        
+        [Row] MatrixObject[1]  -> '4 5 6'
+        [Col] MatrixObject[:1] -> '2; 5'
+        [Item] MatrixObject[1, 2] -> 6
+
+        Note: in [Item] the first arg is the row
+        num and the second is the col num.
+        """
         # Return row if one argument (int) was given (M[1])
         if isinstance(rowcol, int):
             return Matrix(self.matrix).row(rowcol)
@@ -114,7 +139,7 @@ class Matrix:
         return self.matrix[rowcol[0]][rowcol[1]]
 
     def __contains__(self, item):
-        """Return True if item in Object else False"""
+        """If item `in` MatrixObject | True if in the Matrix else False"""
         for row in self.matrix:
             if item in row:
                 return True
@@ -221,7 +246,13 @@ class Matrix:
 
     # Object Manpulation: START
     def row(self, num: int, start=0):
-        """Return the given row position"""
+        """Return the row of the position `num`
+        Alternative to `MatrixObject[INT]` (it's
+        actullay what `MatrixObject[INT]` is using)
+
+        start=1 if you want to use the Matrix like
+        in real life.
+        """
         if num > start-1:
             num -= start
 
@@ -232,7 +263,13 @@ class Matrix:
 
 
     def col(self, num: int, start=0):
-        """Return the given col position"""
+        """Return the col of the position `num`
+        Alternative to `MatrixObject[:INT]` (it's
+        actullay what `MatrixObject[:INT]` is using)
+
+        start=1 if you want to use the Matrix like
+        in real life.
+        """
         if num > start-1:
             num -= start
 
@@ -243,7 +280,15 @@ class Matrix:
 
 
     def addrow(self, row, index=-1):
-        """Add a row to an exisiting Matrix object"""
+        """Add a new row to your Matrix Object
+        MatrixObject -> '1 2 3'
+        
+        MatrixObject.addrow('4 5 6')
+        Output: '1 2 3; 4 5 6'
+        
+        DON'T USE IT. IT'S BUGGY AND UNDER
+        DEVOLPMENT RIGHT NOW.
+        """
         result = self.matrix
 
         if index == -1:
@@ -255,7 +300,15 @@ class Matrix:
 
 
     def addcol(self, col, index=-1):
-        """Add a col to an exisiting Matrix object"""
+        """Add a new col to your Matrix Object
+        MatrixObject -> '1 2 3; 5 6 7'
+        
+        MatrixObject.addcol('4 8')
+        Output: '1 2 3 4; 5 6 7 8'
+        
+        DON'T USE IT. IT'S BUGGY AND UNDER
+        DEVOLPMENT RIGHT NOW.
+        """
         result = self.matrix
 
         if index == -1:
@@ -269,7 +322,15 @@ class Matrix:
 
 
     def rmrow(self, index):
-        """Remove a row from an exisiting Matrix object"""
+        """Remove an Existing row from your Matrix Object.
+        MatrixObject -> '1 2 3; 4 5 6'
+        
+        MatrixObject.rmrow(1)
+        Output: '1 2 3'
+        
+        DON'T USE IT. IT'S BUGGY AND UNDER
+        DEVOLPMENT RIGHT NOW.
+        """
         result = self.matrix
 
         try:
@@ -281,7 +342,15 @@ class Matrix:
 
 
     def rmcol(self, index):
-        """Remove a col from an exisiting Matrix object"""
+        """Remove an Existing col from your Matrix Object.
+        MatrixObject -> '1 2 3 4; 5 6 7 8'
+        
+        MatrixObject.rmcol(1)
+        Output: '1 3 4; 5 7 8'
+
+        DON'T USE IT. IT'S BUGGY AND UNDER
+        DEVOLPMENT RIGHT NOW.
+        """
         result = self.matrix
 
         try:
@@ -294,23 +363,25 @@ class Matrix:
 
 
     def transpose(self: list):
-        """Return a new matrix transposed"""
+        """Return the Matrix transposed
+        rows -> cols, cols -> rows
+        """
         return Matrix([list(i) for i in zip(*self.matrix)])
 
 
     def tolist(self):
-        """Convert Matrix object to a list"""
+        """Convert Matrix Object to a Nested List"""
         return self.matrix
     # Object Manpulation: END
 
     # Booleon Expressions: START
     def is_square(self):
-        """Check if the matrix is square"""
+        """Return True or False depending.. well on the Matrix"""
         return bool(self.rowsnum == self.colsnum)
 
 
     def is_symmetric(self):
-        """Check of the matrix is symmetric"""
+        """True if the matrix is symmetric else False"""
         if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
         return False
@@ -319,7 +390,12 @@ class Matrix:
     # Pre Made Objects: START
     @staticmethod
     def identity(size: int):
-        """Return a New Identity Matrix"""
+        """Return a New Identity Matrix (I)
+        Alternative to `Matrix(INT)`
+        
+        I Matrix is always square that's why
+        there's one arg
+        """
         result = list()
 
         for i in range(size):
@@ -331,13 +407,19 @@ class Matrix:
 
     @staticmethod
     def zero(size: int):
-        """Return a New Zero Matrix"""
+        """Return a New Zero Matrix (All it's items = 0)"""
         return Matrix([[0] * size] * size)
 
 
     @staticmethod
     def diagonal(*numbers: int):
-        """"Return a New diagonal Matrix"""
+        """"Return a New diagonal Matrix OR get the
+        diagonal of YOUR MatrixObject.
+        MatrixObject = '1 2; 3 4'
+
+        [New] Matrix.diagonal(1, 2, 3) -> '1 0 0; 0 2 0; 0 0 3'
+        [GET] Matrix.diagonal(a) -> '1 4'
+        """
         result = list()
 
         if isinstance(numbers[0], Matrix):
@@ -353,7 +435,8 @@ class Matrix:
 
 
 def main():
-    """The CLI for the module"""
+    """The Command-Line Interface (CLI) for the module"""
+
     parser=argparse.ArgumentParser(
         prog="matrix-py",
         description = 'matrix-py module to add, substract, multiply'
