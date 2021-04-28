@@ -75,12 +75,30 @@ class Matrix:
 
     def __str__(self):
         """Return the Matrix, the size of it (Activated when using print)"""
-        result = list()
+        matrix_str = list()
+        rows = str()
 
-        for row in self.matrix:
-            result.append(" ".join(map(str, row)))
+        for row in self.matrix:  # [[1, 2, 3]] -> [["1", "2", "3"]]
+            matrix_str.append(list(map(str, row)))
 
-        return "\n".join(result) + f"\n({self.rowsnum}x{self.colsnum})"
+        # Get the maximum number in the matrix
+        maxlen = int()
+        for row in matrix_str:
+            if len(max(row, key=len)) > maxlen:
+                maxlen = len(max(row, key=len))
+
+        for i in range(len(matrix_str)):
+            for x in range(len(matrix_str[0])):
+                rows += matrix_str[i][x] + " "
+                rows += " " * ((maxlen-len(matrix_str[i][x])))
+            rows = rows.rstrip()
+            rows += "\n"
+
+        # Calculate the spaces before (ROWSNUMxCOLSNUM)
+        rwcl_spaces = " " * (len(rows.split("\n")[-2]) // 2 -
+                            len(f"({self.rowsnum}x{self.colsnum})") // 2)
+
+        return rows + rwcl_spaces + f"({self.rowsnum}x{self.colsnum})"
 
     def __getitem__(self, rowcol):
         """Return matrix item | a_matrix[1, 2] 1->row 2->col"""
