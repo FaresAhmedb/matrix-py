@@ -35,7 +35,7 @@ import json as _json
 
 
 __all__     = ['Matrix', 'MatrixError']
-__version__ = '0.5.1'
+__version__ = '0.6.0'
 __author__  = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
@@ -432,7 +432,7 @@ class Matrix:
         MatrixObject = '1 2; 3 4'
 
         [New] Matrix.diagonal(1, 2, 3) -> '1 0 0; 0 2 0; 0 0 3'
-        [GET] Matrix.diagonal(a) -> '1 4'
+        [Get] Matrix.diagonal(MatrixObject) -> '1 4'
         """
         result = list()
 
@@ -448,7 +448,7 @@ class Matrix:
     # Pre Made Objects: END
 
 
-def _main():
+def _cli():
     """The Command-Line Interface (CLI) for the module"""
 
     parser=_argparse.ArgumentParser(
@@ -542,4 +542,4 @@ def _main():
 
 
 if __name__ == '__main__':
-    _main()
+    _cli()

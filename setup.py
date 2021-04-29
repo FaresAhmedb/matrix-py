@@ -45,7 +45,7 @@ setuptools.setup(
     python_requires               = ">=3.6",
     url                           = "https://github.com/FaresAhmedb/matrix-py",
     entry_points                  = {
-        "console_scripts": ["matrixpy=matrixpy:main"],
+        "console_scripts": ["matrixpy=matrixpy:_cli"],
     },
     include_package_data          =  True,
     package_dir                   = {"": "src"},
