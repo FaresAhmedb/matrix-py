@@ -1,18 +1,18 @@
 #! /usr/bin/python3
 # Copyright (C) 2021 Fares Ahmed
-# 
+#
 # This file is part of matrix-py.
-# 
+#
 # matrix-py is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # matrix-py is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with matrix-py.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -36,7 +36,7 @@ import json as _json
 
 __all__     = ['Matrix', 'MatrixError']
 __version__ = '0.5.1'
-__author__ = "Fares Ahmed <faresahmed@zohomail.com>"
+__author__  = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
 class MatrixError(Exception):
@@ -81,7 +81,7 @@ class Matrix:
     def __repr__(self):
         """Returnt a representation of the Matrix Object
         Appears when using an interactive Python shell
-        
+
         >>> Matrix(3)
         Output: '1 0 0; 0 1 0; 0 0 1'
         """
@@ -98,7 +98,7 @@ class Matrix:
     def __str__(self):
         """Return the matrix in `str` representation
         Appears when using print(Matrix)
-        
+
         >>> print(Matrix.random((3,3), 1, 1000))
         Output: 133 23  388
                 4   335 6
@@ -120,7 +120,7 @@ class Matrix:
         for i in range(len(matrix_str)):
             for x in range(len(matrix_str[0])):
                 rows += matrix_str[i][x] + " "
-                rows += " " * ((maxlen-len(matrix_str[i][x])))
+                rows += " " * (maxlen-len(matrix_str[i][x]))
             rows = rows.rstrip()
             rows += "\n"
 
@@ -296,10 +296,10 @@ class Matrix:
     def addrow(self, row, index=-1):
         """Add a new row to your Matrix Object
         MatrixObject -> '1 2 3'
-        
+
         MatrixObject.addrow('4 5 6')
         Output: '1 2 3; 4 5 6'
-        
+
         DON'T USE IT. IT'S BUGGY AND UNDER
         DEVOLPMENT RIGHT NOW.
         """
@@ -316,10 +316,10 @@ class Matrix:
     def addcol(self, col, index=-1):
         """Add a new col to your Matrix Object
         MatrixObject -> '1 2 3; 5 6 7'
-        
+
         MatrixObject.addcol('4 8')
         Output: '1 2 3 4; 5 6 7 8'
-        
+
         DON'T USE IT. IT'S BUGGY AND UNDER
         DEVOLPMENT RIGHT NOW.
         """
@@ -338,10 +338,10 @@ class Matrix:
     def rmrow(self, index):
         """Remove an Existing row from your Matrix Object.
         MatrixObject -> '1 2 3; 4 5 6'
-        
+
         MatrixObject.rmrow(1)
         Output: '1 2 3'
-        
+
         DON'T USE IT. IT'S BUGGY AND UNDER
         DEVOLPMENT RIGHT NOW.
         """
@@ -358,7 +358,7 @@ class Matrix:
     def rmcol(self, index):
         """Remove an Existing col from your Matrix Object.
         MatrixObject -> '1 2 3 4; 5 6 7 8'
-        
+
         MatrixObject.rmcol(1)
         Output: '1 3 4; 5 7 8'
 
@@ -406,7 +406,7 @@ class Matrix:
     def identity(size: int):
         """Return a New Identity Matrix (I)
         Alternative to `Matrix(INT)`
-        
+
         I Matrix is always square that's why
         there's one arg
         """
@@ -538,7 +538,7 @@ def _main():
         else:
             raise SyntaxError('The avillable operations are +, -, *')
     else:
-        return parser.print_help()
+        print(parser.print_help())
 
 
 if __name__ == '__main__':
