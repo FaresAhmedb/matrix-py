@@ -30,8 +30,8 @@ OR $ python -m matrixpy --help
 
 # pylint: disable=C0103 # Variable name "m" is "iNvAlId-nAmE"
 
-import argparse
-import json
+import argparse as _argparse
+import json as _json
 
 
 __all__     = ['Matrix', 'MatrixError']
@@ -448,10 +448,10 @@ class Matrix:
     # Pre Made Objects: END
 
 
-def main():
+def _main():
     """The Command-Line Interface (CLI) for the module"""
 
-    parser=argparse.ArgumentParser(
+    parser=_argparse.ArgumentParser(
         prog="matrix-py",
         description = 'matrix-py module to add, substract, multiply'
         'matrices.',
@@ -464,19 +464,19 @@ def main():
     )
 
     parser.add_argument('-s', '--size',
-        type=json.loads,
+        type=_json.loads,
         metavar='',
         help='Size of MatA'
     )
 
     parser.add_argument('-t', '--transpose',
-        type=json.loads,
+        type=_json.loads,
         metavar='',
         help='Transpose of MatA (-t "[[1, 2, 3], [4, 5, 6]]")'
     )
 
     parser.add_argument('-ma', '--matrixa',
-        type=json.loads,
+        type=_json.loads,
         metavar='',
         help='MatA (.. -ma "[[1, 2, 3], [4, 5, 6]]")'
     )
@@ -488,7 +488,7 @@ def main():
     )
 
     parser.add_argument('-mb', '--matrixb',
-        type=json.loads,
+        type=_json.loads,
         metavar='',
         help='MatB (.. -mb "[[1, 2, 3], [4, 5, 6]]")'
     )
@@ -506,7 +506,7 @@ def main():
     )
 
     parser.add_argument('-diag', '--diagonal',
-        type=json.loads,
+        type=_json.loads,
         metavar='',
         help='Diagonal (.. -diag [1, 2, 3, 4])'
     )
@@ -542,4 +542,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    _main()
