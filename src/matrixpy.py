@@ -24,9 +24,9 @@ import argparse
 import json
 
 
-name = 'matrixpy'
-__version__ = '0.5.1'
 __all__     = ['Matrix', 'MatrixError']
+__version__ = '0.5.1'
+__author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
 class MatrixError(Exception):
@@ -41,6 +41,7 @@ class Matrix:
     # Object Creation: START
     def __init__(self, matrix):
         """Initialize Matrix Object | 3 Ways.
+
         [Nested List]    Matrix([[1, 2, 3], [4, 5, 6]])
         [One Number (I)] Matrix(3) -> (3x3) Identity Matrix
         [String]         Matrix("1 2 3; 4 5 6")
@@ -69,8 +70,10 @@ class Matrix:
 
     def __repr__(self):
         """Returnt a representation of the Matrix Object
-        Appears when using an interactive Python shell (eg. Python, Ipython)
-        >>> Matrix(3) | Output: '1 0 0; 0 1 0; 0 0 1'
+        Appears when using an interactive Python shell
+        
+        >>> Matrix(3)
+        Output: '1 0 0; 0 1 0; 0 0 1'
         """
         result = list()
 
@@ -85,6 +88,7 @@ class Matrix:
     def __str__(self):
         """Return the matrix in `str` representation
         Appears when using print(Matrix)
+        
         >>> print(Matrix.random((3,3), 1, 1000))
         Output: 133 23  388
                 4   335 6
@@ -117,9 +121,9 @@ class Matrix:
         return rows + rwcl_spaces + f"({self.rowsnum}x{self.colsnum})"
 
     def __getitem__(self, rowcol):
-        """Return row or col or item of Matrix
+        """Return row, col, or item of Matrix Object
         MatrixObject = Matrix("1 2 3; 4 5 6")
-        
+
         [Row] MatrixObject[1]  -> '4 5 6'
         [Col] MatrixObject[:1] -> '2; 5'
         [Item] MatrixObject[1, 2] -> 6
@@ -148,7 +152,7 @@ class Matrix:
 
     # Object Expressions: START
     def __pos__(self):
-        """Positive operator: +A | Return the matrix * 1 (copy)"""
+        """Positive operator: +MatA | Return MatA * 1 (copy)"""
         result = list()
 
         for i in range(self.rowsnum):
@@ -159,7 +163,7 @@ class Matrix:
         return Matrix(result)
 
     def __neg__(self):
-        """Negative operator: -A. | Returns the matrix * -1"""
+        """Negative operator: -MatA. | Returns MatA * -1"""
         result = [[-x for x in y] for y in self.matrix]
 
         return Matrix(result)
@@ -167,9 +171,9 @@ class Matrix:
 
     # Object Math operations: START
     def __add__(self, other):
-        """Matrix Addition: A + B or A + INT."""
+        """Matrix Addition: MatA + MatB or MatA + INT."""
         if isinstance(other, Matrix):
-            # A + B
+            # MatA + MatB
             result = list()
 
             if (self.rowsnum != other.rowsnum or
@@ -183,7 +187,7 @@ class Matrix:
                     result[m].append(self.matrix[m][j] + other.matrix[m][j])
 
         else:
-            # A + INT
+            # MatA + INT
             result = list()
 
             for m in range(self.rowsnum):
@@ -194,9 +198,9 @@ class Matrix:
         return Matrix(result)
 
     def __sub__(self, other):
-        """Matrix Subtraction: A - B or A - INT."""
+        """Matrix Subtraction: MatA - MatB or MatA - INT."""
         if isinstance(other, Matrix):
-            # A + B
+            # MatA + MatB
             result = list()
 
             if (self.rowsnum != other.rowsnum or
@@ -209,7 +213,7 @@ class Matrix:
                 for j in range(self.colsnum):
                     result[m].append(self.matrix[m][j] - other.matrix[m][j])
         else:
-            # A + INT
+            # MatA + INT
             result = list()
 
             for m in range(self.rowsnum):
@@ -220,12 +224,12 @@ class Matrix:
         return Matrix(result)
 
     def __mul__(self, other):
-        """Matrix Multiplication: A * B or A * INT."""
+        """Matrix Multiplication: MatA * MatB or MatA * INT."""
         if isinstance(other, Matrix):
-            # A * B
+            # MatA * MatB
             if self.colsnum != other.rowsnum:
-                raise MatrixError('The number of rows in matrix A must be'
-                ' equal to the number of columns in B matrix') from None
+                raise MatrixError('The number of Columns in MatA must be'
+                ' equal to the number of Rows in MatB') from None
 
             # References:
             # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
@@ -233,7 +237,7 @@ class Matrix:
                             for B_col in zip(*other.matrix)]
                                     for A_row in self.matrix]
         else:
-            # A * INT
+            # MatA * INT
             result = list()
 
             for m in range(self.rowsnum):
@@ -263,12 +267,12 @@ class Matrix:
 
 
     def col(self, num: int, start=0):
-        """Return the col of the position `num`
+        """Return the col in the position `num`
         Alternative to `MatrixObject[:INT]` (it's
         actullay what `MatrixObject[:INT]` is using)
 
-        start=1 if you want to use the Matrix like
-        in real life.
+        start=1 if you want to use the Matrix Object
+        like in real life
         """
         if num > start-1:
             num -= start
@@ -376,7 +380,7 @@ class Matrix:
 
     # Booleon Expressions: START
     def is_square(self):
-        """Return True or False depending.. well on the Matrix"""
+        """True if the matrix is square else False"""
         return bool(self.rowsnum == self.colsnum)
 
 
@@ -452,19 +456,19 @@ def main():
     parser.add_argument('-s', '--size',
         type=json.loads,
         metavar='',
-        help='Size of A Matrix'
+        help='Size of MatA'
     )
 
     parser.add_argument('-t', '--transpose',
         type=json.loads,
         metavar='',
-        help='Transpose of A Matrix (-t "[[1, 2, 3], [4, 5, 6]]")'
+        help='Transpose of MatA (-t "[[1, 2, 3], [4, 5, 6]]")'
     )
 
     parser.add_argument('-ma', '--matrixa',
         type=json.loads,
         metavar='',
-        help='Matrix A (.. -ma "[[1, 2, 3], [4, 5, 6]]")'
+        help='MatA (.. -ma "[[1, 2, 3], [4, 5, 6]]")'
     )
 
     parser.add_argument('-op', '--operator',
@@ -476,7 +480,7 @@ def main():
     parser.add_argument('-mb', '--matrixb',
         type=json.loads,
         metavar='',
-        help='Matrix B (.. -mb "[[1, 2, 3], [4, 5, 6]]")'
+        help='MatB (.. -mb "[[1, 2, 3], [4, 5, 6]]")'
     )
 
     parser.add_argument('-I', '--identity',
