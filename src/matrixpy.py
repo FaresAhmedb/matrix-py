@@ -32,6 +32,7 @@ OR $ python -m matrixpy --help
 
 import argparse as _argparse
 import json as _json
+import random as _random
 
 
 __all__     = ['Matrix', 'MatrixError']
@@ -443,6 +444,31 @@ class Matrix:
         for i, number in enumerate(numbers):
             result.append([0] * len(numbers))
             result[i][i] = number
+
+        return Matrix(result)
+
+
+    @staticmethod
+    def randint(size: tuple, a: int, b: int):
+        """Return random matrix in range [a, b]
+        Using randint from random module to generate
+        a MatrixObject (size) with random numbers
+        in range [a, b]
+
+        print(Matrix.randint((3,3), 1, 100))
+        Output: 1  25 58
+                59 18 48
+                15 6  70
+                  (3x3)
+        """
+        result  = list()
+        rowsnum = size[0]
+        colsnum = size[1]
+
+        for row in range(rowsnum):
+            result.append([])
+            for _ in range(colsnum):
+                result[row].append(_random.randint(a, b))
 
         return Matrix(result)
     # Pre Made Objects: END
