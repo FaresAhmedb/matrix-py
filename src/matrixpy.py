@@ -36,7 +36,7 @@ import random as _random
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "0.6.1"
+__version__ = "0.6.5"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
