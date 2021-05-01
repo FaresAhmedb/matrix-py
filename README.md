@@ -65,7 +65,16 @@ Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb "[[7, 8, 9], [10, 11, 12]]"
 ```
 
 # Usage
-HEADS UP! :warning:: UPDATE 0.3 HAS OTHER STUFF SO USE help(Matrix) UNTIL I ADD THE NEW STUFF
+Most of what is written here is: old, changed or old, removed or better methods were made
+I am planning on writing a REAL documntation but in the mean time if you want to use the module
+all the docstring are well written and will tell you about everything.
+Avillable on github pages: https://faresahmedb.github.io/matrix-py/reference/
+or in python:
+```python
+>>> import matrixpy
+>>> help(matrixpy)
+```
+
 ## - The Module
 Sample code:
 ```python
