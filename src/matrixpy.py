@@ -290,11 +290,11 @@ class Matrix:
         Returns:
             Matrix: return the row as Matrix
         """
-        if num > start - 1:
-            num -= start
+        if position > start - 1:
+            position -= start
 
         try:
-            return Matrix([self.matrix[num]])
+            return Matrix([self.matrix[position]])
         except IndexError:
             raise MatrixError("Matrix Index out of range") from None
 
@@ -315,11 +315,11 @@ class Matrix:
         Returns:
             Matrix: return the column as Matrix
         """
-        if num > start - 1:
-            num -= start
+        if position > start - 1:
+            position -= start
 
         try:
-            return Matrix([[row[num]] for row in self.matrix])
+            return Matrix([[row[position]] for row in self.matrix])
         except IndexError:
             raise MatrixError("Matrix Index out of range") from None
 
@@ -378,7 +378,7 @@ class Matrix:
         try:
             result.pop(index)
         except IndexError:
-            raise MatrixError("Matrix index out of range") from None
+            raise MatrixError("Matrix Index out of range") from None
 
         return Matrix(result)
 
@@ -398,7 +398,7 @@ class Matrix:
             for i in range(self.rowsnum):
                 result[i].pop(index)
         except IndexError:
-            raise MatrixError("Matrix index out of range") from None
+            raise MatrixError("Matrix Index out of range") from None
 
         return Matrix(result)
 
@@ -465,10 +465,12 @@ class Matrix:
             is symmetric (Matrix == Matrix transpose).
             else returns False
         """
+        if not Matrix(self.matrix).is_square():
+            raise MatrixError("symmetric matrix is a square matrix")
+
         if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
         return False
-
     # Booleon Expressions: END
 
     # Pre Made Objects: START
@@ -567,6 +569,13 @@ class Matrix:
             Matrix: (size) Matrix with random
             integer in the range a:b
         """
+        if not isinstance(size, tuple):
+            raise TypeError("arg1 `size` must be tuple. (3,3) = (3x3) Matrix")
+        if not isinstance(a, int): 
+            raise TypeError("arg2 `a` must be int.")
+        if not isinstance(b, int): 
+            raise TypeError("arg2 `b` must be int.")
+        
         result = list()
         rowsnum = size[0]
         colsnum = size[1]
