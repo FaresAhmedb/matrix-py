@@ -31,7 +31,7 @@ def getversion(fname):
     """Get __version__ without importing."""
     for line in open(fname):
         if line.startswith('__version__'):
-            return f'{eval(line[13:].rstrip())}'
+            return f"{eval(line[13:].rstrip())}"
 
 
 setuptools.setup(

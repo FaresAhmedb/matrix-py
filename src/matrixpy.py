@@ -35,9 +35,9 @@ import json as _json
 import random as _random
 
 
-__all__     = ['Matrix', 'MatrixError']
-__version__ = '0.6.1'
-__author__  = "Fares Ahmed <faresahmed@zohomail.com>"
+__all__ = ["Matrix", "MatrixError"]
+__version__ = "0.6.1"
+__author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
 class MatrixError(Exception):
@@ -66,15 +66,15 @@ class Matrix:
 
         # Matrix("1 2 3; 4 5 6") -> Row1 = (1 2 3), Row2 = (4 5 6)
         if isinstance(matrix, str):
-            # input: Matrix("1 2 3; 4 5 6") | output: Matrix([[1, 2, 3], [4, 5, 6]])
-            matrix = matrix.split(';')             # ["1 2 3", " 4 5 6"]
-            matrix = list(map(str.lstrip, matrix)) # ["1 2 3", "4 5 6"]
-            for i, nums in enumerate(matrix):      # [['1', '2', '3'], ['4', '5', '6']]
-                matrix[i] = nums.split(' ')
+            # input: Matrix("1 2 3; 4 5 6")
+            # output: Matrix([[1, 2, 3], [4, 5, 6]])
+            matrix = matrix.split(";")  # ["1 2 3", " 4 5 6"]
+            matrix = list(map(str.lstrip, matrix))  # ["1 2 3", "4 5 6"]
+            for i, nums in enumerate(matrix):  # [['1', '2', '3'], ['4', '5', '6']]
+                matrix[i] = nums.split(" ")
 
             # list From str -> int
-            self.matrix = [list(map(int, matrix[i]))
-            for i in range(len(matrix))]
+            self.matrix = [list(map(int, matrix[i])) for i in range(len(matrix))]
 
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
@@ -88,8 +88,7 @@ class Matrix:
         """
         result = list()
 
-        ma_str = [list(map(str, self.matrix[i]))
-        for i in range(self.rowsnum)]
+        ma_str = [list(map(str, self.matrix[i])) for i in range(self.rowsnum)]
 
         for i in ma_str:
             result.append(" ".join(i))
@@ -118,16 +117,18 @@ class Matrix:
             if len(max(row, key=len)) > maxlen:
                 maxlen = len(max(row, key=len))
 
-        for i in range(len(matrix_str)):
-            for x in range(len(matrix_str[0])):
-                rows += matrix_str[i][x] + " "
-                rows += " " * (maxlen-len(matrix_str[i][x]))
+        for rowsidx, row in enumerate(matrix_str):
+            for numidx, num in enumerate(matrix_str[0]):
+                rows += matrix_str[rowsidx][numidx] + " "
+                rows += " " * (maxlen - len(matrix_str[rowsidx][numidx]))
             rows = rows.rstrip()
             rows += "\n"
 
         # Calculate the spaces before (ROWSNUMxCOLSNUM)
-        rwcl_spaces = " " * (len(rows.split("\n")[-2]) // 2 -
-                            len(f"({self.rowsnum}x{self.colsnum})") // 2)
+        rwcl_spaces = " " * (
+            len(rows.split("\n")[-2]) // 2
+            - len(f"({self.rowsnum}x{self.colsnum})") // 2
+        )
 
         return rows + rwcl_spaces + f"({self.rowsnum}x{self.colsnum})"
 
@@ -187,10 +188,11 @@ class Matrix:
             # MatA + MatB
             result = list()
 
-            if (self.rowsnum != other.rowsnum or
-                self.colsnum != other.colsnum):
-                raise MatrixError('To add matrices, the matrices must have'
-                ' the same dimensions') from None
+            if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
+                raise MatrixError(
+                    "To add matrices, the matrices must have"
+                    " the same dimensions"
+                ) from None
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -214,10 +216,11 @@ class Matrix:
             # MatA + MatB
             result = list()
 
-            if (self.rowsnum != other.rowsnum or
-                self.colsnum != other.colsnum):
-                raise MatrixError('To sub matrices, the matrices must have'
-                ' the same dimensions') from None
+            if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
+                raise MatrixError(
+                    "To sub matrices, the matrices must have"
+                    " the same dimensions"
+                ) from None
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -239,14 +242,20 @@ class Matrix:
         if isinstance(other, Matrix):
             # MatA * MatB
             if self.colsnum != other.rowsnum:
-                raise MatrixError('The number of Columns in MatA must be'
-                ' equal to the number of Rows in MatB') from None
+                raise MatrixError(
+                    "The number of Columns in MatA must be"
+                    " equal to the number of Rows in MatB"
+                ) from None
 
             # References:
             # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
-            result = [[sum(a * b for a, b in zip(A_row, B_col))
-                            for B_col in zip(*other.matrix)]
-                                    for A_row in self.matrix]
+            result = [
+                [
+                    sum(a * b for a, b in zip(A_row, B_col))
+                    for B_col in zip(*other.matrix)
+                ]
+                for A_row in self.matrix
+            ]
         else:
             # MatA * INT
             result = list()
@@ -268,14 +277,13 @@ class Matrix:
         start=1 if you want to use the Matrix like
         in real life.
         """
-        if num > start-1:
+        if num > start - 1:
             num -= start
 
         try:
             return Matrix([self.matrix[num]])
         except IndexError:
-            raise MatrixError('Matrix Index out of range') from None
-
+            raise MatrixError("Matrix Index out of range") from None
 
     def col(self, num: int, start=0):
         """Return the col in the position `num`
@@ -285,14 +293,13 @@ class Matrix:
         start=1 if you want to use the Matrix Object
         like in real life
         """
-        if num > start-1:
+        if num > start - 1:
             num -= start
 
         try:
             return Matrix([[row[num]] for row in self.matrix])
         except IndexError:
-            raise MatrixError('Matrix Index out of range') from None
-
+            raise MatrixError("Matrix Index out of range") from None
 
     def addrow(self, row, index=-1):
         """Add a new row to your Matrix Object
@@ -312,7 +319,6 @@ class Matrix:
             result.insert(index, (Matrix(row).tolist()[0]))
 
         return Matrix(result)
-
 
     def addcol(self, col, index=-1):
         """Add a new col to your Matrix Object
@@ -335,7 +341,6 @@ class Matrix:
 
         return Matrix(result)
 
-
     def rmrow(self, index):
         """Remove an Existing row from your Matrix Object.
         MatrixObject -> '1 2 3; 4 5 6'
@@ -354,7 +359,6 @@ class Matrix:
             raise MatrixError("Matrix index out of range") from None
 
         return Matrix(result)
-
 
     def rmcol(self, index):
         """Remove an Existing col from your Matrix Object.
@@ -376,13 +380,11 @@ class Matrix:
 
         return Matrix(result)
 
-
     def transpose(self: list):
         """Return the Matrix transposed
         rows -> cols, cols -> rows
         """
         return Matrix([list(i) for i in zip(*self.matrix)])
-
 
     def tolist(self):
         """Convert Matrix Object to a Nested List"""
@@ -394,12 +396,12 @@ class Matrix:
         """True if the matrix is square else False"""
         return bool(self.rowsnum == self.colsnum)
 
-
     def is_symmetric(self):
         """True if the matrix is symmetric else False"""
         if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
         return False
+
     # Booleon Expressions: END
 
     # Pre Made Objects: START
@@ -419,16 +421,14 @@ class Matrix:
 
         return Matrix(result)
 
-
     @staticmethod
     def zero(size: int):
         """Return a New Zero Matrix (All it's items = 0)"""
         return Matrix([[0] * size] * size)
 
-
     @staticmethod
     def diagonal(*numbers: int):
-        """"Return a New diagonal Matrix OR get the
+        """Return a New diagonal Matrix OR get the
         diagonal of YOUR MatrixObject.
         MatrixObject = '1 2; 3 4'
 
@@ -447,7 +447,6 @@ class Matrix:
 
         return Matrix(result)
 
-
     @staticmethod
     def randint(size: tuple, a: int, b: int):
         """Return random matrix in range [a, b]
@@ -461,7 +460,7 @@ class Matrix:
                 15 6  70
                   (3x3)
         """
-        result  = list()
+        result = list()
         rowsnum = size[0]
         colsnum = size[1]
 
@@ -477,64 +476,72 @@ class Matrix:
 def _cli():
     """The Command-Line Interface (CLI) for the module"""
 
-    parser=_argparse.ArgumentParser(
+    parser = _argparse.ArgumentParser(
         prog="matrix-py",
-        description = 'matrix-py module to add, substract, multiply'
-        'matrices.',
-        epilog = 'Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb'
-        ' "[[7, 8, 9], [10, 11, 12]]"')
+        description="matrix-py module to add, substract, multiply" "matrices.",
+        epilog='Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb'
+        ' "[[7, 8, 9], [10, 11, 12]]"',
+    )
 
-    parser.add_argument('-v', '--version',
+    parser.add_argument(
+        "-v",
+        "--version",
         action="version",
         version=__version__,
     )
 
-    parser.add_argument('-s', '--size',
-        type=_json.loads,
-        metavar='',
-        help='Size of MatA'
+    parser.add_argument(
+        "-s", "--size", type=_json.loads, metavar="", help="Size of MatA"
     )
 
-    parser.add_argument('-t', '--transpose',
+    parser.add_argument(
+        "-t",
+        "--transpose",
         type=_json.loads,
-        metavar='',
-        help='Transpose of MatA (-t "[[1, 2, 3], [4, 5, 6]]")'
+        metavar="",
+        help='Transpose of MatA (-t "[[1, 2, 3], [4, 5, 6]]")',
     )
 
-    parser.add_argument('-ma', '--matrixa',
+    parser.add_argument(
+        "-ma",
+        "--matrixa",
         type=_json.loads,
-        metavar='',
-        help='MatA (.. -ma "[[1, 2, 3], [4, 5, 6]]")'
+        metavar="",
+        help='MatA (.. -ma "[[1, 2, 3], [4, 5, 6]]")',
     )
 
-    parser.add_argument('-op', '--operator',
+    parser.add_argument(
+        "-op",
+        "--operator",
         type=str,
-        metavar='',
-        help='Operator (.. -op "+", "-", "*")'
+        metavar="",
+        help='Operator (.. -op "+", "-", "*")',
     )
 
-    parser.add_argument('-mb', '--matrixb',
+    parser.add_argument(
+        "-mb",
+        "--matrixb",
         type=_json.loads,
-        metavar='',
-        help='MatB (.. -mb "[[1, 2, 3], [4, 5, 6]]")'
+        metavar="",
+        help='MatB (.. -mb "[[1, 2, 3], [4, 5, 6]]")',
     )
 
-    parser.add_argument('-I', '--identity',
-        type=int,
-        metavar='',
-        help='Identity (.. -I 3)'
+    parser.add_argument(
+        "-I", "--identity", type=int, metavar="",
+        help="Identity (.. -I 3)"
     )
 
-    parser.add_argument('-i', '--int',
-        type=int,
-        metavar='',
-        help='Integer (.. -i 5)'
+    parser.add_argument(
+        "-i", "--int", type=int, metavar="",
+        help="Integer (.. -i 5)"
     )
 
-    parser.add_argument('-diag', '--diagonal',
+    parser.add_argument(
+        "-diag",
+        "--diagonal",
         type=_json.loads,
-        metavar='',
-        help='Diagonal (.. -diag [1, 2, 3, 4])'
+        metavar="",
+        help="Diagonal (.. -diag [1, 2, 3, 4])",
     )
 
     args = parser.parse_args()
@@ -555,17 +562,17 @@ def _cli():
         elif args.diagonal:
             b = Matrix.diagonal(args.diagonal)
 
-        if args.operator == '+':
+        if args.operator == "+":
             print(Matrix(args.matrixa) + b)
-        elif args.operator == '-':
+        elif args.operator == "-":
             print(Matrix(args.matrixa) - b)
-        elif args.operator == '*':
+        elif args.operator == "*":
             print(Matrix(args.matrixa) * b)
         else:
-            raise SyntaxError('The avillable operations are +, -, *')
+            raise SyntaxError("The avillable operations are +, -, *")
     else:
         print(parser.print_help())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _cli()
