@@ -120,10 +120,10 @@ class Matrix:
             if len(max(row, key=len)) > maxlen:
                 maxlen = len(max(row, key=len))
 
-        for rowsidx, row in enumerate(matrix_str):
-            for numidx, num in enumerate(matrix_str[0]):
-                rows += matrix_str[rowsidx][numidx] + " "
-                rows += " " * (maxlen - len(matrix_str[rowsidx][numidx]))
+        for row in matrix_str:
+            for num in row:
+                rows += num + " "
+                rows += " " * (maxlen - len(num))
             rows = rows.rstrip()
             rows += "\n"
 
@@ -143,7 +143,7 @@ class Matrix:
             [Row] MatrixObject[1]  -> '4 5 6'
             [Col] MatrixObject[:1] -> '2; 5'
             [Item] MatrixObject[1, 2] -> 6
-        
+
         Note: in [Item] the first arg is the row
         num and the second is the col num.
         """
@@ -428,7 +428,7 @@ class Matrix:
         """Convert Matrix Object to a Nested List
 
         Returns:
-            list: Convert Matrix Object to a 
+            list: Convert Matrix Object to a
             Nested List. Useful for manipulating
             the list yourself if matrix-py doesn't
             do what you expect.
@@ -458,7 +458,7 @@ class Matrix:
         Raises:
             MatrixError: if the given Matrix is not
             square Matrix. Explaination:
-            https://www.wikiwand.com/en/Symmetric_matrix 
+            https://www.wikiwand.com/en/Symmetric_matrix
 
         Returns:
             bool: True if the given Matrix (self)
@@ -483,8 +483,8 @@ class Matrix:
 
         Returns:
             Matrix: New I Matrix (All the diagonal
-            items == 1) 
-            
+            items == 1)
+
         Example:
             print(Matrix.identity(3)) # 3 -> (3x3) Matrix
             Output: 1 0 0
@@ -525,11 +525,11 @@ class Matrix:
 
         Returns:
             Matrix: The result depends on how you call
-            the function. 
-            
+            the function.
+
             Matrix.diagonal(MatrixObject):
             Return the diagonal of an exisiting Matrix Object.
-            
+
             Matrix.diagonal(INT, INT, ..):
             Return a new square Matrix with (INT, INT, ..) as
             the Matrix's diagonal
@@ -571,11 +571,11 @@ class Matrix:
         """
         if not isinstance(size, tuple):
             raise TypeError("arg1 `size` must be tuple. (3,3) = (3x3) Matrix")
-        if not isinstance(a, int): 
+        if not isinstance(a, int):
             raise TypeError("arg2 `a` must be int.")
-        if not isinstance(b, int): 
+        if not isinstance(b, int):
             raise TypeError("arg2 `b` must be int.")
-        
+
         result = list()
         rowsnum = size[0]
         colsnum = size[1]
