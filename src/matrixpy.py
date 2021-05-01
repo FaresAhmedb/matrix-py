@@ -542,6 +542,13 @@ class Matrix:
             result = numbers[0]
             return Matrix([[result[i, i] for i in range(result.rowsnum)]])
 
+        if fill:
+            for i in range(numbers[0]):
+                result.append([0] * numbers[0])
+                result[i][i] = fill
+
+            return Matrix(result)
+
         for i, number in enumerate(numbers):
             result.append([0] * len(numbers))
             result[i][i] = number
