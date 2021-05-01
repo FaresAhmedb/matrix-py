@@ -53,9 +53,10 @@ class Matrix:
     def __init__(self, matrix):
         """Initialize Matrix Object | 3 Ways.
 
-        [Nested List]    Matrix([[1, 2, 3], [4, 5, 6]])
-        [One Number (I)] Matrix(3) -> (3x3) Identity Matrix
-        [String]         Matrix("1 2 3; 4 5 6")
+        Example:
+               [Nested List]  Matrix([[1, 2, 3], [4, 5, 6]])
+            [One Number (I)]  Matrix(3) -> (3x3) Identity Matrix
+                    [String]  Matrix("1 2 3; 4 5 6")
         """
         # Matrix([[1, 2, 3], [4, 5, 6]]) -> Row1 = (1 2 3), Row2 = (4 5 6)
         self.matrix = matrix
@@ -80,7 +81,8 @@ class Matrix:
         self.colsnum = len(self.matrix[0])
 
     def __repr__(self):
-        """Returnt a representation of the Matrix Object
+        """Returns a representation of the Matrix
+
         Appears when using an interactive Python shell
 
         >>> Matrix(3)
@@ -97,6 +99,7 @@ class Matrix:
 
     def __str__(self):
         """Return the matrix in `str` representation
+
         Appears when using print(Matrix)
 
         >>> print(Matrix.random((3,3), 1, 1000))
@@ -133,13 +136,14 @@ class Matrix:
         return rows + rwcl_spaces + f"({self.rowsnum}x{self.colsnum})"
 
     def __getitem__(self, rowcol):
-        """Return row, col, or item of Matrix Object
-        MatrixObject = Matrix("1 2 3; 4 5 6")
+        """Return row, col, or item of MatrixObject
 
-        [Row] MatrixObject[1]  -> '4 5 6'
-        [Col] MatrixObject[:1] -> '2; 5'
-        [Item] MatrixObject[1, 2] -> 6
-
+        Example:
+            MatrixObject = Matrix("1 2 3; 4 5 6")
+            [Row] MatrixObject[1]  -> '4 5 6'
+            [Col] MatrixObject[:1] -> '2; 5'
+            [Item] MatrixObject[1, 2] -> 6
+        
         Note: in [Item] the first arg is the row
         num and the second is the col num.
         """
@@ -155,7 +159,7 @@ class Matrix:
         return self.matrix[rowcol[0]][rowcol[1]]
 
     def __contains__(self, item):
-        """If item `in` MatrixObject | True if in the Matrix else False"""
+        """item in MatrixObject | True if in the Matrix else False"""
         for row in self.matrix:
             if item in row:
                 return True
@@ -269,13 +273,22 @@ class Matrix:
     # Object Math opertaions: END
 
     # Object Manpulation: START
-    def row(self, num: int, start=0):
-        """Return the row of the position `num`
-        Alternative to `MatrixObject[INT]` (it's
-        actullay what `MatrixObject[INT]` is using)
+    def row(self, position: int, start=0):
+        """Return the row in the position `position`
 
-        start=1 if you want to use the Matrix like
-        in real life.
+        Using `indexing` method is recommended
+        Matrix(3)[INT] == Matrix(3).row(INT)
+
+        Args:
+            position (int): the wanted row position
+            start (int, optional): start counting from. Defaults to 0.
+
+        Raises:
+            MatrixError: raised if the given position row
+            not exist in the Matrix
+
+        Returns:
+            Matrix: return the row as Matrix
         """
         if num > start - 1:
             num -= start
@@ -285,13 +298,22 @@ class Matrix:
         except IndexError:
             raise MatrixError("Matrix Index out of range") from None
 
-    def col(self, num: int, start=0):
-        """Return the col in the position `num`
-        Alternative to `MatrixObject[:INT]` (it's
-        actullay what `MatrixObject[:INT]` is using)
+    def col(self, position: int, start=0):
+        """Return the col in the position `position`
 
-        start=1 if you want to use the Matrix Object
-        like in real life
+        Using `indexing` method is recommended
+        Matrix(3)[:INT] == Matrix(3).col(INT)
+
+        Args:
+            position (int): the wanted column position
+            start (int, optional): start counting from. Defaults to 0.
+
+        Raises:
+            MatrixError: raised if the given position column
+            not exist in the Matrix
+
+        Returns:
+            Matrix: return the column as Matrix
         """
         if num > start - 1:
             num -= start
@@ -380,24 +402,69 @@ class Matrix:
 
         return Matrix(result)
 
-    def transpose(self: list):
-        """Return the Matrix transposed
-        rows -> cols, cols -> rows
+    def transpose(self):
+        """Swith the row and column indices of the Matrix
+
+        Returns:
+            Matrix: Swith the row and column indices of the Matrix
+            take a look at:
+            https://www.wikiwand.com/en/Transpose
+
+        Example:
+            >>> MatA = Matrix("1 2; 3 4; 5 6")
+            >>> print(MatA)
+            1 2
+            3 4
+            5 6
+            (3x2)
+            >>> print(MatA.transpose())
+            1 2 3
+            4 5 6
+            (2x3)
         """
         return Matrix([list(i) for i in zip(*self.matrix)])
 
     def tolist(self):
-        """Convert Matrix Object to a Nested List"""
+        """Convert Matrix Object to a Nested List
+
+        Returns:
+            list: Convert Matrix Object to a 
+            Nested List. Useful for manipulating
+            the list yourself if matrix-py doesn't
+            do what you expect.
+
+        Example:
+            >>> MatA = Matrix(3) # (3x3) Identity Matrix
+            >>> MatA.tolist()
+            [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+        """
         return self.matrix
     # Object Manpulation: END
 
     # Booleon Expressions: START
     def is_square(self):
-        """True if the matrix is square else False"""
+        """Return True if Matrix is square
+
+        Returns:
+            bool: True if the given Matrix (self)
+            is square (rows number == columns number).
+            else returns False
+        """
         return bool(self.rowsnum == self.colsnum)
 
     def is_symmetric(self):
-        """True if the matrix is symmetric else False"""
+        """Return True if Matrix is symmetric
+
+        Raises:
+            MatrixError: if the given Matrix is not
+            square Matrix. Explaination:
+            https://www.wikiwand.com/en/Symmetric_matrix 
+
+        Returns:
+            bool: True if the given Matrix (self)
+            is symmetric (Matrix == Matrix transpose).
+            else returns False
+        """
         if self.matrix == (Matrix(self.matrix).transpose()).tolist():
             return True
         return False
@@ -407,11 +474,21 @@ class Matrix:
     # Pre Made Objects: START
     @staticmethod
     def identity(size: int):
-        """Return a New Identity Matrix (I)
-        Alternative to `Matrix(INT)`
+        """Return a new I (sizeXsize) Matrix
 
-        I Matrix is always square that's why
-        there's one arg
+        Args:
+            size (int): size=2 -> (2x2) Matrix
+
+        Returns:
+            Matrix: New I Matrix (All the diagonal
+            items == 1) 
+            
+        Example:
+            print(Matrix.identity(3)) # 3 -> (3x3) Matrix
+            Output: 1 0 0
+                    0 1 0
+                    0 0 1
+                    (3x3)
         """
         result = list()
 
@@ -423,17 +500,41 @@ class Matrix:
 
     @staticmethod
     def zero(size: int):
-        """Return a New Zero Matrix (All it's items = 0)"""
+        """Return a new zero (sizeXsize) Matrix
+
+        Args:
+            size (int): size=2 -> (2x2) Matrix
+
+        Returns:
+            Matrix: New zero Matrix (all matrix
+            items == 0)
+
+        Example:
+            print(Matrix.zero(3)) # 2 -> (2x2) Matrix
+            Output: 0 0 0
+                    0 0 0
+                    (3x3)
+        """
         return Matrix([[0] * size] * size)
 
     @staticmethod
-    def diagonal(*numbers: int):
-        """Return a New diagonal Matrix OR get the
-        diagonal of YOUR MatrixObject.
-        MatrixObject = '1 2; 3 4'
+    def diagonal(*numbers: int, fill=0):
+        """Get the diag of a Matrix or Generate one
 
-        [New] Matrix.diagonal(1, 2, 3) -> '1 0 0; 0 2 0; 0 0 3'
-        [Get] Matrix.diagonal(MatrixObject) -> '1 4'
+        Returns:
+            Matrix: The result depends on how you call
+            the function. 
+            
+            Matrix.diagonal(MatrixObject):
+            Return the diagonal of an exisiting Matrix Object.
+            
+            Matrix.diagonal(INT, INT, ..):
+            Return a new square Matrix with (INT, INT, ..) as
+            the Matrix's diagonal
+
+            Matrix.diagonal(INT, fill=INT):
+            Return a new (INTxINT) Matrix with the diagonal
+            equels to the fill number
         """
         result = list()
 
@@ -449,16 +550,15 @@ class Matrix:
 
     @staticmethod
     def randint(size: tuple, a: int, b: int):
-        """Return random matrix in range [a, b]
-        Using randint from random module to generate
-        a MatrixObject (size) with random numbers
-        in range [a, b]
+        """Return (size) Matrix with random integers in range (a, b)
 
-        print(Matrix.randint((3,3), 1, 100))
-        Output: 1  25 58
-                59 18 48
-                15 6  70
-                  (3x3)
+        Args:
+            size (tuple): (3,3) -> (3x3) Matrix
+            a, b (int), (int): in the range a:b
+
+        Returns:
+            Matrix: (size) Matrix with random
+            integer in the range a:b
         """
         result = list()
         rowsnum = size[0]
