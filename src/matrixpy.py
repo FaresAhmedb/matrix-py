@@ -30,13 +30,12 @@ OR $ python -m matrixpy --help
 
 # pylint: disable=C0103 # Variable name "m" is "iNvAlId-nAmE"
 
-import argparse as _argparse
-import json as _json
+import sys as _sys
 import random as _random
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "0.6.5"
+__version__ = "0.7.0"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
@@ -590,105 +589,87 @@ class Matrix:
 
 
 def _cli():
-    """The Command-Line Interface (CLI) for the module"""
+    HELP = ["help", "--help", "h", "-h"]
 
-    parser = _argparse.ArgumentParser(
-        prog="matrix-py",
-        description="matrix-py module to add, substract, multiply" "matrices.",
-        epilog='Usage: .. -ma "[[1, 2, 3], [4, 5, 6]]" -op "+" -mb'
-        ' "[[7, 8, 9], [10, 11, 12]]"',
-    )
+    OPERATROS = ["+", "-", "*"]
 
-    parser.add_argument(
-        "-v",
-        "--version",
-        action="version",
-        version=__version__,
-    )
+    args = list(map(str.lower, _sys.argv))
 
-    parser.add_argument(
-        "-s", "--size", type=_json.loads, metavar="", help="Size of MatA"
-    )
+    if len(args) < 2:
+        args.append("help")
 
-    parser.add_argument(
-        "-t",
-        "--transpose",
-        type=_json.loads,
-        metavar="",
-        help='Transpose of MatA (-t "[[1, 2, 3], [4, 5, 6]]")',
-    )
+    if args[1] in HELP or args[1].startswith("h"):
+        return """
+Welcome to matrixpy Command-Line Interface program!
 
-    parser.add_argument(
-        "-ma",
-        "--matrixa",
-        type=_json.loads,
-        metavar="",
-        help='MatA (.. -ma "[[1, 2, 3], [4, 5, 6]]")',
-    )
+\x1b[93m┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑
+\x1b[0m
+Mathmatical Operations:
+    Addition        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
+    Substraction    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
+    Multiplication  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
 
-    parser.add_argument(
-        "-op",
-        "--operator",
-        type=str,
-        metavar="",
-        help='Operator (.. -op "+", "-", "*")',
-    )
+Commands:
+    Transpose       matrixpy transpose "1 2 3; 4 5 6"
+    Randint         matrixpy randint 1 100 3x3
 
-    parser.add_argument(
-        "-mb",
-        "--matrixb",
-        type=_json.loads,
-        metavar="",
-        help='MatB (.. -mb "[[1, 2, 3], [4, 5, 6]]")',
-    )
+\x1b[93m┕————————————————————————————(..)(..) ∫∫——————————————————————————-┙
+\x1b[0m"""
+    elif args[1].startswith("t") or args[1].startswith("-t"):
+        try:
+            MatA = Matrix(args[2])
+        except ValueError or IndexError:
+            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define the Matrix you want to transpose correctly.
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy tranpose '1 2 3; 4 5 6'"""
 
-    parser.add_argument(
-        "-I", "--identity", type=int, metavar="",
-        help="Identity (.. -I 3)"
-    )
+        return MatA.transpose()
 
-    parser.add_argument(
-        "-i", "--int", type=int, metavar="",
-        help="Integer (.. -i 5)"
-    )
+    elif args[1].startswith("r") or args[1].startswith("-r"):
+        try:
+            start = int(args[2])
+            end = int(args[3])
+            matsize = args[4].split("x")
+        except IndexError:
+            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please use the randint command correctly.
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy randint 1 100 3x3"""
 
-    parser.add_argument(
-        "-diag",
-        "--diagonal",
-        type=_json.loads,
-        metavar="",
-        help="Diagonal (.. -diag [1, 2, 3, 4])",
-    )
+        try:
+            return Matrix.randint((int(matsize[0]), int(matsize[1])),
+                                start,
+                                end)
+        except ValueError:
+            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please use the randint command correctly.
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy randint 1 100 3x3"""
 
-    args = parser.parse_args()
+    try:
+        MatA = Matrix(args[1])
+    except ValueError:
+        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatA correctly.
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6'"""
 
-    if args.size:
-        print(Matrix(args.size))
+    try:
+        if args[2] not in OPERATROS:
+            return "\x1b[31m\x1b[1mERROR\x1b[0m: Please define a valid operator. ('+', '-', '*')"
+        op = args[2]
+    except IndexError:
+        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define an operator. ('+', '-', '*')
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' '+' '1 2 3; 4 5 6'"""
 
-    elif args.transpose:
-        print(Matrix(args.transpose).transpose())
+    try:
+        MatB = Matrix(args[3])
+    except IndexError and ValueError:
+        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatB.
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' + '1 2 3; 4 5 6'"""
 
-    elif args.matrixa:
-        if args.matrixb:
-            b = Matrix(args.matrixb)
-        elif args.int:
-            b = args.int
-        elif args.identity:
-            b = Matrix.identity(args.identity)
-        elif args.diagonal:
-            b = Matrix.diagonal(args.diagonal)
-
-        if args.operator == "+":
-            print(Matrix(args.matrixa) + b)
-        elif args.operator == "-":
-            print(Matrix(args.matrixa) - b)
-        elif args.operator == "*":
-            print(Matrix(args.matrixa) * b)
-        else:
-            raise SyntaxError("The avillable operations are +, -, *")
-    else:
-        print(parser.print_help())
+    try:
+        if op == "+":
+            return MatA + MatB
+        elif op == "-":
+            return MatA - MatB
+        return MatA * MatB
+    except MatrixError as MError:
+        return MError
 
 
 if __name__ == "__main__":
-    _cli()
+    print(_cli())
