@@ -82,8 +82,10 @@ Sample code:
 
 from matrixpy import Matrix
 
-A = Matrix([ [1, 2, 3], [4, 5, 6] ])   # List -> Matrix Object
-B = Matrix([ [1, 4], [2, 5], [3, 6] ]) # List -> Matrix Object
+A = Matrix("1 2 3; 4 5 6")   # String -> Matrix Object
+B = Matrix([[1, 4],
+            [2, 5],
+            [3, 6]]) # List -> Matrix Object
 
 # Print the multiply of Matrix A * Matrix B
 print(A * B)
