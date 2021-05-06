@@ -27,13 +27,13 @@ As far as I'm concerned it should work on any python3 version but it's always go
 
 ## Using PyPI
 ```console
-pip install matrix-py
+$ pip install matrix-py
 ```
 
 ## Manule Installation
 ```console
-git clone https://github.com/FaresAhmedb/matrix-py.git
-cd matrix-py && python setup.py install --user
+$ git clone https://github.com/FaresAhmedb/matrix-py.git
+$ cd matrix-py && python setup.py install --user
 ```
 
 Now Try it! 
@@ -116,10 +116,6 @@ print(type(C))
 ```
 
 ## - The Command Line Interface (CLI)
-NOTE :warning:: On Windows NT all the command  below are done like this:
-```
-python -m matrixpy
-```
 
 The CLI is limited at the moment by one  operation at a time (eg. You can't add 3 matrices) duo to the limitations of argparse 
 
