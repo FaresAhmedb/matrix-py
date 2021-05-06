@@ -26,27 +26,27 @@ Works with Python3+
 As far as I'm concerned it should work on any python3 version but it's always good to have the latest version since it will be the one I am sure it works on
 
 ## Using PyPI
-```bash
+```console
 pip install matrix-py
 ```
 
 ## Manule Installation
-```bash
+```console
 git clone https://github.com/FaresAhmedb/matrix-py.git
 cd matrix-py && python setup.py install --user
 ```
 
 Now Try it! 
-```bash
+```console
 $ matrixpy -h
 ```
 On Windows
-```powershell
+```console
 > python -m matrixpy -h
 ```
 
 The ouput should be something like this:
-```
+```console
 usage: __main__.py [-h] [-v] [-s] [-t] [-ma] [-op] [-mb] [-i]
 
 Matrix Minuplation module to add, substract, multiply matrices.
@@ -124,7 +124,7 @@ python -m matrixpy
 The CLI is limited at the moment by one  operation at a time (eg. You can't add 3 matrices) duo to the limitations of argparse 
 
 To get the size of a matrix
-```bash
+```console
 $ matrixpy -s '[[1, 2, 3], [4, 5, 6]]'
 1 2 3
 4 5 6
@@ -132,7 +132,7 @@ $ matrixpy -s '[[1, 2, 3], [4, 5, 6]]'
 ```
 Your matrix is [[1, 2, 3], [4, 5, 6]] \
 To get the transpose of a matrix
-```bash
+```console
 $ matrixpy -t '[[1, 2, 3], [4, 5, 6]]'
 1 4
 2 5
@@ -140,7 +140,7 @@ $ matrixpy -t '[[1, 2, 3], [4, 5, 6]]'
 (3x2)
 ```
 To add 2 matrices to each other or add a matrix to an integer:
-```bash
+```console
 $ matrixpy -ma '[[1, 2, 3], [4, 5, 6]]' -op '+' -mb '[[1, 2, 3], [4, 5, 6]]'
 2 4 6
 8 10 12
