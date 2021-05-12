@@ -76,6 +76,11 @@ class Matrix:
             # list From str -> int
             self.matrix = [list(map(int, matrix[i])) for i in range(len(matrix))]
 
+        for row in self.matrix:
+            if len(row) != len(self.matrix[0]):
+                raise MatrixError(f"Row `{row}` has a different size"
+                " from other rows") from None
+
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
 
@@ -602,23 +607,26 @@ def _cli():
         return """
 Welcome to matrixpy Command-Line Interface program!
 
-\x1b[93m┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑
+\x1b[93m\x1b[1m┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑
 \x1b[0m
-Mathmatical Operations:
-    Addition        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
-    Substraction    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
-    Multiplication  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
+\x1b[33mMathmatical Operations\x1b[0m:
+\x1b[32m    Addition\x1b[0m        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
+\x1b[32m    Substraction\x1b[0m    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
+\x1b[32m    Multiplication\x1b[0m  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
 
-Commands:
-    Transpose       matrixpy transpose "1 2 3; 4 5 6"
-    Randint         matrixpy randint 1 100 3x3
+\x1b[33mCommands\x1b[0m:
+\x1b[32m    Transpose\x1b[0m       matrixpy transpose "1 2 3; 4 5 6"
+\x1b[32m    Randint\x1b[0m         matrixpy randint 1 100 3x3
 
-\x1b[93m┕————————————————————————————(..)(..) ∫∫——————————————————————————-┙
+\x1b[93m\x1b[1m┕————————————————————————————(..)(..) ∫∫——————————————————————————-┙
 \x1b[0m"""
     elif args[1].startswith("t") or args[1].startswith("-t"):
         try:
             MatA = Matrix(args[2])
-        except ValueError or IndexError:
+        except (ValueError, IndexError, MatrixError) as e:
+            if str(e) == "list index out of range":
+                return """\x1b[31m\x1b[1mERROR\x1b[0m: Missing `MatA` argument after transpose.
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy tranpose '1 2 3; 4 5 6'"""
             return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define the Matrix you want to transpose correctly.
 \x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy tranpose '1 2 3; 4 5 6'"""
 
@@ -629,27 +637,28 @@ Commands:
             start = int(args[2])
             end = int(args[3])
             matsize = args[4].split("x")
-        except IndexError:
+        except (IndexError, ValueError):
             return """\x1b[31m\x1b[1mERROR\x1b[0m: Please use the randint command correctly.
 \x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy randint 1 100 3x3"""
 
         try:
             return Matrix.randint((int(matsize[0]), int(matsize[1])),
-                                start,
-                                end)
+                                   start,
+                                   end)
         except ValueError:
             return """\x1b[31m\x1b[1mERROR\x1b[0m: Please use the randint command correctly.
 \x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy randint 1 100 3x3"""
 
     try:
         MatA = Matrix(args[1])
-    except ValueError:
+    except (ValueError, IndexError, MatrixError):
         return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatA correctly.
 \x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6'"""
 
     try:
         if args[2] not in OPERATROS:
-            return "\x1b[31m\x1b[1mERROR\x1b[0m: Please define a valid operator. ('+', '-', '*')"
+            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define a valid operator. ('+', '-', '*')
+\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' '+' '1 2 3; 4 5 6'"""
         op = args[2]
     except IndexError:
         return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define an operator. ('+', '-', '*')
@@ -657,8 +666,8 @@ Commands:
 
     try:
         MatB = Matrix(args[3])
-    except IndexError and ValueError:
-        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatB.
+    except (ValueError, IndexError, MatrixError):
+        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatB correctly.
 \x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' + '1 2 3; 4 5 6'"""
 
     try:
