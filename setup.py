@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 """Matrix Manipulation module to add, substract, multiply matrices.
 
 Copyright (C) 2021 Fares Ahmed
@@ -22,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import setuptools
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
@@ -30,8 +31,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 def getversion(fname):
     """Get __version__ without importing."""
     for line in open(fname):
-        if line.startswith('__version__'):
-            return f"{eval(line[13:].rstrip())}"
+        if line.startswith("__version__"):
+            return "{}".format(eval(line[13:].rstrip()))
 
 
 setuptools.setup(
@@ -42,7 +43,7 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     author                        = "Fares Ahmed",
     author_email                  = "faresahmed@zohomail.com",
-    python_requires               = ">=3.6",
+    python_requires               = ">=2.7",
     url                           = "https://github.com/FaresAhmedb/matrix-py",
     entry_points                  = {
         "console_scripts": ["matrixpy=matrixpy:_cli"],
@@ -53,11 +54,15 @@ setuptools.setup(
     zip_safe                      =  True,
     license                       = "GPLv2",
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3 :: Only',
-        'Topic :: Scientific/Engineering :: Mathematics'
+        "Development Status :: 4 - Beta",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7"
+        "Topic :: Scientific/Engineering :: Mathematics"
     ],
     )

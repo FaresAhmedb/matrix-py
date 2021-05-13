@@ -1,2 +1,1 @@
-from matrixpy import _cli
-print(_cli())
+from matrixpy import _cli; print(_cli())

@@ -1,4 +1,5 @@
-#! /usr/bin/python3
+#! /usr/bin/env python
+# -*- coding: UTF-8 -*-
 # Copyright (C) 2021 Fares Ahmed
 #
 # This file is part of matrix-py.
@@ -32,10 +33,11 @@ OR $ python -m matrixpy --help
 
 import sys as _sys
 import random as _random
+import six as _six
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
@@ -78,8 +80,8 @@ class Matrix:
 
         for row in self.matrix:
             if len(row) != len(self.matrix[0]):
-                raise MatrixError(f"Row `{row}` has a different size"
-                " from other rows") from None
+                _six.raise_from(MatrixError("Row `{}` has a different size"
+                " from other rows".format(row)), None)
 
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
@@ -134,10 +136,10 @@ class Matrix:
         # Calculate the spaces before (ROWSNUMxCOLSNUM)
         rwcl_spaces = " " * (
             len(rows.split("\n")[-2]) // 2
-            - len(f"({self.rowsnum}x{self.colsnum})") // 2
+            - len("({}x{})".format(self.rowsnum, self.colsnum)) // 2
         )
 
-        return rows + rwcl_spaces + f"({self.rowsnum}x{self.colsnum})"
+        return rows + rwcl_spaces + "({}x{})".format(self.rowsnum, self.colsnum)
 
     def __getitem__(self, rowcol):
         """Return row, col, or item of MatrixObject
@@ -197,10 +199,10 @@ class Matrix:
             result = list()
 
             if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
-                raise MatrixError(
+                _six.raise_from(MatrixError(
                     "To add matrices, the matrices must have"
                     " the same dimensions"
-                ) from None
+                ), None)
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -225,10 +227,10 @@ class Matrix:
             result = list()
 
             if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
-                raise MatrixError(
+                _six.raise_from(MatrixError(
                     "To sub matrices, the matrices must have"
                     " the same dimensions"
-                ) from None
+                ), None)
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -250,10 +252,10 @@ class Matrix:
         if isinstance(other, Matrix):
             # MatA * MatB
             if self.colsnum != other.rowsnum:
-                raise MatrixError(
+                _six.raise_from(MatrixError(
                     "The number of Columns in MatA must be"
                     " equal to the number of Rows in MatB"
-                ) from None
+                ), None)
 
             # References:
             # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
@@ -277,7 +279,8 @@ class Matrix:
     # Object Math opertaions: END
 
     # Object Manpulation: START
-    def row(self, position: int, start=0):
+    def row(self, position, start=0):
+        # type: (int, int) -> Matrix
         """Return the row in the position `position`
 
         Using `indexing` method is recommended
@@ -300,9 +303,10 @@ class Matrix:
         try:
             return Matrix([self.matrix[position]])
         except IndexError:
-            raise MatrixError("Matrix Index out of range") from None
+            _six.raise_from(MatrixError("Matrix Index out of range"), None)
 
-    def col(self, position: int, start=0):
+    def col(self, position, start=0):
+        # type: (int, int) -> Matrix
         """Return the col in the position `position`
 
         Using `indexing` method is recommended
@@ -325,9 +329,10 @@ class Matrix:
         try:
             return Matrix([[row[position]] for row in self.matrix])
         except IndexError:
-            raise MatrixError("Matrix Index out of range") from None
+            _six.raise_from(MatrixError("Matrix Index out of range"), None)
 
     def addrow(self, row, index=-1):
+        # type: (Matrix, int) -> Matrix
         """Add a new row to your Matrix Object
         MatrixObject -> '1 2 3'
 
@@ -347,6 +352,7 @@ class Matrix:
         return Matrix(result)
 
     def addcol(self, col, index=-1):
+        # type: (Matrix, int) -> Matrix
         """Add a new col to your Matrix Object
         MatrixObject -> '1 2 3; 5 6 7'
 
@@ -368,6 +374,7 @@ class Matrix:
         return Matrix(result)
 
     def rmrow(self, index):
+        # type: (int) -> Matrix
         """Remove an Existing row from your Matrix Object.
         MatrixObject -> '1 2 3; 4 5 6'
 
@@ -382,11 +389,12 @@ class Matrix:
         try:
             result.pop(index)
         except IndexError:
-            raise MatrixError("Matrix Index out of range") from None
+            _six.raise_from(MatrixError("Matrix Index out of range"), None)
 
         return Matrix(result)
 
     def rmcol(self, index):
+        # type: (int) -> Matrix
         """Remove an Existing col from your Matrix Object.
         MatrixObject -> '1 2 3 4; 5 6 7 8'
 
@@ -402,11 +410,12 @@ class Matrix:
             for i in range(self.rowsnum):
                 result[i].pop(index)
         except IndexError:
-            raise MatrixError("Matrix Index out of range") from None
+            _six.raise_from(MatrixError("Matrix Index out of range"), None)
 
         return Matrix(result)
 
     def transpose(self):
+        # type: () -> bool
         """Swith the row and column indices of the Matrix
 
         Returns:
@@ -429,6 +438,7 @@ class Matrix:
         return Matrix([list(i) for i in zip(*self.matrix)])
 
     def tolist(self):
+        # type: () -> list
         """Convert Matrix Object to a Nested List
 
         Returns:
@@ -447,6 +457,7 @@ class Matrix:
 
     # Booleon Expressions: START
     def is_square(self):
+        # type: () -> bool
         """Return True if Matrix is square
 
         Returns:
@@ -457,6 +468,7 @@ class Matrix:
         return bool(self.rowsnum == self.colsnum)
 
     def is_symmetric(self):
+        # type: () -> bool
         """Return True if Matrix is symmetric
 
         Raises:
@@ -479,7 +491,8 @@ class Matrix:
 
     # Pre Made Objects: START
     @staticmethod
-    def identity(size: int):
+    def identity(size):
+        # type: (int) -> Matrix
         """Return a new I (sizeXsize) Matrix
 
         Args:
@@ -505,7 +518,8 @@ class Matrix:
         return Matrix(result)
 
     @staticmethod
-    def zero(size: int):
+    def zero(size):
+        # type: (int) -> Matrix
         """Return a new zero (sizeXsize) Matrix
 
         Args:
@@ -524,7 +538,7 @@ class Matrix:
         return Matrix([[0] * size] * size)
 
     @staticmethod
-    def diagonal(*numbers: int, fill=0):
+    def diagonal(fill=0, *numbers):
         """Get the diag of a Matrix or Generate one
 
         Returns:
@@ -562,7 +576,8 @@ class Matrix:
         return Matrix(result)
 
     @staticmethod
-    def randint(size: tuple, a: int, b: int):
+    def randint(size, a, b):
+        # type: (tuple, int, int) -> Matrix
         """Return (size) Matrix with random integers in range (a, b)
 
         Args:
@@ -578,7 +593,7 @@ class Matrix:
         if not isinstance(a, int):
             raise TypeError("arg2 `a` must be int.")
         if not isinstance(b, int):
-            raise TypeError("arg2 `b` must be int.")
+            raise TypeError("arg3 `b` must be int.")
 
         result = list()
         rowsnum = size[0]
@@ -610,29 +625,41 @@ Welcome to matrixpy Command-Line Interface program!
 \x1b[93m\x1b[1m┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑
 \x1b[0m
 \x1b[33mMathmatical Operations\x1b[0m:
-\x1b[32m    Addition\x1b[0m        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
-\x1b[32m    Substraction\x1b[0m    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
-\x1b[32m    Multiplication\x1b[0m  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
+\x1b[32m    Addition (+)\x1b[0m        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
+\x1b[32m    Substraction (-)\x1b[0m    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
+\x1b[32m    Multiplication (*)\x1b[0m  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
 
 \x1b[33mCommands\x1b[0m:
-\x1b[32m    Transpose\x1b[0m       matrixpy transpose "1 2 3; 4 5 6"
-\x1b[32m    Randint\x1b[0m         matrixpy randint 1 100 3x3
+\x1b[32m    Transpose, -t\x1b[0m       Get the transpose of a Matrix 
+                        Example: matrixpy transpose "1 2 3; 4 5 6"
+
+\x1b[32m    Randint, -r\x1b[0m         Get a random Matrix in a specific range 
+                        Example: matrixpy randint 1 100 3x3
+
+\x1b[33mOther\x1b[0m:
+\x1b[32m    Help, -h\x1b[0m            Get help about the CLI usage
+\x1b[32m    Version, -v\x1b[0m         Get the version of the matrixpy
 
 \x1b[93m\x1b[1m┕————————————————————————————(..)(..) ∫∫——————————————————————————-┙
 \x1b[0m"""
-    elif args[1].startswith("t") or args[1].startswith("-t"):
+
+    if args[1].startswith("v") or args[1].startswith("-v"):
+        return __version__
+
+    if args[1].startswith("t") or args[1].startswith("-t"):
         try:
             MatA = Matrix(args[2])
         except (ValueError, IndexError, MatrixError) as e:
             if str(e) == "list index out of range":
                 return """\x1b[31m\x1b[1mERROR\x1b[0m: Missing `MatA` argument after transpose.
 \x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy tranpose '1 2 3; 4 5 6'"""
-            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define the Matrix you want to transpose correctly.
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy tranpose '1 2 3; 4 5 6'"""
+            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define the Matrix you
+want to transpose correctly. \x1b[34m\x1b[1mTIP\x1b[0m:
+ $ matrixpy tranpose '1 2 3; 4 5 6'"""
 
         return MatA.transpose()
 
-    elif args[1].startswith("r") or args[1].startswith("-r"):
+    if args[1].startswith("r") or args[1].startswith("-r"):
         try:
             start = int(args[2])
             end = int(args[3])
@@ -673,7 +700,7 @@ Welcome to matrixpy Command-Line Interface program!
     try:
         if op == "+":
             return MatA + MatB
-        elif op == "-":
+        if op == "-":
             return MatA - MatB
         return MatA * MatB
     except MatrixError as MError:
