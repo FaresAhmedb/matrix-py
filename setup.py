@@ -49,6 +49,7 @@ setuptools.setup(
         "console_scripts": ["matrixpy=matrixpy:_cli"],
     },
     include_package_data          =  True,
+    install_requires              = ["six"],
     package_dir                   = {"": "src"},
     py_modules                    = ["matrixpy"],
     zip_safe                      =  True,
