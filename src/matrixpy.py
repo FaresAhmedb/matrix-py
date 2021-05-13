@@ -80,8 +80,12 @@ class Matrix:
 
         for row in self.matrix:
             if len(row) != len(self.matrix[0]):
-                _six.raise_from(MatrixError("Row `{}` has a different size"
-                " from other rows".format(row)), None)
+                _six.raise_from(
+                    MatrixError(
+                        "Row `{}` has a different size" " from other rows".format(row)
+                    ),
+                    None,
+                )
 
         self.rowsnum = len(self.matrix)
         self.colsnum = len(self.matrix[0])
@@ -199,10 +203,12 @@ class Matrix:
             result = list()
 
             if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
-                _six.raise_from(MatrixError(
-                    "To add matrices, the matrices must have"
-                    " the same dimensions"
-                ), None)
+                _six.raise_from(
+                    MatrixError(
+                        "To add matrices, the matrices must have" " the same dimensions"
+                    ),
+                    None,
+                )
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -227,10 +233,12 @@ class Matrix:
             result = list()
 
             if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
-                _six.raise_from(MatrixError(
-                    "To sub matrices, the matrices must have"
-                    " the same dimensions"
-                ), None)
+                _six.raise_from(
+                    MatrixError(
+                        "To sub matrices, the matrices must have" " the same dimensions"
+                    ),
+                    None,
+                )
 
             for m in range(self.rowsnum):
                 result.append([])
@@ -252,10 +260,13 @@ class Matrix:
         if isinstance(other, Matrix):
             # MatA * MatB
             if self.colsnum != other.rowsnum:
-                _six.raise_from(MatrixError(
-                    "The number of Columns in MatA must be"
-                    " equal to the number of Rows in MatB"
-                ), None)
+                _six.raise_from(
+                    MatrixError(
+                        "The number of Columns in MatA must be"
+                        " equal to the number of Rows in MatB"
+                    ),
+                    None,
+                )
 
             # References:
             # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
