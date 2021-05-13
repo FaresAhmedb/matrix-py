@@ -1,11 +1,13 @@
-[![PyPI version shields.io](https://img.shields.io/pypi/v/matrix-py.svg)](https://pypi.python.org/pypi/matrix-py/)
-[![PyPI license](https://img.shields.io/pypi/l/matrix-py.svg)](https://pypi.python.org/pypi/matrix-py/)
-[![Updated Badge](https://badges.pufler.dev/updated/FaresAhmedb/matrix-py)](https://badges.pufler.dev)
+<h2 align="center">Hackable Matrix module written in pure Python + CLI</h2>
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/480bf6060f5a49938991f62a368f8859)](https://www.codacy.com/gh/FaresAhmedb/matrix-py/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=FaresAhmedb/matrix-py&amp;utm_campaign=Badge_Grade)
-[![codebeat badge](https://codebeat.co/badges/b51ca73f-6ba1-443f-ae4d-fd9f541176b2)](https://codebeat.co/projects/github-com-faresahmedb-matrix-py-main)
+<p align="center">
+<a href="https://pypi.python.org/pypi/matrix-py/"><img alt="PyPI version shields.io" src="https://img.shields.io/pypi/v/matrix-py.svg"></a>
+<a href="https://pypi.python.org/pypi/matrix-py/"><img alt="PyPI license" src="https://img.shields.io/pypi/l/matrix-py.svg"></a>
+<a href="https://www.codacy.com/gh/FaresAhmedb/matrix-py/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=FaresAhmedb/matrix-py&amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://app.codacy.com/project/badge/Grade/480bf6060f5a49938991f62a368f8859"></a>
+<a href="https://codebeat.co/projects/github-com-faresahmedb-matrix-py-main"><img alt="codebeat badge" src="https://codebeat.co/badges/b51ca73f-6ba1-443f-ae4d-fd9f541176b2"></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
 
-# matrix-py
 matrix-py Module is a python module to:
 
   - Add Matrices :heavy_check_mark:
