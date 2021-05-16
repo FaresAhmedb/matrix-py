@@ -176,6 +176,24 @@ class Matrix:
         return False
 
     def __iter__(self):
+        """for loops support
+
+        Example:
+            # to loop through all the
+            # Matrix's items:
+            for item in Matrix(3):
+                pass
+
+            # to loop through the items
+            # of a specific row in the Matrix
+            for item in Matrix(3).row(0):
+                pass
+
+            # to loop through the items
+            # of a specific col in the Matirx
+            for item in Matrix(3).col(0):
+                pass
+        """
         for row in range(self.rowsnum):
             for col in range(self.colsnum):
                 yield self.matrix[row][col]
