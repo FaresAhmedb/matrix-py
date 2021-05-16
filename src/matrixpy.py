@@ -174,6 +174,11 @@ class Matrix:
             if item in row:
                 return True
         return False
+
+    def __iter__(self):
+        for row in range(self.rowsnum):
+            for col in range(self.colsnum):
+                yield self.matrix[row][col]
     # Object Creation: END
 
     # Object Expressions: START
