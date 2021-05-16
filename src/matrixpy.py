@@ -426,7 +426,7 @@ class Matrix:
         return Matrix(result)
 
     def transpose(self):
-        # type: () -> bool
+        # type: () -> Matrix
         """Swith the row and column indices of the Matrix
 
         Returns:
@@ -464,6 +464,44 @@ class Matrix:
             [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
         """
         return self.matrix
+
+    # The following function (rank) is by absognety and copied from
+    # https://github.com/absognety/Competitive-Coding-Platforms/
+    # and licensed under The GPLv3 License
+    def rank(self):
+        # type() -> int
+        """Return the rank of the Matrix
+
+        Returns:
+            int: The rank of the Matrix
+        """
+        rank = self.rowsnum
+        mat = self.matrix
+
+        for row in range(rank):
+            if mat[row][row]:
+                for col in range(self.colsnum):
+                    if col != row:
+                        multiplier = mat[col][row] / mat[row][row]
+                        for i in range(rank):
+                            mat[col][i] -= multiplier * mat[row][i]
+            else:
+                reduce = True
+                for i in range(row + 1, self.colsnum):
+                    if mat[i][row]:
+                        for s in range(rank):
+                            temp = mat[row][s]
+                            mat[row][s] = mat[i][s]
+                            mat[i][s] = temp
+                        reduce = False
+                        break
+                if reduce:
+                    rank -= 1
+                    for i in range(self.colsnum):
+                        mat[i][row] = mat[i][rank]
+                row -= 1
+
+        return rank
     # Object Manpulation: END
 
     # Booleon Expressions: START
