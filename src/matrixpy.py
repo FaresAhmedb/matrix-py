@@ -37,7 +37,7 @@ import six as _six
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 
 
@@ -144,6 +144,43 @@ class Matrix:
         )
 
         return rows + rwcl_spaces + "({}x{})".format(self.rowsnum, self.colsnum)
+
+    def alignleft(self):
+        """Return the matrix in `str` representation
+
+        Appears when using print(Matrix)
+
+        >>> print(Matrix.random((3,3), 1, 1000))
+        Output: 133 23  388
+                4   335 6
+                72  8   933
+                   (3x3)
+        """
+        matrix_str = list()
+        rows = str()
+
+        for row in self.matrix:  # [[1, 2, 3]] -> [["1", "2", "3"]]
+            matrix_str.append(list(map(str, row)))
+
+        # Get the maximum number in the matrix
+        maxlen = int()
+        for row in matrix_str:
+            if len(max(row, key=len)) > maxlen:
+                maxlen = len(max(row, key=len))
+
+        for row in matrix_str:
+            for num in row:
+                rows += " " + (" " * (maxlen - len(num)) + num)
+            rows = rows.strip()
+            rows += "\n"
+
+        # Calculate the spaces before (ROWSNUMxCOLSNUM)
+        rwcl_spaces = " " * (
+            len(rows.split("\n")[-2]) // 2
+            - len("({}x{})".format(self.rowsnum, self.colsnum)) // 2
+        )
+
+        return rows.replace("\n ", "\n") + rwcl_spaces + "({}x{})".format(self.rowsnum, self.colsnum)
 
     def __getitem__(self, rowcol):
         """Return row, col, or item of MatrixObject
