@@ -23,10 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
-
 # Stolen from https://bitbucket.org/jeunice/stuf/src/master/setup.py :)
 def getversion(fname):
     """Get __version__ without importing."""
@@ -36,26 +32,32 @@ def getversion(fname):
 
 
 setuptools.setup(
-    name                          = "matrix-py",
-    version                       =  getversion("src/matrixpy.py"),
-    description                   = "matrix-py module to add, substract, multiply matrices.",
-    long_description              =  long_description,
-    long_description_content_type = "text/markdown",
-    author                        = "Fares Ahmed",
-    author_email                  = "faresahmed@zohomail.com",
-    python_requires               = ">=2.7",
-    url                           = "https://github.com/FaresAhmedb/matrix-py",
-    entry_points                  = {
-        "console_scripts": ["matrixpy=matrixpy:_cli"],
+    name="matrix-py",
+    version=getversion("src/matrixpy.py"),
+    description="matrix-py module to add, substract, multiply matrices.",
+    long_description=open("README.md", "r").read(),
+    long_description_content_type="text/markdown",
+    author="Fares Ahmed",
+    author_email="faresahmed@zohomail.com",
+    maintainer="Fares Ahmed",
+    maintainer_email="faresahmed@zohomail.com",
+    keywords="matrix, math, cli",
+    python_requires=">=2.7",
+    entry_points={"console_scripts": ["matrixpy=matrixpy:main"],},
+    install_requires=["typing"],
+    zip_safe=True,
+    package_dir={"": "src"},
+    py_modules=["matrixpy"],
+    license="GPLv2",
+    url="https://github.com/FaresAhmedb/matrix-py",
+    download_url="https://pypi.python.org/pypi/matrix-py",
+    project_urls={
+        "Bug Tracker": "https://github.com/FaresAhmedb/matrix-py/issues",
+        "Documentation": "https://github.com/FaresAhmedb/matrix-py/README.md",
+        "Source Code": "https://github.com/FaresAhmedb/matrix-py",
     },
-    include_package_data          =  True,
-    install_requires              = ["six"],
-    package_dir                   = {"": "src"},
-    py_modules                    = ["matrixpy"],
-    zip_safe                      =  True,
-    license                       = "GPLv2",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
@@ -71,6 +73,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Scientific/Engineering :: Mathematics"
     ],
-    )
+)

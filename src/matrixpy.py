@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
+
 # Copyright (C) 2021 Fares Ahmed
 #
 # This file is part of matrix-py.
@@ -24,469 +25,247 @@ https://github.com/faresahemdb/matrix-py
 Please refer to the link above for more information
 on how to use the module.
 
-You can call matrix-py CLI help with:
-$ matrixpy --help
-OR $ python -m matrixpy --help
+You can call the CLI help with:
+$ python -m matrixpy --help
 """
 
-# pylint: disable=C0103 # Variable name "m" is "iNvAlId-nAmE"
+# pylint: disable=C0103
 
-import sys as _sys
-import random as _random
-import six as _six
+import random
+from typing import Union, List, Tuple, NoReturn, Iterator
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "0.9.0"
+__version__ = "1.0.0"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
+__dir__ = lambda: __all__
 
 
 class MatrixError(Exception):
     """Error for the Matrix Object invalid operations"""
 
 
-class Matrix:
-    """Matrix Object that support Addition, Substraction, [...]
-    And Capable of manipulation, Hackable
-    """
+class Matrix(object):
+    """Matrix Object that support Addition, Substraction, [...]"""
 
-    # Object Creation: START
     def __init__(self, matrix):
-        """Initialize Matrix Object | 3 Ways.
+        # type: (Union[List[List[int]], int, str]) -> None
 
-        Example:
-               [Nested List]  Matrix([[1, 2, 3], [4, 5, 6]])
-            [One Number (I)]  Matrix(3) -> (3x3) Identity Matrix
-                    [String]  Matrix("1 2 3; 4 5 6")
         """
-        # Matrix([[1, 2, 3], [4, 5, 6]]) -> Row1 = (1 2 3), Row2 = (4 5 6)
-        self.matrix = matrix
+        Example:
+            Matrix([[1, 2, 3], [4, 5, 6]])
+            Matrix(3)
+            Matrix("1 2 3; 4 5 6")
+        """
 
-        # Matrix(3) -> (3x3) Identity Matrix
+        self.matrix = matrix  # type: List[List[int]]
+
         if isinstance(matrix, int):
-            self.matrix = Matrix.identity(matrix).tolist()
+            self.matrix = Matrix.identity(matrix).matrix
 
-        # Matrix("1 2 3; 4 5 6") -> Row1 = (1 2 3), Row2 = (4 5 6)
-        if isinstance(matrix, str):
-            # input: Matrix("1 2 3; 4 5 6")
-            # output: Matrix([[1, 2, 3], [4, 5, 6]])
-            matrix = matrix.split(";")  # ["1 2 3", " 4 5 6"]
-            matrix = list(map(str.lstrip, matrix))  # ["1 2 3", "4 5 6"]
-            for i, nums in enumerate(matrix):  # [['1', '2', '3'], ['4', '5', '6']]
-                matrix[i] = nums.split(" ")
+        elif isinstance(matrix, str):
+            self.matrix = [
+                [int(c) for c in b] for b in [a.split() for a in matrix.split(";")]
+            ]
 
-            # list From str -> int
-            self.matrix = [list(map(int, matrix[i])) for i in range(len(matrix))]
+        self.rowsnum = len(self.matrix)  # type: int
+        self.colsnum = len(self.matrix[0])  # type: int
 
         for row in self.matrix:
-            if len(row) != len(self.matrix[0]):
-                _six.raise_from(
-                    MatrixError(
-                        "Row `{}` has a different size" " from other rows".format(row)
-                    ),
-                    None,
+            if len(row) != self.colsnum:
+                raise ValueError(
+                    "Row `%s` has a different size" " from other rows" % row
                 )
-
-        self.rowsnum = len(self.matrix)
-        self.colsnum = len(self.matrix[0])
 
     def __repr__(self):
-        """Returns a representation of the Matrix
+        # type: () -> str
 
-        Appears when using an interactive Python shell
-
-        >>> Matrix(3)
-        Output: '1 0 0; 0 1 0; 0 0 1'
-        """
-        result = list()
-
-        ma_str = [list(map(str, self.matrix[i])) for i in range(self.rowsnum)]
-
-        for i in ma_str:
-            result.append(" ".join(i))
-
-        return "; ".join(result)
+        return (
+            "'"
+            + "; ".join([" ".join(l) for l in [list(map(str, i)) for i in self.matrix]])
+            + "'"
+        )
 
     def __str__(self):
-        """Return the matrix in `str` representation
+        # type: () -> str
 
-        Appears when using print(Matrix)
-
-        >>> print(Matrix.random((3,3), 1, 1000))
-        Output: 133 23  388
-                4   335 6
-                72  8   933
-                   (3x3)
-        """
-        matrix_str = list()
-        rows = str()
-
-        for row in self.matrix:  # [[1, 2, 3]] -> [["1", "2", "3"]]
-            matrix_str.append(list(map(str, row)))
-
-        # Get the maximum number in the matrix
-        maxlen = int()
-        for row in matrix_str:
-            if len(max(row, key=len)) > maxlen:
-                maxlen = len(max(row, key=len))
-
-        for row in matrix_str:
-            for num in row:
-                rows += num + " "
-                rows += " " * (maxlen - len(num))
-            rows = rows.rstrip()
-            rows += "\n"
-
-        # Calculate the spaces before (ROWSNUMxCOLSNUM)
-        rwcl_spaces = " " * (
-            len(rows.split("\n")[-2]) // 2
-            - len("({}x{})".format(self.rowsnum, self.colsnum)) // 2
-        )
-
-        return rows + rwcl_spaces + "({}x{})".format(self.rowsnum, self.colsnum)
-
-    def alignleft(self):
-        """Return the matrix in `str` representation
-
-        Appears when using print(Matrix)
-
-        >>> print(Matrix.random((3,3), 1, 1000))
-        Output: 133 23  388
-                4   335 6
-                72  8   933
-                   (3x3)
-        """
-        matrix_str = list()
-        rows = str()
-
-        for row in self.matrix:  # [[1, 2, 3]] -> [["1", "2", "3"]]
-            matrix_str.append(list(map(str, row)))
-
-        # Get the maximum number in the matrix
-        maxlen = int()
-        for row in matrix_str:
-            if len(max(row, key=len)) > maxlen:
-                maxlen = len(max(row, key=len))
-
-        for row in matrix_str:
-            for num in row:
-                rows += " " + (" " * (maxlen - len(num)) + num)
-            rows = rows.strip()
-            rows += "\n"
-
-        # Calculate the spaces before (ROWSNUMxCOLSNUM)
-        rwcl_spaces = " " * (
-            len(rows.split("\n")[-2]) // 2
-            - len("({}x{})".format(self.rowsnum, self.colsnum)) // 2
-        )
-
-        return rows.replace("\n ", "\n") + rwcl_spaces + "({}x{})".format(self.rowsnum, self.colsnum)
+        mat_str = [[str(c) for c in b] for b in self.matrix]
+        max_num = max([len(max(l, key=len)) for l in mat_str])
+        lines = [" ".join(i) for i in [list(map(lambda i: "{:<{}}".format(i, max_num), i)) for i in mat_str]]
+        return "%s\n%s" % ("\n".join(lines), "{:^{}}".format("(%sx%s)" % (self.rowsnum, self.colsnum), len(max(lines, key=len))))
 
     def __getitem__(self, rowcol):
-        """Return row, col, or item of MatrixObject
+        # type: (Union[int, Tuple, slice]) -> Union[Matrix, int]
 
-        Example:
-            MatrixObject = Matrix("1 2 3; 4 5 6")
-            [Row] MatrixObject[1]  -> '4 5 6'
-            [Col] MatrixObject[:1] -> '2; 5'
-            [Item] MatrixObject[1, 2] -> 6
-
-        Note: in [Item] the first arg is the row
-        num and the second is the col num.
         """
-        # Return row if one argument (int) was given (M[1])
+        Example:
+            Matrix = Matrix("1 2 3; 4 5 6")
+            [Row] Matrix[1, None] -> '4 5 6'  # None can be omitted
+            [Col] Matrix[None, 1] -> '2; 5'
+            [Item] Matrix[1, 2] -> 6
+            [Slice] Matrix[0:None:1] -> "1 2 3; 4 5 6"
+        """
+
         if isinstance(rowcol, int):
-            return Matrix(self.matrix).row(rowcol)
+            rowcol = (rowcol, None)
 
-        # Return col if slice was given (M[:1])
+        if isinstance(rowcol, tuple):
+            if rowcol[1] is None:
+                return Matrix([self.matrix[rowcol[0]]])
+            if rowcol[0] is None:
+                return Matrix([[row[rowcol[1]]] for row in self.matrix])
+            return self.matrix[rowcol[0]][rowcol[1]]
+
         if isinstance(rowcol, slice):
-            return Matrix(self.matrix).col(rowcol.stop)
+            return Matrix(self.matrix[rowcol])
 
-        # Return Matrix item if 2 arguments (list) was given
-        return self.matrix[rowcol[0]][rowcol[1]]
+    def __contains__(self, other):
+        # type: (Union[Matrix, int]) -> bool
 
-    def __contains__(self, item):
-        """item in MatrixObject | True if in the Matrix else False"""
-        for row in self.matrix:
-            if item in row:
-                return True
-        return False
+        if isinstance(other, Matrix):
+            for row in other.matrix:
+                if row in self.matrix:
+                    return True
+            return False
+
+        if isinstance(other, int):
+            for row in self.matrix:
+                if other in row:
+                    return True
+            return False
+
+        raise NotImplementedError
 
     def __iter__(self):
-        """for loops support
+        # type: () -> Iterator[int]
 
-        Example:
-            # to loop through all the
-            # Matrix's items:
-            for item in Matrix(3):
-                pass
-
-            # to loop through the items
-            # of a specific row in the Matrix
-            for item in Matrix(3).row(0):
-                pass
-
-            # to loop through the items
-            # of a specific col in the Matirx
-            for item in Matrix(3).col(0):
-                pass
         """
-        for row in range(self.rowsnum):
-            for col in range(self.colsnum):
-                yield self.matrix[row][col]
-    # Object Creation: END
+        Example:
+            [All Items] for item in Matrix(3)
+            [Specific Row] for item in Matrix(3)[0]
+            [Specific Col] for item in Matrix(3)[None, 0]
+        """
 
-    # Object Expressions: START
+        for row in self.matrix:
+            for col in row:
+                yield col
+
     def __pos__(self):
-        """Positive operator: +MatA | Return MatA * 1 (copy)"""
-        result = list()
+        # type: () -> Matrix
 
-        for i in range(self.rowsnum):
-            result.append([])
-            for m in range(self.colsnum):
-                result[i].append(+self.matrix[i][m])
-
-        return Matrix(result)
+        return Matrix(self.matrix)
 
     def __neg__(self):
-        """Negative operator: -MatA. | Returns MatA * -1"""
-        result = [[-x for x in y] for y in self.matrix]
+        # type: () -> Matrix
 
-        return Matrix(result)
-    # Object Expressions: END
+        return Matrix([[-x for x in y] for y in self.matrix])
 
-    # Object Math operations: START
     def __add__(self, other):
-        """Matrix Addition: MatA + MatB or MatA + INT."""
-        if isinstance(other, Matrix):
-            # MatA + MatB
-            result = list()
+        # type: (Union[Matrix, any]) -> Matrix
 
+        if isinstance(other, Matrix):
             if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
-                _six.raise_from(
-                    MatrixError(
-                        "To add matrices, the matrices must have" " the same dimensions"
-                    ),
-                    None,
+                raise MatrixError(
+                    "Matrices addition requires them to have the same dimensions"
                 )
 
-            for m in range(self.rowsnum):
-                result.append([])
-                for j in range(self.colsnum):
-                    result[m].append(self.matrix[m][j] + other.matrix[m][j])
+            return Matrix(
+                [
+                    [x + y for x, y in zip(m, j)]
+                    for m, j in zip(self.matrix, other.matrix)
+                ]
+            )
 
-        else:
-            # MatA + INT
-            result = list()
-
-            for m in range(self.rowsnum):
-                result.append([])
-                for i in range(self.colsnum):
-                    result[m].append(self.matrix[m][i] + other)
-
-        return Matrix(result)
+        return Matrix([list(map(lambda x: x + other, x)) for x in self.matrix])
 
     def __sub__(self, other):
-        """Matrix Subtraction: MatA - MatB or MatA - INT."""
-        if isinstance(other, Matrix):
-            # MatA + MatB
-            result = list()
+        # type: (Union[Matrix, any]) -> Matrix
 
+        if isinstance(other, Matrix):
             if self.rowsnum != other.rowsnum or self.colsnum != other.colsnum:
-                _six.raise_from(
-                    MatrixError(
-                        "To sub matrices, the matrices must have" " the same dimensions"
-                    ),
-                    None,
+                raise MatrixError(
+                    "Matrices subtraction requires them to have the same dimensions"
                 )
 
-            for m in range(self.rowsnum):
-                result.append([])
-                for j in range(self.colsnum):
-                    result[m].append(self.matrix[m][j] - other.matrix[m][j])
-        else:
-            # MatA + INT
-            result = list()
+            return Matrix(
+                [
+                    [x - y for x, y in zip(m, j)]
+                    for m, j in zip(self.matrix, other.matrix)
+                ]
+            )
 
-            for m in range(self.rowsnum):
-                result.append([])
-                for i in range(self.colsnum):
-                    result[m].append(self.matrix[m][i] - other)
-
-        return Matrix(result)
+        return Matrix([list(map(lambda x: x - other, x)) for x in self.matrix])
 
     def __mul__(self, other):
-        """Matrix Multiplication: MatA * MatB or MatA * INT."""
+        # type: (Union[Matrix, any]) -> Matrix
         if isinstance(other, Matrix):
-            # MatA * MatB
-            if self.colsnum != other.rowsnum:
-                _six.raise_from(
-                    MatrixError(
-                        "The number of Columns in MatA must be"
-                        " equal to the number of Rows in MatB"
-                    ),
-                    None,
-                )
+            # Since the library supports Py2.7+ Matrix Mul will
+            # Work just fine if `other` is a Matrix
+            return self.__matmul__(other)
 
-            # References:
-            # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
-            result = [
-                [
-                    sum(a * b for a, b in zip(A_row, B_col))
-                    for B_col in zip(*other.matrix)
-                ]
-                for A_row in self.matrix
+        return Matrix([list(map(lambda x: x - other, x)) for x in self.matrix])
+
+    def __matmul__(self, other):
+        # type: (Union[Matrix, any]) -> Matrix
+
+        # For the @ (Matrix Mul) operator introduced in Py3.5
+
+        if self.colsnum != other.rowsnum:
+            raise MatrixError(
+                "The number of Columns in {!r} must be equal to the"
+                "number of Rows in {!r}".format(self, other)
+            )
+
+        # References:
+        # https://www.geeksforgeeks.org/python-program-multiply-two-matrices
+        return Matrix([
+            [
+                sum(a * b for a, b in zip(a_row, b_col))
+                for b_col in zip(*other.matrix)
             ]
-        else:
-            # MatA * INT
-            result = list()
+            for a_row in self.matrix
+        ])
 
-            for m in range(self.rowsnum):
-                result.append([])
-                for i in range(self.colsnum):
-                    result[m].append(self.matrix[m][i] * other)
+    def insert_row(self, index, row):
+        # type: (int, List[int]) -> NoReturn
 
-        return Matrix(result)
-    # Object Math opertaions: END
+        self.matrix.insert(index, row)
+        self.__init__(self.matrix)
 
-    # Object Manpulation: START
-    def row(self, position, start=0):
-        # type: (int, int) -> Matrix
-        """Return the row in the position `position`
+    def insert_col(self, index, col):
+        # type: (int, List[int]) -> NoReturn
 
-        Using `indexing` method is recommended
-        Matrix(3)[INT] == Matrix(3).row(INT)
+        for i in range(self.rowsnum):
+            self.matrix[i].insert(index, col[i])
 
-        Args:
-            position (int): the wanted row position
-            start (int, optional): start counting from. Defaults to 0.
+        self.__init__(self.matrix)
 
-        Raises:
-            MatrixError: raised if the given position row
-            not exist in the Matrix
+    def pop_row(self, index):
+        # type: (int) -> List[int]
 
-        Returns:
-            Matrix: return the row as Matrix
-        """
-        if position > start - 1:
-            position -= start
+        popped = self.matrix.pop(index)
+        self.__init__(self.matrix)
+        return popped
 
-        try:
-            return Matrix([self.matrix[position]])
-        except IndexError:
-            _six.raise_from(MatrixError("Matrix Index out of range"), None)
+    def pop_col(self, index):
+        # type: (int) -> List[int]
 
-    def col(self, position, start=0):
-        # type: (int, int) -> Matrix
-        """Return the col in the position `position`
+        popped = []
 
-        Using `indexing` method is recommended
-        Matrix(3)[:INT] == Matrix(3).col(INT)
+        for i in range(self.rowsnum):
+            popped.append(self.matrix[i].pop(index))
 
-        Args:
-            position (int): the wanted column position
-            start (int, optional): start counting from. Defaults to 0.
+        self.__init__(self.matrix)
+        return popped
 
-        Raises:
-            MatrixError: raised if the given position column
-            not exist in the Matrix
+    def list(self):
+        # type: () -> list[List[int]]
 
-        Returns:
-            Matrix: return the column as Matrix
-        """
-        if position > start - 1:
-            position -= start
-
-        try:
-            return Matrix([[row[position]] for row in self.matrix])
-        except IndexError:
-            _six.raise_from(MatrixError("Matrix Index out of range"), None)
-
-    def addrow(self, row, index=-1):
-        # type: (Matrix, int) -> Matrix
-        """Add a new row to your Matrix Object
-        MatrixObject -> '1 2 3'
-
-        MatrixObject.addrow('4 5 6')
-        Output: '1 2 3; 4 5 6'
-
-        DON'T USE IT. IT'S BUGGY AND UNDER
-        DEVOLPMENT RIGHT NOW.
-        """
-        result = self.matrix
-
-        if index == -1:
-            result.insert(self.rowsnum, (Matrix(row).tolist()[0]))
-        else:
-            result.insert(index, (Matrix(row).tolist()[0]))
-
-        return Matrix(result)
-
-    def addcol(self, col, index=-1):
-        # type: (Matrix, int) -> Matrix
-        """Add a new col to your Matrix Object
-        MatrixObject -> '1 2 3; 5 6 7'
-
-        MatrixObject.addcol('4 8')
-        Output: '1 2 3 4; 5 6 7 8'
-
-        DON'T USE IT. IT'S BUGGY AND UNDER
-        DEVOLPMENT RIGHT NOW.
-        """
-        result = self.matrix
-
-        if index == -1:
-            for i in range(self.rowsnum):
-                result[i].insert(self.colsnum, Matrix(col)[0, i])
-        else:
-            for i in range(self.rowsnum):
-                result[i].insert(index, Matrix(col)[0, i])
-
-        return Matrix(result)
-
-    def rmrow(self, index):
-        # type: (int) -> Matrix
-        """Remove an Existing row from your Matrix Object.
-        MatrixObject -> '1 2 3; 4 5 6'
-
-        MatrixObject.rmrow(1)
-        Output: '1 2 3'
-
-        DON'T USE IT. IT'S BUGGY AND UNDER
-        DEVOLPMENT RIGHT NOW.
-        """
-        result = self.matrix
-
-        try:
-            result.pop(index)
-        except IndexError:
-            _six.raise_from(MatrixError("Matrix Index out of range"), None)
-
-        return Matrix(result)
-
-    def rmcol(self, index):
-        # type: (int) -> Matrix
-        """Remove an Existing col from your Matrix Object.
-        MatrixObject -> '1 2 3 4; 5 6 7 8'
-
-        MatrixObject.rmcol(1)
-        Output: '1 3 4; 5 7 8'
-
-        DON'T USE IT. IT'S BUGGY AND UNDER
-        DEVOLPMENT RIGHT NOW.
-        """
-        result = self.matrix
-
-        try:
-            for i in range(self.rowsnum):
-                result[i].pop(index)
-        except IndexError:
-            _six.raise_from(MatrixError("Matrix Index out of range"), None)
-
-        return Matrix(result)
+        return self.matrix
 
     def transpose(self):
         # type: () -> Matrix
+
         """Swith the row and column indices of the Matrix
 
         Returns:
@@ -496,45 +275,33 @@ class Matrix:
 
         Example:
             >>> MatA = Matrix("1 2; 3 4; 5 6")
-            >>> print(MatA)
-            1 2
-            3 4
-            5 6
-            (3x2)
             >>> print(MatA.transpose())
             1 2 3
             4 5 6
             (2x3)
         """
+
         return Matrix([list(i) for i in zip(*self.matrix)])
 
-    def tolist(self):
-        # type: () -> list
-        """Convert Matrix Object to a Nested List
+    def diagonal(self):
+        # type: () -> Matrix
 
-        Returns:
-            list: Convert Matrix Object to a
-            Nested List. Useful for manipulating
-            the list yourself if matrix-py doesn't
-            do what you expect.
+        """Get the diagonal of the matrix"""
 
-        Example:
-            >>> MatA = Matrix(3) # (3x3) Identity Matrix
-            >>> MatA.tolist()
-            [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-        """
-        return self.matrix
+        return Matrix([[self[i, i] for i in range(self.rowsnum)]])
 
-    # The following function (rank) is by absognety and copied from
+    # The following function (rank) is copyrighted by absognety:
     # https://github.com/absognety/Competitive-Coding-Platforms/
-    # and licensed under The GPLv3 License
+    # Licensed under The GPLv3 License
     def rank(self):
-        # type() -> int
+        # type: () -> int
+
         """Return the rank of the Matrix
 
         Returns:
             int: The rank of the Matrix
         """
+
         rank = self.rowsnum
         mat = self.matrix
 
@@ -562,23 +329,24 @@ class Matrix:
                 row -= 1
 
         return rank
-    # Object Manpulation: END
 
-    # Booleon Expressions: START
     def is_square(self):
         # type: () -> bool
-        """Return True if Matrix is square
+
+        """Return True if the Matrix is square
 
         Returns:
             bool: True if the given Matrix (self)
             is square (rows number == columns number).
             else returns False
         """
-        return bool(self.rowsnum == self.colsnum)
+
+        return self.rowsnum == self.colsnum
 
     def is_symmetric(self):
         # type: () -> bool
-        """Return True if Matrix is symmetric
+
+        """Return True if the Matrix is symmetric
 
         Raises:
             MatrixError: if the given Matrix is not
@@ -590,18 +358,19 @@ class Matrix:
             is symmetric (Matrix == Matrix transpose).
             else returns False
         """
-        if not Matrix(self.matrix).is_square():
+
+        if not self.is_square():
             raise MatrixError("symmetric matrix is a square matrix")
 
-        if self.matrix == (Matrix(self.matrix).transpose()).tolist():
+        if self.matrix == self.transpose().tolist():
             return True
-        return False
-    # Booleon Expressions: END
 
-    # Pre Made Objects: START
+        return False
+
     @staticmethod
     def identity(size):
         # type: (int) -> Matrix
+
         """Return a new I (sizeXsize) Matrix
 
         Args:
@@ -618,10 +387,10 @@ class Matrix:
                     0 0 1
                     (3x3)
         """
-        result = list()
+
+        result = [[0] * 3 for _ in range(size)]
 
         for i in range(size):
-            result.append([0] * size)
             result[i][i] = 1
 
         return Matrix(result)
@@ -629,6 +398,7 @@ class Matrix:
     @staticmethod
     def zero(size):
         # type: (int) -> Matrix
+
         """Return a new zero (sizeXsize) Matrix
 
         Args:
@@ -644,49 +414,13 @@ class Matrix:
                     0 0 0
                     (3x3)
         """
+
         return Matrix([[0] * size] * size)
 
     @staticmethod
-    def diagonal(fill=0, *numbers):
-        """Get the diag of a Matrix or Generate one
+    def random(size, a, b):
+        # type: (Tuple, int, int) -> Matrix
 
-        Returns:
-            Matrix: The result depends on how you call
-            the function.
-
-            Matrix.diagonal(MatrixObject):
-            Return the diagonal of an exisiting Matrix Object.
-
-            Matrix.diagonal(INT, INT, ..):
-            Return a new square Matrix with (INT, INT, ..) as
-            the Matrix's diagonal
-
-            Matrix.diagonal(INT, fill=INT):
-            Return a new (INTxINT) Matrix with the diagonal
-            equels to the fill number
-        """
-        result = list()
-
-        if isinstance(numbers[0], Matrix):
-            result = numbers[0]
-            return Matrix([[result[i, i] for i in range(result.rowsnum)]])
-
-        if fill:
-            for i in range(numbers[0]):
-                result.append([0] * numbers[0])
-                result[i][i] = fill
-
-            return Matrix(result)
-
-        for i, number in enumerate(numbers):
-            result.append([0] * len(numbers))
-            result[i][i] = number
-
-        return Matrix(result)
-
-    @staticmethod
-    def randint(size, a, b):
-        # type: (tuple, int, int) -> Matrix
         """Return (size) Matrix with random integers in range (a, b)
 
         Args:
@@ -697,124 +431,178 @@ class Matrix:
             Matrix: (size) Matrix with random
             integer in the range a:b
         """
-        if not isinstance(size, tuple):
-            raise TypeError("arg1 `size` must be tuple. (3,3) = (3x3) Matrix")
-        if not isinstance(a, int):
-            raise TypeError("arg2 `a` must be int.")
-        if not isinstance(b, int):
-            raise TypeError("arg3 `b` must be int.")
 
-        result = list()
-        rowsnum = size[0]
-        colsnum = size[1]
-
-        for row in range(rowsnum):
-            result.append([])
-            for _ in range(colsnum):
-                result[row].append(_random.randint(a, b))
-
-        return Matrix(result)
-    # Pre Made Objects: END
+        return Matrix(
+            [[random.randint(a, b) for _ in range(size[1])] for _ in range(size[0])]
+        )
 
 
-def _cli():
-    HELP = ["help", "--help", "h", "-h"]
+def main(args=None):
+    # type: (None) -> None
 
-    OPERATROS = ["+", "-", "*"]
+    from textwrap import dedent
+    from typing import Text
+    from operator import add, sub, mul
+    import sys
 
-    args = list(map(str.lower, _sys.argv))
+    def error(s, t):
+        # type: (Text, Text) -> NoReturn
+        sys.exit(
+            (
+                "{red}{bold}ERROR: {reset}{red}{}.{reset}\n" +
+                "{blue}{bold}TIP: {reset}{blue}{}{reset}"
+            ).format(
+                s,
+                "... '1 2 3; 4 5 6'"
+                if t == "Matrix"
+                else "... 10"
+                if t == "int"
+                else "3x3"
+                if t == "Matrix_size"
+                else "... +, -, *"
+                if t == "operator"
+                else t,
+                **colors
+            )
+        )
 
-    if len(args) < 2:
+    def matrix_exit(m):
+        # type: (Matrix) -> NoReturn
+        m = str(m)  # type: str
+        sys.exit(
+            "{green}{}\n{blue}{}{reset}".format(
+                m[: m.rfind("\n")], m.splitlines()[-1], **colors
+            )
+        )
+
+    args = list(map(lambda s: s.strip("-").lower(), sys.argv[1:]))  # type: List[str]
+
+    try:
+        args.pop(args.index("no-colors"))
+        allow_colors = False
+    except ValueError:
+        allow_colors = True
+
+    colors = {
+        "red": "\x1b[31m",
+        "green": "\x1b[32m",
+        "yellow": "\x1b[33m",
+        "blue": "\x1b[34m",
+        "bold": "\x1b[1m",
+        "reset": "\x1b[0m",
+    }
+
+    colors = {k: allow_colors * v for k, v in colors.items()}
+
+    if not args:
         args.append("help")
 
-    if args[1] in HELP or args[1].startswith("h"):
-        return """
-Welcome to matrixpy Command-Line Interface program!
+    args_one_char = [a[0] for a in args]
 
-\x1b[93m\x1b[1m┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑
-\x1b[0m
-\x1b[33mMathmatical Operations\x1b[0m:
-\x1b[32m    Addition (+)\x1b[0m        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
-\x1b[32m    Substraction (-)\x1b[0m    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
-\x1b[32m    Multiplication (*)\x1b[0m  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
+    if "h" in args_one_char:
+        sys.exit(dedent(
+            """
+            Welcome to matrixpy Command-Line Interface program!
 
-\x1b[33mCommands\x1b[0m:
-\x1b[32m    Transpose, -t\x1b[0m       Get the transpose of a Matrix 
-                        Example: matrixpy transpose "1 2 3; 4 5 6"
+            {yellow}{bold}┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑{reset}
 
-\x1b[32m    Randint, -r\x1b[0m         Get a random Matrix in a specific range 
-                        Example: matrixpy randint 1 100 3x3
+            {yellow}Mathmatical Operations{reset}:
+            {green}    Addition (+){reset}        matrixpy "1 2 3; 4 5 6" "+" "1 2 3; 4 5 6"
+            {green}    Substraction (-){reset}    matrixpy "1 2 3; 4 5 6" "-" "1 2 3; 4 5 6"
+            {green}    Multiplication (*){reset}  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
 
-\x1b[33mOther\x1b[0m:
-\x1b[32m    Help, -h\x1b[0m            Get help about the CLI usage
-\x1b[32m    Version, -v\x1b[0m         Get the version of the matrixpy
+            {yellow}Commands{reset}:
+            {green}    Transpose, -t{reset}       Get the transpose of a Matrix 
+                                    Example: matrixpy transpose "1 2 3; 4 5 6"
 
-\x1b[93m\x1b[1m┕————————————————————————————(..)(..) ∫∫——————————————————————————-┙
-\x1b[0m"""
+            {green}    Randint, -r{reset}         Get a random Matrix in a specific range 
+                                    Example: matrixpy randint 1 100 3x3
 
-    if args[1].startswith("v") or args[1].startswith("-v"):
-        return __version__
+            {yellow}Other{reset}:
+            {green}    Help, -h{reset}            Get help about the CLI usage
+            {green}    Version, -v{reset}         Get the version of the matrixpy
 
-    if args[1].startswith("t") or args[1].startswith("-t"):
+            {yellow}{bold}┕————————————————————————————(..)(..) ∫∫——————————————————————————-┙{reset}
+            """.format(**colors)
+        ))
+
+    if "v" in args_one_char:
+        sys.exit(
+            "{yellow}Version{reset} {green}{}{reset}".format(__version__, **colors)
+        )
+
+    def get_matrix(name, index):
+        # type: (str, int) -> Matrix
+        if len(args) == index:
+            error("No %s has been defined" % name, "Matrix")
         try:
-            MatA = Matrix(args[2])
-        except (ValueError, IndexError, MatrixError) as e:
-            if str(e) == "list index out of range":
-                return """\x1b[31m\x1b[1mERROR\x1b[0m: Missing `MatA` argument after transpose.
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy tranpose '1 2 3; 4 5 6'"""
-            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define the Matrix you
-want to transpose correctly. \x1b[34m\x1b[1mTIP\x1b[0m:
- $ matrixpy tranpose '1 2 3; 4 5 6'"""
+            return Matrix(args[index])
+        except (ValueError, TypeError):
+            error("Define %s correctly" % name, "Matrix")
 
-        return MatA.transpose()
+    if args_one_char[0] == "t":
+        matrix_exit(get_matrix("Matrix", 1).transpose())
 
-    if args[1].startswith("r") or args[1].startswith("-r"):
+    if args[0].startswith("rand"):
+
+        def get_num(name, index):
+            # type: (str, int) -> int
+            if len(args) == index:
+                error("No %s has been defined" % name, "int")
+            try:
+                return int(args[index])
+            except ValueError:
+                error("%s Should be numeric" % name, "int")
+
+        a = get_num("A", 1)
+        b = get_num("B", 2)
+
+        if len(args) == 3:
+            error("No Matrix Size has been defined", "Matrix_size")
+
         try:
-            start = int(args[2])
-            end = int(args[3])
-            matsize = args[4].split("x")
-        except (IndexError, ValueError):
-            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please use the randint command correctly.
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy randint 1 100 3x3"""
-
-        try:
-            return Matrix.randint((int(matsize[0]), int(matsize[1])),
-                                   start,
-                                   end)
+            size = tuple(map(int, args[3].split("x")))
         except ValueError:
-            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please use the randint command correctly.
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy randint 1 100 3x3"""
+            size = (0,)
+
+        if len(size) != 2:
+            error("Define the Matrix Size correctly", "Matrix_size")
+
+        matrix_exit(Matrix.random(size, a, b))
+
+    if args[0] == "rank":
+        sys.exit(
+            "{yellow}Rank{reset}: {green}{}{reset}".format(
+                get_matrix("Matrix", 1).rank(), **colors
+            )
+        )
+
+    def get_op(index):
+        # type: (int) -> str
+        if len(args) == index:
+            error("No operator has been defined.", "operator")
+        op = args[index]
+        if op not in ["+", "-", "*"]:
+            error("{!r} is not a valid operator.".format(op), "operator")
+        return op
+
+    mat_a = get_matrix("MatA", 0)
+    op = get_op(1)
+    mat_b = get_matrix("MatB", 2)
 
     try:
-        MatA = Matrix(args[1])
-    except (ValueError, IndexError, MatrixError):
-        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatA correctly.
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6'"""
+        result = (
+            add(mat_a, mat_b)
+            if op == "+"
+            else sub(mat_a, mat_b)
+            if op == "-"
+            else mul(mat_a, mat_b)
+        )
+    except MatrixError as e:
+        error(e, "Null")
 
-    try:
-        if args[2] not in OPERATROS:
-            return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define a valid operator. ('+', '-', '*')
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' '+' '1 2 3; 4 5 6'"""
-        op = args[2]
-    except IndexError:
-        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define an operator. ('+', '-', '*')
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' '+' '1 2 3; 4 5 6'"""
-
-    try:
-        MatB = Matrix(args[3])
-    except (ValueError, IndexError, MatrixError):
-        return """\x1b[31m\x1b[1mERROR\x1b[0m: Please define MatB correctly.
-\x1b[34m\x1b[1mTIP\x1b[0m: $ matrixpy '1 2 3; 4 5 6' + '1 2 3; 4 5 6'"""
-
-    try:
-        if op == "+":
-            return MatA + MatB
-        if op == "-":
-            return MatA - MatB
-        return MatA * MatB
-    except MatrixError as MError:
-        return MError
+    matrix_exit(result)
 
 
 if __name__ == "__main__":
-    print(_cli())
+    main()
