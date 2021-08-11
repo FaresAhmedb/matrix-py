@@ -50,11 +50,11 @@ setuptools.setup(
     py_modules=["matrixpy"],
     license="GPLv2",
     url="https://github.com/FaresAhmedb/matrix-py",
-    download_url="https://pypi.python.org/pypi/matrix-py",
+    download_url="https://pypi.org/project/matrix-py/#files",
     project_urls={
         "Bug Tracker": "https://github.com/FaresAhmedb/matrix-py/issues",
-        "Documentation": "https://github.com/FaresAhmedb/matrix-py/README.md",
-        "Source Code": "https://github.com/FaresAhmedb/matrix-py",
+        "Documentation": "https://github.com/FaresAhmedb/matrix-py/blob/main/README.md",
+        "Source Code": "https://github.com/FaresAhmedb/matrix-py/blob/main/src/matrixpy.py",
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
