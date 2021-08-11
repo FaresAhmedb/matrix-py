@@ -36,7 +36,7 @@ from typing import Union, List, Tuple, NoReturn, Iterator
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 __dir__ = lambda: __all__
 
