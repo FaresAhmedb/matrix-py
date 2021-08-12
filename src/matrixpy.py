@@ -36,7 +36,7 @@ from typing import Union, List, Tuple, NoReturn, Iterator
 
 
 __all__ = ["Matrix", "MatrixError"]
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __author__ = "Fares Ahmed <faresahmed@zohomail.com>"
 __dir__ = lambda: __all__
 
@@ -58,41 +58,38 @@ class Matrix(object):
             Matrix("1 2 3; 4 5 6")
         """
 
-        self.matrix = matrix  # type: List[List[int]]
+        self.list = matrix  # type: List[List[int]]
 
         if isinstance(matrix, int):
-            self.matrix = Matrix.identity(matrix).matrix
+            self.list = Matrix.identity(matrix).list
 
         elif isinstance(matrix, str):
-            self.matrix = [
+            self.list = [
                 [int(c) for c in b] for b in [a.split() for a in matrix.split(";")]
             ]
 
-        self.rowsnum = len(self.matrix)  # type: int
-        self.colsnum = len(self.matrix[0])  # type: int
+        self.rowsnum = len(self.list)  # type: int
+        self.colsnum = len(self.list[0])  # type: int
 
-        for row in self.matrix:
+        for row in self.list:
             if len(row) != self.colsnum:
                 raise ValueError(
-                    "Row `%s` has a different size" " from other rows" % row
+                    "Row `%s` has a different size from other rows" % row
                 )
 
     def __repr__(self):
         # type: () -> str
 
-        return (
-            "'"
-            + "; ".join([" ".join(l) for l in [list(map(str, i)) for i in self.matrix]])
-            + "'"
-        )
+        return "'" + "; ".join([" ".join(list(map(str, l))) for l in self.list]) + "'"
 
     def __str__(self):
         # type: () -> str
 
-        mat_str = [[str(c) for c in b] for b in self.matrix]
-        max_num = max([len(max(l, key=len)) for l in mat_str])
-        lines = [" ".join(i) for i in [list(map(lambda i: "{:<{}}".format(i, max_num), i)) for i in mat_str]]
-        return "%s\n%s" % ("\n".join(lines), "{:^{}}".format("(%sx%s)" % (self.rowsnum, self.colsnum), len(max(lines, key=len))))
+        mat_str = [list(map(str, b)) for b in self.list]
+        max_len = max(len(max(l, key=len)) for l in mat_str)
+        rslines = [" ".join(i) for i in [list(map(lambda i: "{:<{}}".format(i, max_len), i)) for i in mat_str]]
+        r = "%s\n%s" % ("\n".join(rslines), "{:^{}}".format("(%sx%s)" % (self.rowsnum, self.colsnum), len(max(rslines, key=len))))
+        return "\n".join(list(map(str.rstrip, r.splitlines())))
 
     def __getitem__(self, rowcol):
         # type: (Union[int, Tuple, slice]) -> Union[Matrix, int]
@@ -111,25 +108,25 @@ class Matrix(object):
 
         if isinstance(rowcol, tuple):
             if rowcol[1] is None:
-                return Matrix([self.matrix[rowcol[0]]])
+                return Matrix([self.list[rowcol[0]]])
             if rowcol[0] is None:
-                return Matrix([[row[rowcol[1]]] for row in self.matrix])
-            return self.matrix[rowcol[0]][rowcol[1]]
+                return Matrix([[row[rowcol[1]]] for row in self.list])
+            return self.list[rowcol[0]][rowcol[1]]
 
         if isinstance(rowcol, slice):
-            return Matrix(self.matrix[rowcol])
+            return Matrix(self.list[rowcol])
 
     def __contains__(self, other):
         # type: (Union[Matrix, int]) -> bool
 
         if isinstance(other, Matrix):
-            for row in other.matrix:
-                if row in self.matrix:
+            for row in other.list:
+                if row in self.list:
                     return True
             return False
 
         if isinstance(other, int):
-            for row in self.matrix:
+            for row in self.list:
                 if other in row:
                     return True
             return False
@@ -146,19 +143,19 @@ class Matrix(object):
             [Specific Col] for item in Matrix(3)[None, 0]
         """
 
-        for row in self.matrix:
+        for row in self.list:
             for col in row:
                 yield col
 
     def __pos__(self):
         # type: () -> Matrix
 
-        return Matrix(self.matrix)
+        return Matrix(self.list)
 
     def __neg__(self):
         # type: () -> Matrix
 
-        return Matrix([[-x for x in y] for y in self.matrix])
+        return Matrix([[-x for x in y] for y in self.list])
 
     def __add__(self, other):
         # type: (Union[Matrix, any]) -> Matrix
@@ -172,11 +169,11 @@ class Matrix(object):
             return Matrix(
                 [
                     [x + y for x, y in zip(m, j)]
-                    for m, j in zip(self.matrix, other.matrix)
+                    for m, j in zip(self.list, other.list)
                 ]
             )
 
-        return Matrix([list(map(lambda x: x + other, x)) for x in self.matrix])
+        return Matrix([list(map(lambda x: x + other, x)) for x in self.list])
 
     def __sub__(self, other):
         # type: (Union[Matrix, any]) -> Matrix
@@ -190,20 +187,21 @@ class Matrix(object):
             return Matrix(
                 [
                     [x - y for x, y in zip(m, j)]
-                    for m, j in zip(self.matrix, other.matrix)
+                    for m, j in zip(self.list, other.list)
                 ]
             )
 
-        return Matrix([list(map(lambda x: x - other, x)) for x in self.matrix])
+        return Matrix([list(map(lambda x: x - other, x)) for x in self.list])
 
     def __mul__(self, other):
         # type: (Union[Matrix, any]) -> Matrix
+
         if isinstance(other, Matrix):
             # Since the library supports Py2.7+ Matrix Mul will
             # Work just fine if `other` is a Matrix
             return self.__matmul__(other)
 
-        return Matrix([list(map(lambda x: x - other, x)) for x in self.matrix])
+        return Matrix([list(map(lambda x: x - other, x)) for x in self.list])
 
     def __matmul__(self, other):
         # type: (Union[Matrix, any]) -> Matrix
@@ -221,47 +219,59 @@ class Matrix(object):
         return Matrix([
             [
                 sum(a * b for a, b in zip(a_row, b_col))
-                for b_col in zip(*other.matrix)
+                for b_col in zip(*other.list)
             ]
-            for a_row in self.matrix
+            for a_row in self.list
         ])
 
     def insert_row(self, index, row):
         # type: (int, List[int]) -> NoReturn
 
-        self.matrix.insert(index, row)
-        self.__init__(self.matrix)
+        """Insert row before index."""
+
+        if len(row) != self.colsnum:
+            raise ValueError(
+                "The row you are trying to insert has different size than "
+                "other rows"
+            )
+        self.list.insert(index, row)
+        self.rowsnum += 1
 
     def insert_col(self, index, col):
         # type: (int, List[int]) -> NoReturn
 
+        """Insert column before index."""
+
+        if len(col) != self.colsnum:
+            raise ValueError(
+                "The column you are trying to insert has different size than "
+                "other columns"
+            )
         for i in range(self.rowsnum):
-            self.matrix[i].insert(index, col[i])
+            self.list[i].insert(index, col[i])
+        self.colsnum += 1
 
-        self.__init__(self.matrix)
-
-    def pop_row(self, index):
+    def pop_row(self, index=-1):
         # type: (int) -> List[int]
 
-        popped = self.matrix.pop(index)
-        self.__init__(self.matrix)
+        """Remove and return row at index (default last)."""
+
+        popped = self.list.pop(index)
+        self.rowsnum -= 1
         return popped
 
-    def pop_col(self, index):
+    def pop_col(self, index=-1):
         # type: (int) -> List[int]
+
+        """Remove and return column at index (default last)."""
 
         popped = []
 
         for i in range(self.rowsnum):
-            popped.append(self.matrix[i].pop(index))
+            popped.append(self.list[i].pop(index))
 
-        self.__init__(self.matrix)
+        self.colsnum -= 1
         return popped
-
-    def list(self):
-        # type: () -> list[List[int]]
-
-        return self.matrix
 
     def transpose(self):
         # type: () -> Matrix
@@ -281,7 +291,7 @@ class Matrix(object):
             (2x3)
         """
 
-        return Matrix([list(i) for i in zip(*self.matrix)])
+        return Matrix([list(i) for i in zip(*self.list)])
 
     def diagonal(self):
         # type: () -> Matrix
@@ -303,29 +313,29 @@ class Matrix(object):
         """
 
         rank = self.rowsnum
-        mat = self.matrix
+        matrix = self.list
 
         for row in range(rank):
-            if mat[row][row]:
+            if matrix[row][row]:
                 for col in range(self.colsnum):
                     if col != row:
-                        multiplier = mat[col][row] / mat[row][row]
+                        multiplier = matrix[col][row] / matrix[row][row]
                         for i in range(rank):
-                            mat[col][i] -= multiplier * mat[row][i]
+                            matrix[col][i] -= multiplier * matrix[row][i]
             else:
                 reduce = True
                 for i in range(row + 1, self.colsnum):
-                    if mat[i][row]:
+                    if matrix[i][row]:
                         for s in range(rank):
-                            temp = mat[row][s]
-                            mat[row][s] = mat[i][s]
-                            mat[i][s] = temp
+                            t = matrix[row][s]
+                            matrix[row][s] = matrix[i][s]
+                            matrix[i][s] = t
                         reduce = False
                         break
                 if reduce:
                     rank -= 1
                     for i in range(self.colsnum):
-                        mat[i][row] = mat[i][rank]
+                        matrix[i][row] = matrix[i][rank]
                 row -= 1
 
         return rank
@@ -362,10 +372,7 @@ class Matrix(object):
         if not self.is_square():
             raise MatrixError("symmetric matrix is a square matrix")
 
-        if self.matrix == self.transpose().tolist():
-            return True
-
-        return False
+        return self.list == self.transpose().list
 
     @staticmethod
     def identity(size):
@@ -433,12 +440,15 @@ class Matrix(object):
         """
 
         return Matrix(
-            [[random.randint(a, b) for _ in range(size[1])] for _ in range(size[0])]
+            [[random.randint(a, b) for _ in range(size[1])]
+              for _ in range(size[0])]
         )
 
 
 def main(args=None):
     # type: (None) -> None
+
+    """The main entry for the matrix-py CLI"""
 
     from textwrap import dedent
     from typing import Text
@@ -501,7 +511,7 @@ def main(args=None):
 
     if "h" in args_one_char:
         sys.exit(dedent(
-            """
+            r"""
             Welcome to matrixpy Command-Line Interface program!
 
             {yellow}{bold}┍————————————————————————————- /ᐠ｡ꞈ｡ᐟ\ ————————————————————————————┑{reset}
@@ -512,10 +522,10 @@ def main(args=None):
             {green}    Multiplication (*){reset}  matrixpy "1 2 3; 4 5 6" "*" "1 2; 3 4; 5 6"
 
             {yellow}Commands{reset}:
-            {green}    Transpose, -t{reset}       Get the transpose of a Matrix 
+            {green}    Transpose, -t{reset}       Get the transpose of a Matrix
                                     Example: matrixpy transpose "1 2 3; 4 5 6"
 
-            {green}    Randint, -r{reset}         Get a random Matrix in a specific range 
+            {green}    Randint, -r{reset}         Get a random Matrix in a specific range
                                     Example: matrixpy randint 1 100 3x3
 
             {yellow}Other{reset}:
